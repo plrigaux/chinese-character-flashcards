@@ -4,38 +4,37 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.sling.commons.json.io.JSONWriter;
 
-import com.plr.cvstojson.Data.Def;
+import com.plr.cvstojson.Data.Definision;
 
 public class Writer {
 
 	private final int BATCH = 200;
 
 	private int dataWrote = 0;
-	
+
 	private int listIndex = 1;
 
 	void write(List<String[]> csvRows) throws Exception {
 
 		File file = new File("");
 		file = new File(file.getAbsolutePath());
-		
+
 		File fs[] = file.listFiles(new FileFilter() {
-			
+
 			@Override
 			public boolean accept(File file) {
 				return file.getName().startsWith("out-");
 			}
 		});
-		
+
 		for (File f : fs) {
 			f.delete();
 		}
-		
+
 		int nbBatch = csvRows.size() / BATCH;
 
 		for (int i = 1; i < nbBatch; i++) {
@@ -57,8 +56,6 @@ public class Writer {
 
 		JSONWriter jw = new JSONWriter(ow);
 		try {
-			// jw.object();
-			// jw.key("data");
 			jw.array();
 			Data data = null;
 
@@ -79,31 +76,31 @@ public class Writer {
 						listIndex--;
 						break;
 					}
-					
+
 					data = new Data();
-					data.setId(id);
+					data.setId(idi);
 					data.setCharaters(row[1]);
-				
+
 				}
 
-				if (data == null) {
-					System.out.println(Arrays.asList(row));
-					System.out.println("li " + listIndex);
-					System.out.println(batch);
-					System.out.println("dw " + dataWrote);
-				}
-				
+//				if (data == null) {
+//					System.out.println(Arrays.asList(row));
+//					System.out.println("li " + listIndex);
+//					System.out.println(batch);
+//					System.out.println("dw " + dataWrote);
+//				}
+
 				data.setExplanation(row[2]);
 			}
-			
+
 			doOutput(data, jw);
-			
+
 			jw.endArray();
 		} finally {
 			// ow.flush();
 			ow.close();
 		}
-		
+
 		if (dataWrote == 0) {
 			f.delete();
 		}
@@ -117,8 +114,8 @@ public class Writer {
 		}
 
 		jw.object();
-		 jw.key("id");
-		 jw.value(d.getId());
+		jw.key("i");
+		jw.value(d.getId());
 		jw.key("s");
 		jw.value(d.getS());
 
@@ -136,10 +133,13 @@ public class Writer {
 
 		jw.array();
 
-		for (Def def : d.getDefs()) {
+		for (Definision def : d.getDefs()) {
 			jw.object();
 			jw.key("p");
 			jw.value(def.getPy());
+			
+			jw.key("n");
+			jw.value(def.getPyNum());
 
 			jw.key("d");
 			jw.array();
@@ -153,7 +153,7 @@ public class Writer {
 		jw.endArray();
 
 		jw.endObject();
-		
+
 		dataWrote++;
 	}
 }

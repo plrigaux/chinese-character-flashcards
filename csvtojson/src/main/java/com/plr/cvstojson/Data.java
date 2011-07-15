@@ -1,5 +1,7 @@
 package com.plr.cvstojson;
 
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 
 import com.google.common.base.Splitter;
@@ -10,17 +12,23 @@ public class Data {
 	private Character sc;
 	private Character ac;
 
-	private ArrayList<Def> pron = new ArrayList<Def>();
+	private ArrayList<Definision> pron = new ArrayList<Definision>();
 
-	static class Def {
+	static class Definision {
 		private String pinyin;
+		private String pinyinNum;
 		private ArrayList<String> def = new ArrayList<String>();
 
-		Def(String pinyin, Iterable<String> it) {
+		Definision(String pinyin, Iterable<String> it) {
+			
+			pinyin = Normalizer.normalize(pinyin, Form.NFC);
+			
 			this.pinyin = pinyin;
 			for (String s : it) {
 				def.add(s);
 			}
+						
+			pinyinNum = Pinyin.convertNum(pinyin);
 		}
 
 		public String getPy() {
@@ -31,11 +39,13 @@ public class Data {
 			
 			return def;
 		}
+
+		public String getPyNum() {
+			return pinyinNum;
+		}
 	}
 
-	public void setId(String id) {
-		Integer i = Integer.parseInt(id);
-
+	public void setId(int i) {
 		this.id = i;
 	}
 
@@ -61,9 +71,9 @@ public class Data {
 
 		if (c != -1 && b != -1) {
 			String pinying = string.substring(b + 1, c);
-
+		
 			Iterable<String> it = s.split(string.substring(c + 1));
-			Def d = new Def(pinying, it);
+			Definision d = new Definision(pinying, it);
 
 			pron.add(d);
 		}
@@ -86,7 +96,7 @@ public class Data {
 	}
 
 
-	public ArrayList<Def> getDefs() {
+	public ArrayList<Definision> getDefs() {
 		return pron;
 	}
 }
