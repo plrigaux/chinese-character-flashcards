@@ -1,11 +1,16 @@
 package com.plr.cvstojson;
 
 import java.io.File;
-import java.io.FileFilter;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
+import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.io.JSONWriter;
 
 import com.plr.cvstojson.Data.Definision;
@@ -18,22 +23,17 @@ public class Writer {
 
 	private int listIndex = 1;
 
+	private Map<String, String> num2pinyin = new TreeMap<String, String>();
+
 	void write(List<String[]> csvRows) throws Exception {
 
-		File file = new File("");
-		file = new File(file.getAbsolutePath());
+		File file = new File("output");
 
-		File fs[] = file.listFiles(new FileFilter() {
-
-			@Override
-			public boolean accept(File file) {
-				return file.getName().startsWith("out-");
-			}
-		});
-
-		for (File f : fs) {
-			f.delete();
+		if (file.isDirectory()) {
+			file.delete();
 		}
+
+		file.mkdir();
 
 		int nbBatch = csvRows.size() / BATCH;
 
@@ -42,11 +42,38 @@ public class Writer {
 			doABatch(i, csvRows);
 		}
 
+		doPinyinToNum();
+
+	}
+
+	private void doPinyinToNum() throws IOException, FileNotFoundException,
+			UnsupportedEncodingException, JSONException {
+		File f = new File("output/num2pinyin.json");
+
+		f.createNewFile();
+
+		FileOutputStream fo = new FileOutputStream(f);
+
+		OutputStreamWriter ow = new OutputStreamWriter(fo, "UTF-8");
+		try {
+			JSONWriter jw = new JSONWriter(ow);
+			jw.object();
+			for (Map.Entry<String, String> en : num2pinyin.entrySet()) {
+				String k = en.getKey();
+				String v = en.getValue();
+				
+				jw.key(k);
+				jw.value(v);
+			}
+			jw.endObject();
+		} finally {
+			ow.close();
+		}
 	}
 
 	private void doABatch(int batch, List<String[]> csvRows) throws Exception {
 
-		File f = new File("out-" + batch + ".json");
+		File f = new File("output/chineseChar-" + batch + ".json");
 
 		f.createNewFile();
 
@@ -83,12 +110,12 @@ public class Writer {
 
 				}
 
-//				if (data == null) {
-//					System.out.println(Arrays.asList(row));
-//					System.out.println("li " + listIndex);
-//					System.out.println(batch);
-//					System.out.println("dw " + dataWrote);
-//				}
+				// if (data == null) {
+				// System.out.println(Arrays.asList(row));
+				// System.out.println("li " + listIndex);
+				// System.out.println(batch);
+				// System.out.println("dw " + dataWrote);
+				// }
 
 				data.setExplanation(row[2]);
 			}
@@ -137,7 +164,7 @@ public class Writer {
 			jw.object();
 			jw.key("p");
 			jw.value(def.getPy());
-			
+
 			jw.key("n");
 			jw.value(def.getPyNum());
 
@@ -148,6 +175,8 @@ public class Writer {
 			}
 			jw.endArray();
 			jw.endObject();
+
+			num2pinyin.put(def.getPyNum(), def.getPy());
 		}
 
 		jw.endArray();
@@ -155,5 +184,6 @@ public class Writer {
 		jw.endObject();
 
 		dataWrote++;
+
 	}
 }
