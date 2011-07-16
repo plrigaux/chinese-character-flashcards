@@ -464,4 +464,8 @@ public class Pinyin {
 		// return input;
 		return sb.toString();
 	}
+	
+	public static void main(String[] args) {
+		System.out.println("n"+COMBINING_GRAVE_ACCENT);
+	}
 }
