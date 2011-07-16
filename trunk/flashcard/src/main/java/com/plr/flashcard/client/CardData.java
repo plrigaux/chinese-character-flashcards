@@ -11,11 +11,11 @@ public class CardData extends JavaScriptObject {
 	}
 
 	public final native String getSimplifiedCharacter() /*-{
-		return this.simpl;
+		return this.s;
 	}-*/;
 
 	public final native JsArray<Definition> getDefinitions() /*-{
-		return this.def;
+		return this.d;
 	}-*/;
 
 	static class Definition extends JavaScriptObject {
@@ -24,11 +24,34 @@ public class CardData extends JavaScriptObject {
 		}
 
 		public final native String getPinyin() /*-{
-			return this.py;
+			return this.p;
 		}-*/;
 
 		public final native JsArrayString getDefinition() /*-{
-			return this.def;
+			return this.d;
 		}-*/;
+
+		public final native String getPinyinNum() /*-{
+			return this.n;
+		}-*/;
+
+		public final int getTone() {
+			String pinyinNum = getPinyinNum();
+
+			char c = pinyinNum.charAt(pinyinNum.length() - 1);
+
+			switch (c) {
+			case '1':
+				return 1;
+			case '2':
+				return 2;
+			case '3':
+				return 3;
+			case '4':
+				return 4;
+			}
+
+			return 5;
+		}
 	}
 }

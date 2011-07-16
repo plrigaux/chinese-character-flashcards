@@ -34,7 +34,8 @@ public class Application implements EntryPoint {
 		sp.add(vp);
 		rootPanel.add(sp);
 
-		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, "out.json");
+		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET,
+				"data/out-1.json");
 
 		rb.setCallback(new RequestCallback() {
 
@@ -45,7 +46,7 @@ public class Application implements EntryPoint {
 
 				JSONArray p = (JSONArray) JSONParser.parseLenient(jsonString);
 
-				for (int i = 0; i < p.size() && i < 10; i++) {
+				for (int i = 0; i < p.size(); i++) {
 					JSONWrapper w = new JSONWrapper(p.get(i));
 
 					CardData cd = buildCustomer(w.toString());
@@ -60,18 +61,41 @@ public class Application implements EntryPoint {
 					int row = 0;
 					for (int j = 0; j < jsArray.length(); j++) {
 						Definition d = cd.getDefinitions().get(j);
-						
+
 						Label lp = new Label(d.getPinyin());
 						lp.addStyleName("pinyin");
+
+						int tone = d.getTone();
+
+						String toneStyle;
+						switch (tone) {
+						case 1:
+							toneStyle = "tone1";
+							break;
+						case 2:
+							toneStyle = "tone2";
+							break;
+						case 3:
+							toneStyle = "tone3";
+							break;
+						case 4:
+							toneStyle = "tone4";
+							break;
+						default:
+							toneStyle = "tone5";
+
+						}
+
+						lp.addStyleName(toneStyle);
+
 						ft.setWidget(row, 0, lp);
-						
-						
+
 						for (int k = 0; k < d.getDefinition().length(); k++) {
 							ft.setText(row++, 1, d.getDefinition().get(k));
 						}
-						
+
 					}
-					
+
 					vp.add(ft);
 					vp.add(new Label(""));
 				}
