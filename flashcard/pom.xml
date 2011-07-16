@@ -47,7 +47,7 @@
 					</dependency>
 				</dependencies>
 				<configuration>
-					<runTarget>com.plr.flashcard.Flashcard/Flashcard.html</runTarget>
+					<runTarget>Flashcard.html</runTarget>
 					<server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
 					<workDir> ${webappDirectory}</workDir>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
