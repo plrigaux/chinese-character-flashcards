@@ -14,12 +14,12 @@ public class CardData extends JavaScriptObject {
 		return this.s;
 	}-*/;
 
-	public final native JsArray<Definition> getDefinitions() /*-{
+	public final native JsArray<CharDefinition> getDefinitions() /*-{
 		return this.d;
 	}-*/;
 
-	static class Definition extends JavaScriptObject {
-		protected Definition() {
+	static class CharDefinition extends JavaScriptObject {
+		protected CharDefinition() {
 
 		}
 
