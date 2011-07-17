@@ -5,23 +5,21 @@
 		.important {
 			font-weight: bold;
 		}
-		.pretty { background-color: Skyblue; }
+		
 	</ui:style>
 	<g:HTMLPanel>
 		<div style="text-align:center">
 			<g:Label ui:field="character" />
+			<g:Button ui:field="show" text="Show" />
+			<g:VerticalPanel ui:field="answer">
+			</g:VerticalPanel>
+			<g:HorizontalPanel>
+				<g:Button text="◀" ui:field="previous" />
+				<!-- <span> </span> -->
+				
+				<g:Button text="▶" ui:field="next" />
+			</g:HorizontalPanel>
 		</div>
-		<g:LayoutPanel width="450px" height="300px">
-	
-			<g:layer left="150px" width="125px" top="117px" height="24px">
-				<g:Button ui:field="show" text="Show" />
-			</g:layer>
-			<g:layer left="0px" width="79px" top="276px" height="24px">
-				<g:Button text="Previous" ui:field="previous" />
-			</g:layer>
-			<g:layer left="371px" width="79px" top="276px" height="24px">
-				<g:Button text="Next" ui:field="next" />
-			</g:layer>
-		</g:LayoutPanel>
+
 	</g:HTMLPanel>
 </ui:UiBinder> 
