@@ -1,16 +1,28 @@
 #summary One-sentence summary of this page.
-#labels Featured
+#labels Featured,Phase-Requirements
 
 = Introduction =
 
-Describes the project features.
+Describes the project vision and requirements.
 
+= Vision =
+ Do an application like project with the purpose to learn Chinese characters.
 
-= Details =
+= Elements =
 
 The forecast elements of this project are:
- * A welcome page
+ * A [WelcomePage welcome page]
  * A flashcard learner
  * A type guesser
  * A dictionary
  * ...
+
+= Quality attributes =
+
+ * Lean
+ * Help instruction
+ * Easy to use
+
+= Architecture =
+
+A JavaScript application with limited sever access.
