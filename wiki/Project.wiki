@@ -9,8 +9,7 @@ Describes the project feature
 = Details =
 
 The forecast elements of this project are:
-
-* A flashcard learner
-* A type guesser
-* A dictionary
-* ...
+ * A flashcard learner
+ * A type guesser
+ * A dictionary
+ * ...
