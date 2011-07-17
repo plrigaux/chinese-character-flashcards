@@ -18,7 +18,7 @@ public class CardData extends JavaScriptObject {
 		return this.d;
 	}-*/;
 
-	static class CharDefinition extends JavaScriptObject {
+	static public class  CharDefinition extends JavaScriptObject {
 		protected CharDefinition() {
 
 		}
