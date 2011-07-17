@@ -3,12 +3,13 @@
 
 = Introduction =
 
-Describes the project feature
+Describes the project features.
 
 
 = Details =
 
 The forecast elements of this project are:
+ * A welcome page
  * A flashcard learner
  * A type guesser
  * A dictionary
