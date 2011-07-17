@@ -53,7 +53,9 @@
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 					<appEngineVersion>1.5.1</appEngineVersion>
 					<port>8088</port>
-
+<warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
+<module>com.plr.flashcard.Flashcard</module>
+<extraJvmArg>-Xdebug -Xrunjdwp:transport=dt_socket,address=127.0.0.1:33333</extraJvmArg>
 				</configuration>
 			</plugin>
 			<!-- <plugin> -->
