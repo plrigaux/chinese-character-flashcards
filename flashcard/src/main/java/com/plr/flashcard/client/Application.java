@@ -39,13 +39,9 @@ public class Application implements EntryPoint, ValueChangeHandler<String> {
 
 		rootPanel.add(sp);
 
-		
-
 		// final MyCard mc = new MyCard(dataControler);
 
-		Welcome w = new Welcome();
-
-		vp.add(w);
+		History.newItem("");
 	}
 
 	@Override
@@ -59,12 +55,12 @@ public class Application implements EntryPoint, ValueChangeHandler<String> {
 			vp.add(mc);
 		} else if ("dictionnary".equals(value)) {
 			vp.clear();
-			CharDictionnary w = new CharDictionnary();
-			vp.add(w);
+			CharDictionnary charDictionnary = new CharDictionnary();
+			vp.add(charDictionnary);
 		} else {
 			vp.clear();
-			Welcome w = new Welcome();
-			vp.add(w);
+			Welcome welcome = new Welcome();
+			vp.add(welcome);
 		}
 
 	}
