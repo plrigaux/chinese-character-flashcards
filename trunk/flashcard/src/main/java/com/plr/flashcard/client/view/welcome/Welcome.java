@@ -16,8 +16,6 @@ public class Welcome extends Composite {
 
 	public Welcome() {
 		initWidget(uiBinder.createAndBindUi(this));
-		
-	
 	}
 
 	@UiField
