@@ -31,6 +31,9 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.plr.flashcard.client.CardData;
+import com.plr.flashcard.client.DataControler;
+import com.plr.flashcard.client.ZhongWenCharacter;
 
 /**
  * Example file.
@@ -61,35 +64,33 @@ public class CwCellList extends ContentWidget {
 	 * The Cell used to render a {@link ContactInfo}.
 	 */
 
-	static class ContactCell extends AbstractCell<ContactInfo> {
+	static class CharacterCell extends AbstractCell<ZhongWenCharacter> {
 
 		/**
 		 * The html of the image used for contacts.
 		 */
 
-		public ContactCell() {
+		public CharacterCell() {
 		}
 
 		@Override
-		public void render(Context context, ContactInfo value, SafeHtmlBuilder sb) {
+		public void render(Context context, ZhongWenCharacter value, SafeHtmlBuilder sb) {
 			// Value can be null, so do a null check..
 			if (value == null) {
 				return;
 			}
 
-			sb.appendHtmlConstant("<table>");
-
-			// Add the contact image.
-			sb.appendHtmlConstant("<tr><td rowspan='3'>");
-//			sb.appendHtmlConstant(imageHtml);
-			sb.appendHtmlConstant("</td>");
-
-			// Add the name and address.
-			sb.appendHtmlConstant("<td style='font-size:95%;'>");
-			sb.appendEscaped(value.getFullName());
-			sb.appendHtmlConstant("</td></tr><tr><td>");
-			sb.appendEscaped(value.getAddress());
-			sb.appendHtmlConstant("</td></tr></table>");
+//			sb.appendHtmlConstant("<table>");
+//
+//			// Add the contact image.
+//			sb.appendHtmlConstant("<tr><td>");
+//			sb.appendEscaped(""+value.getId());
+//			sb.appendHtmlConstant("</td><td>");
+			sb.appendHtmlConstant(" ");
+			sb.appendEscaped(value.getSimplifiedCharacter());
+			sb.appendHtmlConstant(" ");
+			
+//			sb.appendHtmlConstant("</td></tr></table>");
 		}
 	}
 
@@ -125,7 +126,7 @@ public class CwCellList extends ContentWidget {
 	 * The CellList.
 	 */
 
-	private CellList<ContactInfo> cellList;
+	private CellList<ZhongWenCharacter> cellList;
 
 	/**
 	 * Constructor.
@@ -147,25 +148,27 @@ public class CwCellList extends ContentWidget {
 //		Images images = GWT.create(Images.class);
 
 		// Create a CellList.
-		ContactCell contactCell = new ContactCell();
+		CharacterCell contactCell = new CharacterCell();
 
 		// Set a key provider that provides a unique key for each contact. If
 		// key is
 		// used to identify contacts when fields (such as the name and address)
 		// change.
-		cellList = new CellList<ContactInfo>(contactCell, ContactInfo.KEY_PROVIDER);
+		cellList = new CellList<ZhongWenCharacter>(contactCell, CardData.KEY_PROVIDER);
 		cellList.setPageSize(30);
 		cellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
 		cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
 		// Add a selection model so we can select cells.
-		final SingleSelectionModel<ContactInfo> selectionModel = new SingleSelectionModel<ContactInfo>(
-				ContactInfo.KEY_PROVIDER);
+		final SingleSelectionModel<ZhongWenCharacter> selectionModel = new SingleSelectionModel<ZhongWenCharacter>(
+				CardData.KEY_PROVIDER);
 		cellList.setSelectionModel(selectionModel);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			
 			public void onSelectionChange(SelectionChangeEvent event) {
 				contactForm.setContact(selectionModel.getSelectedObject());
 			}
+			
 		});
 
 		// Create the UiBinder.
@@ -173,7 +176,7 @@ public class CwCellList extends ContentWidget {
 		Widget widget = uiBinder.createAndBindUi(this);
 
 		// Add the CellList to the data provider in the database.
-		ContactDatabase.get().addDataDisplay(cellList);
+		DataControler.get().addDataDisplay(cellList);
 
 		// Set the cellList as the display of the pagers. This example has two
 		// pagers. pagerPanel is a scrollable pager that extends the range when
@@ -187,7 +190,7 @@ public class CwCellList extends ContentWidget {
 		// Handle events from the generate button.
 		generateButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				ContactDatabase.get().generateContacts(50);
+				DataControler.get().generateContacts(50);
 			}
 		});
 

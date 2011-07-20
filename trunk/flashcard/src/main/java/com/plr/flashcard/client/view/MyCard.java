@@ -31,16 +31,14 @@ public class MyCard extends Composite {
 	@UiField
 	VerticalPanel answer;
 
-	private final DataControler dataControler;
 
 	interface MyCardUiBinder extends UiBinder<Widget, MyCard> {
 	}
 
-	public MyCard(DataControler dataControler) {
+	public MyCard() {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		character.addStyleName("chararter");
-		this.dataControler = dataControler;
 	}
 
 	public void setText(String text) {
@@ -54,7 +52,7 @@ public class MyCard extends Composite {
 	@UiHandler("show")
 	void onShowClick(ClickEvent event) {
 
-		CardData cardData = dataControler.current();
+		CardData cardData = DataControler.get().current();
 		answer.clear();
 		
 		JsArray<CharDefinition> jsArray = cardData.getDefinitions();
@@ -103,13 +101,13 @@ public class MyCard extends Composite {
 	@UiHandler("previous")
 	void onPreviousClick(ClickEvent event) {
 		answer.clear();
-		character.setText(dataControler.previous().getSimplifiedCharacter());
+		character.setText(DataControler.get().previous().getSimplifiedCharacter());
 	}
 
 	@UiHandler("next")
 	void onNextClick(ClickEvent event) {
 		answer.clear();
-		character.setText(dataControler.next().getSimplifiedCharacter());
+		character.setText(DataControler.get().next().getSimplifiedCharacter());
 	}
 
 }

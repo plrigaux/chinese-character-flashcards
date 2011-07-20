@@ -1,18 +1,29 @@
 package com.plr.flashcard.client;
 
+import java.util.List;
+
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.view.client.HasData;
+import com.google.gwt.view.client.ListDataProvider;
 
 public class DataControler {
+	private static DataControler instance = null;
 	private JsArray<CardData> cardDatas = null;
 	int index = 0;
 
-	public DataControler() {
+	/**
+	 * The provider that holds the list of contacts in the database.
+	 */
+	private ListDataProvider<ZhongWenCharacter> dataProvider = new ListDataProvider<ZhongWenCharacter>();
+	
+	private DataControler() {
 		final String resource = "data/out-1.json";
 		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, resource);
 
@@ -32,6 +43,11 @@ public class DataControler {
 
 				cardDatas = buildCardData(jsonString);
 
+				List<ZhongWenCharacter> contacts = dataProvider.getList();
+				
+				for(int i = 0; i < cardDatas.length(); i++) {
+					contacts.add(cardDatas.get(i));
+				}
 			}
 
 			@Override
@@ -48,6 +64,17 @@ public class DataControler {
 		}
 
 	}
+	
+	public static DataControler get() {
+		if (instance  == null) {
+			instance = new DataControler();
+		}
+		return instance;
+		
+		
+		
+	}
+
 
 	public static final native JsArray<CardData> buildCardData(String json) /*-{
 																			return eval('(' + json + ')');
@@ -66,5 +93,21 @@ public class DataControler {
 	public CardData current() {
 
 		return cardDatas.get(index);
+	}
+
+	public void generateContacts(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addDataDisplay(HasData<ZhongWenCharacter> display) {
+		dataProvider.addDataDisplay(display);
+	}
+	
+	/**
+	 * Refresh all displays.
+	 */
+	public void refreshDisplays() {
+		dataProvider.refresh();
 	}
 }

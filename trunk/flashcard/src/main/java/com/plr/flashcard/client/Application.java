@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.plr.flashcard.client.view.MyCard;
-import com.plr.flashcard.client.view.dictionnary.CharDictionnary;
+import com.plr.flashcard.client.view.dictionnary.CwCellList;
 import com.plr.flashcard.client.view.welcome.Welcome;
 
 /**
@@ -20,8 +20,7 @@ public class Application implements EntryPoint, ValueChangeHandler<String> {
 	// Logger.getLogger(Application.class.getName());
 
 	final VerticalPanel vp = new VerticalPanel();
-	final DataControler dataControler = new DataControler();
-
+	
 	@Override
 	public void onModuleLoad() {
 
@@ -36,7 +35,9 @@ public class Application implements EntryPoint, ValueChangeHandler<String> {
 
 		sp.add(vp);
 		// vp.add(new Label("Test"));
-
+		
+		sp.add(new CwCellList());
+		
 		rootPanel.add(sp);
 
 		// final MyCard mc = new MyCard(dataControler);
@@ -51,11 +52,11 @@ public class Application implements EntryPoint, ValueChangeHandler<String> {
 
 		if ("flash".equals(value)) {
 			vp.clear();
-			 MyCard mc = new MyCard(dataControler);
+			 MyCard mc = new MyCard();
 			vp.add(mc);
 		} else if ("dictionnary".equals(value)) {
 			vp.clear();
-			CharDictionnary charDictionnary = new CharDictionnary();
+			CwCellList charDictionnary = new CwCellList();
 			vp.add(charDictionnary);
 		} else {
 			vp.clear();
