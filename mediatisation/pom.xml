@@ -32,41 +32,40 @@
 			<!-- </configuration> -->
 			<!-- </plugin> -->
 
-<!-- 			<plugin> -->
-<!-- 				<artifactId>maven-antrun-plugin</artifactId> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-						
-<!-- 						<configuration> -->
-<!-- 							<tasks> -->
-<!-- <echo message="plugin classpath:  ${plugin_classpath}"/> -->
-<!-- 								<copy todir="war"> -->
-<!-- 									<fileset -->
-<!-- 										dir="${project.build.directory}/${project.build.finalName}" /> -->
-<!-- 								</copy> -->
+			<!-- <plugin> -->
+			<!-- <artifactId>maven-antrun-plugin</artifactId> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
 
-<!-- 							</tasks> -->
-<!-- 						</configuration> -->
-<!-- 						<goals> -->
-<!-- 							<goal>run</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
-			
-			
+			<!-- <configuration> -->
+			<!-- <tasks> -->
+			<!-- <echo message="plugin classpath: ${plugin_classpath}"/> -->
+			<!-- <copy todir="war"> -->
+			<!-- <fileset -->
+			<!-- dir="${project.build.directory}/${project.build.finalName}" /> -->
+			<!-- </copy> -->
+
+			<!-- </tasks> -->
+			<!-- </configuration> -->
+			<!-- <goals> -->
+			<!-- <goal>run</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
-				
+
 				<configuration>
 					<tasks>
 						<echo message="Copy files " />
-						
-														<copy todir="war">
-									<fileset
-										dir="${project.build.directory}/${project.build.finalName}" />
-								</copy>
+
+						<copy todir="war" overwrite="true">
+							<fileset dir="src/main/webapp" />
+						</copy>
 					</tasks>
 				</configuration>
 			</plugin>

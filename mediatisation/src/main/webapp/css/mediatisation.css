@@ -1,9 +1,30 @@
 IMG.accueil {
 	width: 200px;
-	height: auto;
+	height: 263px;
+/* 	height: auto; */
+	border: 2px solid gray;
+}
+
+A IMG.accueil {
+	margin: 10px;
+	text-decoration: none;
 }
 
 IMG.inpage {
 	width: 200px;
 	height: auto;
+}
+
+body { /* 	margin: 50px 0px; */
+	padding: 0px;
+	text-align: center;
+}
+
+#Content {
+	width: 800px;
+	margin: 0px auto;
+	text-align: left;
+	padding: 15px;
+	/* 	border: 1px dashed #333; */
+	/* 	background-color: #eee; */
 }
