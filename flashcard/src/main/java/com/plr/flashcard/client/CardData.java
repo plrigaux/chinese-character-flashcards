@@ -68,4 +68,14 @@ public class CardData extends JavaScriptObject implements ZhongWenCharacter {
 			return 5;
 		}
 	}
+
+	@Override
+	public final int definitionCount() {
+		return getDefinitions().length();
+	}
+
+	@Override
+	public final CharDefinition getDefinition(int j) {
+		return getDefinitions().get(j);
+	}
 }
