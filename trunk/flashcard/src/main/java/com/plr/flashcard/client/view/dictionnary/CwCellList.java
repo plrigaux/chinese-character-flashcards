@@ -18,8 +18,6 @@ package com.plr.flashcard.client.view.dictionnary;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -27,7 +25,6 @@ import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
@@ -56,9 +53,9 @@ public class CwCellList extends ContentWidget {
 	 * The images used for this example.
 	 */
 
-//	static interface Images extends ClientBundle {
-//		ImageResource contact();
-//	}
+	// static interface Images extends ClientBundle {
+	// ImageResource contact();
+	// }
 
 	/**
 	 * The Cell used to render a {@link ContactInfo}.
@@ -80,17 +77,17 @@ public class CwCellList extends ContentWidget {
 				return;
 			}
 
-//			sb.appendHtmlConstant("<table>");
-//
-//			// Add the contact image.
-//			sb.appendHtmlConstant("<tr><td>");
-//			sb.appendEscaped(""+value.getId());
-//			sb.appendHtmlConstant("</td><td>");
-			sb.appendHtmlConstant(" ");
+			// sb.appendHtmlConstant("<table>");
+			//
+			// // Add the contact image.
+			// sb.appendHtmlConstant("<tr><td>");
+			// sb.appendEscaped(""+value.getId());
+			// sb.appendHtmlConstant("</td><td>");
+			sb.appendHtmlConstant("<span style=\"font-size: large;\">");
 			sb.appendEscaped(value.getSimplifiedCharacter());
-			sb.appendHtmlConstant(" ");
-			
-//			sb.appendHtmlConstant("</td></tr></table>");
+			sb.appendHtmlConstant("</span>");
+
+			// sb.appendHtmlConstant("</td></tr></table>");
 		}
 	}
 
@@ -100,13 +97,6 @@ public class CwCellList extends ContentWidget {
 
 	@UiField
 	ContactInfoForm contactForm;
-
-	/**
-	 * The button used to generate more contacts.
-	 */
-
-	@UiField
-	Button generateButton;
 
 	/**
 	 * The pager used to change the range of data.
@@ -145,7 +135,7 @@ public class CwCellList extends ContentWidget {
 
 	@Override
 	public Widget onInitialize() {
-//		Images images = GWT.create(Images.class);
+		// Images images = GWT.create(Images.class);
 
 		// Create a CellList.
 		CharacterCell contactCell = new CharacterCell();
@@ -164,11 +154,11 @@ public class CwCellList extends ContentWidget {
 				CardData.KEY_PROVIDER);
 		cellList.setSelectionModel(selectionModel);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-			
+
 			public void onSelectionChange(SelectionChangeEvent event) {
-				contactForm.setContact(selectionModel.getSelectedObject());
+				contactForm.setCharater(selectionModel.getSelectedObject());
 			}
-			
+
 		});
 
 		// Create the UiBinder.
@@ -186,13 +176,6 @@ public class CwCellList extends ContentWidget {
 		// current range, but does not have any controls to change the range.
 		pagerPanel.setDisplay(cellList);
 		rangeLabelPager.setDisplay(cellList);
-
-		// Handle events from the generate button.
-		generateButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				DataControler.get().generateContacts(50);
-			}
-		});
 
 		return widget;
 	}
