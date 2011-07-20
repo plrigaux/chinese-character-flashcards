@@ -29,182 +29,9 @@ import com.google.gwt.view.client.ProvidesKey;
  */
 public class ContactDatabase {
 
-	/**
-	 * A contact category.
-	 */
-	public static class Category {
 
-		private final String displayName;
 
-		private Category(String displayName) {
-			this.displayName = displayName;
-		}
-
-		public String getDisplayName() {
-			return displayName;
-		}
-	}
-
-	/**
-	 * Information about a contact.
-	 */
-	public static class ContactInfo implements Comparable<ContactInfo> {
-
-		/**
-		 * The key provider that provides the unique ID of a contact.
-		 */
-		public static final ProvidesKey<ContactInfo> KEY_PROVIDER = new ProvidesKey<ContactInfo>() {
-			public Object getKey(ContactInfo item) {
-				return item == null ? null : item.getId();
-			}
-		};
-
-		private static int nextId = 0;
-
-		private String address;
-		private Date birthday;
-		private Category category;
-		private String firstName;
-		private final int id;
-		private String lastName;
-
-		public ContactInfo(Category category) {
-			this.id = nextId;
-			nextId++;
-			setCategory(category);
-		}
-
-		public int compareTo(ContactInfo o) {
-			return (o == null || o.firstName == null) ? -1 : -o.firstName.compareTo(firstName);
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (o instanceof ContactInfo) {
-				return id == ((ContactInfo) o).id;
-			}
-			return false;
-		}
-
-		/**
-		 * @return the contact's address
-		 */
-		public String getAddress() {
-			return address;
-		}
-
-		/**
-		 * @return the contact's age
-		 */
-		@SuppressWarnings("deprecation")
-		public int getAge() {
-			Date today = new Date();
-			int age = today.getYear() - birthday.getYear();
-			if (today.getMonth() > birthday.getMonth()
-					|| (today.getMonth() == birthday.getMonth() && today.getDate() > birthday.getDate())) {
-				age--;
-			}
-			return age;
-		}
-
-		/**
-		 * @return the contact's birthday
-		 */
-		public Date getBirthday() {
-			return birthday;
-		}
-
-		/**
-		 * @return the category of the conteact
-		 */
-		public Category getCategory() {
-			return category;
-		}
-
-		/**
-		 * @return the contact's firstName
-		 */
-		public String getFirstName() {
-			return firstName;
-		}
-
-		/**
-		 * @return the contact's full name
-		 */
-		public final String getFullName() {
-			return firstName + " " + lastName;
-		}
-
-		/**
-		 * @return the unique ID of the contact
-		 */
-		public int getId() {
-			return this.id;
-		}
-
-		/**
-		 * @return the contact's lastName
-		 */
-		public String getLastName() {
-			return lastName;
-		}
-
-		@Override
-		public int hashCode() {
-			return id;
-		}
-
-		/**
-		 * Set the contact's address.
-		 * 
-		 * @param address
-		 *            the address
-		 */
-		public void setAddress(String address) {
-			this.address = address;
-		}
-
-		/**
-		 * Set the contact's birthday.
-		 * 
-		 * @param birthday
-		 *            the birthday
-		 */
-		public void setBirthday(Date birthday) {
-			this.birthday = birthday;
-		}
-
-		/**
-		 * Set the contact's category.
-		 * 
-		 * @param category
-		 *            the category to set
-		 */
-		public void setCategory(Category category) {
-			assert category != null : "category cannot be null";
-			this.category = category;
-		}
-
-		/**
-		 * Set the contact's first name.
-		 * 
-		 * @param firstName
-		 *            the firstName to set
-		 */
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-
-		/**
-		 * Set the contact's last name.
-		 * 
-		 * @param lastName
-		 *            the lastName to set
-		 */
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
-		}
-	}
+	
 
 	/**
 	 * The constants used in this Content Widget.
@@ -293,19 +120,11 @@ public class ContactDatabase {
 	 */
 	private ListDataProvider<ContactInfo> dataProvider = new ListDataProvider<ContactInfo>();
 
-	private final Category[] categories;
 
 	/**
 	 * Construct a new contact database.
 	 */
 	private ContactDatabase() {
-		// Initialize the categories.
-		
-		String[] catNames = {"Cat A", "Cat B", "Cat C"};
-		categories = new Category[catNames.length];
-		for (int i = 0; i < catNames.length; i++) {
-			categories[i] = new Category(catNames[i]);
-		}
 
 		// Generate initial data.
 		generateContacts(250);
@@ -353,51 +172,25 @@ public class ContactDatabase {
 		return dataProvider;
 	}
 
-	/**
-	 * Get the categories in the database.
-	 * 
-	 * @return the categories in the database
-	 */
-	public Category[] queryCategories() {
-		return categories;
-	}
+	
+//	/**
+//	 * Query all contacts for the specified category.
+//	 * 
+//	 * @param category
+//	 *            the category
+//	 * @return the list of contacts in the category
+//	 */
+//	public List<ContactInfo> queryContactsByCategory(Category category) {
+//		List<ContactInfo> matches = new ArrayList<ContactInfo>();
+//		for (ContactInfo contact : dataProvider.getList()) {
+//			if (contact.getCategory() == category) {
+//				matches.add(contact);
+//			}
+//		}
+//		return matches;
+//	}
 
-	/**
-	 * Query all contacts for the specified category.
-	 * 
-	 * @param category
-	 *            the category
-	 * @return the list of contacts in the category
-	 */
-	public List<ContactInfo> queryContactsByCategory(Category category) {
-		List<ContactInfo> matches = new ArrayList<ContactInfo>();
-		for (ContactInfo contact : dataProvider.getList()) {
-			if (contact.getCategory() == category) {
-				matches.add(contact);
-			}
-		}
-		return matches;
-	}
-
-	/**
-	 * Query all contacts for the specified category that begin with the
-	 * specified first name prefix.
-	 * 
-	 * @param category
-	 *            the category
-	 * @param firstNamePrefix
-	 *            the prefix of the first name
-	 * @return the list of contacts in the category
-	 */
-	public List<ContactInfo> queryContactsByCategoryAndFirstName(Category category, String firstNamePrefix) {
-		List<ContactInfo> matches = new ArrayList<ContactInfo>();
-		for (ContactInfo contact : dataProvider.getList()) {
-			if (contact.getCategory() == category && contact.getFirstName().startsWith(firstNamePrefix)) {
-				matches.add(contact);
-			}
-		}
-		return matches;
-	}
+	
 
 	/**
 	 * Refresh all displays.
@@ -413,7 +206,7 @@ public class ContactDatabase {
 	 */
 	@SuppressWarnings("deprecation")
 	private ContactInfo createContactInfo() {
-		ContactInfo contact = new ContactInfo(nextValue(categories));
+		ContactInfo contact = new ContactInfo();
 		contact.setLastName(nextValue(LAST_NAMES));
 		if (Random.nextBoolean()) {
 			// Male.
