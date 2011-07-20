@@ -20,8 +20,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -29,12 +27,10 @@ import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
-import com.plr.flashcard.client.view.dictionnary.ContactDatabase.ContactInfo;
 
 /**
  * Example file.
@@ -49,21 +45,17 @@ public class CwCellList extends ContentWidget {
 	interface Binder extends UiBinder<Widget, CwCellList> {
 	}
 
-	
-	
 	/**
 	 * The constants used in this Content Widget.
 	 */
-
-
 
 	/**
 	 * The images used for this example.
 	 */
 
-	static interface Images extends ClientBundle {
-		ImageResource contact();
-	}
+//	static interface Images extends ClientBundle {
+//		ImageResource contact();
+//	}
 
 	/**
 	 * The Cell used to render a {@link ContactInfo}.
@@ -74,10 +66,8 @@ public class CwCellList extends ContentWidget {
 		/**
 		 * The html of the image used for contacts.
 		 */
-		private final String imageHtml;
 
-		public ContactCell(ImageResource image) {
-			this.imageHtml = AbstractImagePrototype.create(image).getHTML();
+		public ContactCell() {
 		}
 
 		@Override
@@ -91,7 +81,7 @@ public class CwCellList extends ContentWidget {
 
 			// Add the contact image.
 			sb.appendHtmlConstant("<tr><td rowspan='3'>");
-			sb.appendHtmlConstant(imageHtml);
+//			sb.appendHtmlConstant(imageHtml);
 			sb.appendHtmlConstant("</td>");
 
 			// Add the name and address.
@@ -144,35 +134,33 @@ public class CwCellList extends ContentWidget {
 	 *            the constants
 	 */
 	public CwCellList() {
-		super("cwCellListName", "sdf", false, "ContactDatabase.java", "CwCellList.ui.xml",
-				"ContactInfoForm.java", "ShowMorePagerPanel.java", "RangeLabelPager.java");
+		super("cwCellListName", "sdf", false, "ContactDatabase.java", "CwCellList.ui.xml", "ContactInfoForm.java",
+				"ShowMorePagerPanel.java", "RangeLabelPager.java");
 	}
 
 	/**
 	 * Initialize this example.
 	 */
 
-	
-	
 	@Override
 	public Widget onInitialize() {
-		Images images = GWT.create(Images.class);
+//		Images images = GWT.create(Images.class);
 
 		// Create a CellList.
-		ContactCell contactCell = new ContactCell(images.contact());
+		ContactCell contactCell = new ContactCell();
 
 		// Set a key provider that provides a unique key for each contact. If
 		// key is
 		// used to identify contacts when fields (such as the name and address)
 		// change.
-		cellList = new CellList<ContactInfo>(contactCell, ContactDatabase.ContactInfo.KEY_PROVIDER);
+		cellList = new CellList<ContactInfo>(contactCell, ContactInfo.KEY_PROVIDER);
 		cellList.setPageSize(30);
 		cellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
 		cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
 		// Add a selection model so we can select cells.
 		final SingleSelectionModel<ContactInfo> selectionModel = new SingleSelectionModel<ContactInfo>(
-				ContactDatabase.ContactInfo.KEY_PROVIDER);
+				ContactInfo.KEY_PROVIDER);
 		cellList.setSelectionModel(selectionModel);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 			public void onSelectionChange(SelectionChangeEvent event) {
