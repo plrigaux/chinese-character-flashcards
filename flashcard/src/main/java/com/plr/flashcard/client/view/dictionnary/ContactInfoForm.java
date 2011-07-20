@@ -25,6 +25,8 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
+import com.plr.flashcard.client.ZhongWenCharacter;
+
 /**
  * A form used for editing contacts.
  */
@@ -36,41 +38,29 @@ public class ContactInfoForm extends Composite {
 	}
 
 	@UiField
-	TextArea addressBox;
-	 @UiField
-	 DateBox birthdayBox;
-	
-	@UiField
 	TextBox firstNameBox;
 	@UiField
 	TextBox lastNameBox;
-	
-	private ContactInfo contactInfo;
+
+//	private ZhongWenCharacter contactInfo;
 
 	public ContactInfoForm() {
 		initWidget(uiBinder.createAndBindUi(this));
-		 DateTimeFormat dateFormat = DateTimeFormat.getFormat(
-		 PredefinedFormat.DATE_LONG);
-		
-		 birthdayBox.setFormat(new DateBox.DefaultFormat(dateFormat));
 
 		// Add the categories to the category box.
-		
+
 		// Initialize the contact to null.
 		setContact(null);
 
-		
 	}
 
-	public void setContact(ContactInfo contact) {
-		this.contactInfo = contact;
-//		updateButton.setEnabled(contact != null);
+	public void setContact(ZhongWenCharacter contact) {
+//		this.contactInfo = contact;
+		// updateButton.setEnabled(contact != null);
 		if (contact != null) {
-			firstNameBox.setText(contact.getFirstName());
-			lastNameBox.setText(contact.getLastName());
-			addressBox.setText(contact.getAddress());
-			// birthdayBox.setValue(contact.getBirthday());
-			
+			firstNameBox.setText("" + contact.getId());
+			lastNameBox.setText(contact.getSimplifiedCharacter());
+
 		}
 	}
 }
