@@ -15,6 +15,12 @@
  */
 package com.plr.flashcard.client.view.dictionnary;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -28,13 +34,8 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.LazyPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -111,7 +112,7 @@ public abstract class ContentWidget extends LazyPanel implements HasValueChangeH
 	/**
 	 * The view that holds the name, description, and example.
 	 */
-	private ContentWidgetView view;
+	private SimplePanel view;
 
 	/**
 	 * Whether the demo widget has been initialized.
@@ -304,9 +305,7 @@ public abstract class ContentWidget extends LazyPanel implements HasValueChangeH
 	 */
 	@Override
 	protected final Widget createWidget() {
-		view = new ContentWidgetView();
-		view.setName(getName());
-		view.setDescription(getDescription());
+		view = new SimplePanel();
 		return view;
 	}
 
@@ -352,7 +351,8 @@ public abstract class ContentWidget extends LazyPanel implements HasValueChangeH
 
 				Widget widget = result;
 				if (widget != null) {
-					view.setExample(widget);
+					view.clear();
+					view.add(widget);
 				}
 				onInitializeComplete();
 			}

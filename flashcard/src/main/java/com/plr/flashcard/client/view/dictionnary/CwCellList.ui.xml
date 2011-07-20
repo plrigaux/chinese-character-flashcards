@@ -8,7 +8,7 @@
   <ui:style>
     .scrollable {
       height: 400px;
-      width: 250px;
+      width: 50px;
       border: 1px solid #ccc;
       text-align: left;
     }
@@ -35,13 +35,7 @@
           valign='top'
           align='center'>
           <s:ContactInfoForm
-            ui:field='contactForm' />
-          <br />
-          <g:Button
-            ui:field='generateButton'>
-            <ui:msg
-              key='cwCellListGenerateButton'>Generate 50 Contacts</ui:msg>
-          </g:Button>
+            ui:field='contactForm' />   
         </td>
       </tr>
       <tr>
