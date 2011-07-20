@@ -1,5 +1,3 @@
-package com.plr.flashcard.client.view.dictionnary;
-
 /*
  * Copyright 2010 Google Inc.
  *
@@ -15,8 +13,8 @@ package com.plr.flashcard.client.view.dictionnary;
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.plr.flashcard.client.view.dictionnary;
 
-import com.google.gwt.i18n.client.HasDirection;
 import com.google.gwt.user.cellview.client.AbstractPager;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.view.client.HasRows;
@@ -46,7 +44,6 @@ public class RangeLabelPager extends AbstractPager {
     Range range = display.getVisibleRange();
     int start = range.getStart();
     int end = start + range.getLength();
-    label.setText(start + " - " + end + " : " + display.getRowCount(),
-        HasDirection.Direction.LTR);
+    label.setText(start + " - " + end + " : " + display.getRowCount());
   }
 }

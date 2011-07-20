@@ -1,5 +1,3 @@
-package com.plr.flashcard.client.view.dictionnary;
-
 /*
  * Copyright 2010 Google Inc.
  *
@@ -15,6 +13,7 @@ package com.plr.flashcard.client.view.dictionnary;
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.plr.flashcard.client.view.dictionnary;
 
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
