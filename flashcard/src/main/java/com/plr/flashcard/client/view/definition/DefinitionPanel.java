@@ -13,37 +13,35 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.plr.flashcard.client.view.dictionnary;
+package com.plr.flashcard.client.view.definition;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.plr.flashcard.client.CardData.CharDefinition;
 import com.plr.flashcard.client.ZhongWenCharacter;
-import com.plr.flashcard.client.view.definition.DefinitionPanel;
 
 /**
  * A form used for editing contacts.
  */
-public class ContactInfoForm extends Composite {
+public class DefinitionPanel extends Composite {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
-	interface Binder extends UiBinder<Widget, ContactInfoForm> {
+	interface Binder extends UiBinder<Widget, DefinitionPanel> {
 	}
 
 	@UiField
-	Label idLabel;
-	@UiField
-	Label chararterLabel;
-	@UiField
-	DefinitionPanel definitionPanel;
+	SimplePanel simplePanel;
 
 //	private ZhongWenCharacter contactInfo;
 
-	public ContactInfoForm() {
+	public DefinitionPanel() {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		// Add the categories to the category box.
@@ -57,10 +55,52 @@ public class ContactInfoForm extends Composite {
 //		this.contactInfo = contact;
 		// updateButton.setEnabled(contact != null);
 		if (zwChar != null) {
-			idLabel.setText("" + zwChar.getId());
-			chararterLabel.setText(zwChar.getSimplifiedCharacter());
-			
-			definitionPanel.setCharater(zwChar);
+					
+			FlexTable definitionTable = new FlexTable();
+			int row = 0;
+			for (int j = 0; j < zwChar.definitionCount(); j++) {
+				CharDefinition charDefinition = zwChar.getDefinition(j);
+
+				Label lp = new Label(charDefinition.getPinyin());
+				lp.addStyleName("pinyin");
+
+				int tone = charDefinition.getTone();
+
+				String toneStyle;
+				switch (tone) {
+				case 1:
+					toneStyle = "tone1";
+					break;
+				case 2:
+					toneStyle = "tone2";
+					break;
+				case 3:
+					toneStyle = "tone3";
+					break;
+				case 4:
+					toneStyle = "tone4";
+					break;
+				default:
+					toneStyle = "tone5";
+
+				}
+
+				lp.addStyleName(toneStyle);
+
+				definitionTable.setWidget(row, 0, lp);
+
+				for (int k = 0; k < charDefinition.getDefinition().length(); k++) {
+					definitionTable.setText(row++, 1, charDefinition.getDefinition().get(k));
+				}
+
+				simplePanel.clear();
+				simplePanel.add(definitionTable);
+			}
 		}
+	}
+
+	public void clear() {
+		simplePanel.clear();
+		
 	}
 }

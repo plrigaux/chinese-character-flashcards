@@ -8,15 +8,13 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.ListDataProvider;
 
 public class DataControler {
 	private static DataControler instance = null;
-	private JsArray<CardData> cardDatas = null;
-	int index = 0;
+	private int index = 0;
 
 	/**
 	 * The provider that holds the list of contacts in the database.
@@ -41,12 +39,12 @@ public class DataControler {
 
 				String jsonString = response.getText();
 
-				cardDatas = buildCardData(jsonString);
+				JsArray<CardData> cardDatas = buildCardData(jsonString);
 
-				List<ZhongWenCharacter> contacts = dataProvider.getList();
+				List<ZhongWenCharacter> zhongWenCharacters = dataProvider.getList();
 				
 				for(int i = 0; i < cardDatas.length(); i++) {
-					contacts.add(cardDatas.get(i));
+					zhongWenCharacters.add(cardDatas.get(i));
 				}
 			}
 
@@ -80,19 +78,18 @@ public class DataControler {
 																			return eval('(' + json + ')');
 																			}-*/;
 
-	public CardData next() {
-		index = index <= (cardDatas.length() - 2) ? index + 1 : cardDatas.length() - 1;
-		return cardDatas.get(index);
+	public ZhongWenCharacter next() {
+		index = index <= (dataProvider.getList().size() - 2) ? index + 1 : dataProvider.getList().size() - 1;
+		return dataProvider.getList().get(index);
 	}
 
-	public CardData previous() {
+	public ZhongWenCharacter previous() {
 		index = index <= 0 ? 0 : index - 1;
-		return cardDatas.get(index);
+		return  dataProvider.getList().get(index);
 	}
 
-	public CardData current() {
-
-		return cardDatas.get(index);
+	public ZhongWenCharacter current() {
+		return dataProvider.getList().get(index);
 	}
 
 	public void generateContacts(int i) {
