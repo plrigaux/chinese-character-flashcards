@@ -38,14 +38,6 @@ public class MyCard extends Composite {
 		character.addStyleName("chararter");
 	}
 
-	public void setText(String text) {
-		show.setText(text);
-	}
-
-	public String getText() {
-		return show.getText();
-	}
-
 	@UiHandler("show")
 	void onShowClick(ClickEvent event) {
 

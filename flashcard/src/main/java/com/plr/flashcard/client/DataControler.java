@@ -1,5 +1,6 @@
 package com.plr.flashcard.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.JsArray;
@@ -20,6 +21,10 @@ public class DataControler {
 	 * The provider that holds the list of contacts in the database.
 	 */
 	private ListDataProvider<ZhongWenCharacter> dataProvider = new ListDataProvider<ZhongWenCharacter>();
+	
+	private List<DataDependant> dataDependants = new ArrayList<DataDependant>();
+	
+	private boolean dataReady = false;
 	
 	private DataControler() {
 		final String resource = "data/out-1.json";
@@ -45,6 +50,12 @@ public class DataControler {
 				
 				for(int i = 0; i < cardDatas.length(); i++) {
 					zhongWenCharacters.add(cardDatas.get(i));
+				}
+				
+				dataReady = true;
+				 
+				for (DataDependant datadependant : dataDependants) {
+					datadependant.dataReady();
 				}
 			}
 
@@ -106,5 +117,12 @@ public class DataControler {
 	 */
 	public void refreshDisplays() {
 		dataProvider.refresh();
+	}
+	
+	public void register(DataDependant dataDependant) {
+		dataDependants.add(dataDependant);
+		if (dataReady) {
+			dataDependant.dataReady();
+		}
 	}
 }

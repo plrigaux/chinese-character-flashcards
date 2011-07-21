@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.plr.flashcard.client.view.MyCard;
 import com.plr.flashcard.client.view.dictionnary.CwCellList;
+import com.plr.flashcard.client.view.shishenme.ShiShenme;
 import com.plr.flashcard.client.view.welcome.Welcome;
 
 /**
@@ -36,7 +37,7 @@ public class Application implements EntryPoint, ValueChangeHandler<String> {
 		sp.add(vp);
 		// vp.add(new Label("Test"));
 		
-		sp.add(new CwCellList());
+		sp.add(new ShiShenme());
 		
 		rootPanel.add(sp);
 
@@ -57,6 +58,10 @@ public class Application implements EntryPoint, ValueChangeHandler<String> {
 		} else if ("dictionnary".equals(value)) {
 			vp.clear();
 			CwCellList charDictionnary = new CwCellList();
+			vp.add(charDictionnary);
+		} else if ("shiShenme".equals(value)) {
+			vp.clear();
+			ShiShenme charDictionnary = new ShiShenme();
 			vp.add(charDictionnary);
 		} else {
 			vp.clear();

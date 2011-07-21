@@ -92,7 +92,7 @@ public class DefinitionPanel extends Composite {
 				for (int k = 0; k < charDefinition.getDefinition().length(); k++) {
 					definitionTable.setText(row++, 1, charDefinition.getDefinition().get(k));
 				}
-
+				
 				simplePanel.clear();
 				simplePanel.add(definitionTable);
 			}
@@ -103,4 +103,8 @@ public class DefinitionPanel extends Composite {
 		simplePanel.clear();
 		
 	}
+	
+//	public void setVisible(boolean visible) {
+//		simplePanel.setVisible(visible);		
+//	}
 }
