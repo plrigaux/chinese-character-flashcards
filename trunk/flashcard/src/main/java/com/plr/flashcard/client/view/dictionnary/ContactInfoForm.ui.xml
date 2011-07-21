@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM 'http://dl.google.com/gwt/DTD/xhtml.ent'>
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'
+	xmlns:d='urn:import:com.plr.flashcard.client.view.definition'>
 
 	<ui:style>
 		.header {
@@ -50,7 +51,7 @@
 						Definition:
 					</td>
 					<td>
-						<g:SimplePanel ui:field='definitionPanel' />
+						<d:DefinitionPanel ui:field='definitionPanel' />
 					</td>
 				</tr>
 			</table>

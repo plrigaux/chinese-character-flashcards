@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:d='urn:import:com.plr.flashcard.client.view.definition'>
 	<ui:style>
 		.important {
 			font-weight: bold;
@@ -11,8 +12,7 @@
 		<div style="text-align:center">
 			<g:Label ui:field="character" />
 			<g:Button ui:field="show" text="Show" />
-			<g:VerticalPanel ui:field="answer">
-			</g:VerticalPanel>
+			<d:DefinitionPanel ui:field='definitionPanel' />
 			<g:HorizontalPanel width="100%">
 				<g:Button text="◀" ui:field="previous" />
 				<g:Button text="▶" ui:field="next" />
