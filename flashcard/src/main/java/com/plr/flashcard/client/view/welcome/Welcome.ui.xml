@@ -7,7 +7,6 @@
 		}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:Hyperlink ui:field="flashLink" targetHistoryToken="flash" text="flash" />
-		<g:Hyperlink ui:field="dictionnaryLink" targetHistoryToken="dictionnary" text="dictionnary" />
+		Welcome
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -18,11 +18,7 @@ public class Welcome extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	@UiField
-	Hyperlink dictionnaryLink;
-	
-	@UiField
-	Hyperlink flashLink;
+
 
 
 }
