@@ -1,0 +1,36 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+		
+		.centerPanel {
+			margin: 0px auto;
+			width: 480px;
+		}
+	</ui:style>
+	<g:HTMLPanel styleName='{style.centerPanel}'>
+		<g:MenuBar animationEnabled="true" ui:field="menuBar">
+			<g:MenuItem text="App">
+				<g:MenuBar vertical="true">
+					<g:MenuItem text="Home" ui:field="home" />
+					<g:MenuItem text="Flashcards"  ui:field="flashcards" />
+					<g:MenuItem text="Guess" ui:field="guesser" />
+					<g:MenuItem text="Char Browser" ui:field="browser" />
+				</g:MenuBar>
+			</g:MenuItem>
+			<g:MenuItem text="Help" ui:field="help" />
+			<g:MenuItem text="About" ui:field="about" />
+		</g:MenuBar>
+
+		<g:HTMLPanel ui:field="insidePanel">
+			<g:Hyperlink ui:field="flashLink" targetHistoryToken="flash"
+				text="flash" />
+			<g:Hyperlink ui:field="dictionnaryLink"
+				targetHistoryToken="dictionnary" text="dictionnary" />
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+
+</ui:UiBinder> 
