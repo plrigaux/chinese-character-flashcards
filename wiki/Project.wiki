@@ -13,8 +13,9 @@ Describes the project vision and requirements.
 The forecast elements of this project are:
  * A [WelcomePage welcome page]
  * A [Flashcard flashcard character learner]
- * A type guesser
+ * A [Guesser character guesser]
  * A dictionary
+ * A memory game (I don't know)
  * ...
 
 = Quality attributes =
