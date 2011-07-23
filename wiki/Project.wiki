@@ -25,4 +25,6 @@ The forecast elements of this project are:
 
 = Architecture =
 
-A JavaScript application with limited sever access.
+* A JavaScript application with limited sever access.
+* Use OAut or/and OpenId
+* Run on Appengine
