@@ -1,6 +1,7 @@
 package com.plr.flashcard.client.view.shishenme;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
@@ -11,12 +12,12 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.plr.flashcard.client.CardData.CharDefinition;
 import com.plr.flashcard.client.DataControler;
 import com.plr.flashcard.client.DataDependant;
+import com.plr.flashcard.client.Tone;
 import com.plr.flashcard.client.ZhongWenCharacter;
-import com.plr.flashcard.client.CardData.CharDefinition;
 import com.plr.flashcard.client.view.definition.DefinitionPanel;
 
 public class ShiShenme extends Composite implements DataDependant {
@@ -32,10 +33,12 @@ public class ShiShenme extends Composite implements DataDependant {
 
 	@UiField
 	TextBox answer;
-	
+
 	@UiField
-	VerticalPanel vPanel;
-	
+	DivElement result;
+
+	@UiField
+	Style style;
 
 	ZhongWenCharacter zwChar = null;
 
@@ -77,13 +80,43 @@ public class ShiShenme extends Composite implements DataDependant {
 				break;
 			}
 		}
-		
-		vPanel.clear();
+
+		StringBuilder displayAnswer = new StringBuilder();
+		displayAnswer.append("<p>Previous: ");
 		if (ok) {
-			vPanel.add(new Label("Good"));
+			displayAnswer.append("<span class='").append(style.ok()).append("'>对</span>");
 		} else {
-			vPanel.add(new Label("Wong"));
+			displayAnswer.append("<span class='").append(style.wrong()).append("'>错</span>");
 		}
+
+		displayAnswer.append("<br/>");
+		displayAnswer.append("<span class='" + style.askedChar() + "'>");
+		displayAnswer.append(zwChar.getSimplifiedCharacter());
+		displayAnswer.append("</span> is ");
+
+		int count = zwChar.definitionCount();
+		for (int i = 0; i < count; i++) {
+
+			if (i != 0) {
+				if (i + 1 == count) {
+					displayAnswer.append(" or ");
+				} else {
+					displayAnswer.append(", ");
+				}
+			}
+
+			CharDefinition charDefinition = zwChar.getDefinition(i);
+
+			String pinyin = charDefinition.getPinyin();
+			int tone = charDefinition.getTone();
+			String toneStyle = Tone.getTone(tone).getCssClass();
+
+			displayAnswer.append("<span class='").append(toneStyle).append("'>").append(pinyin).append("</span>");
+		}
+
+		displayAnswer.append(".</p>");
+		result.setInnerHTML(displayAnswer.toString());
+
 		nextChar();
 	}
 
@@ -94,10 +127,10 @@ public class ShiShenme extends Composite implements DataDependant {
 
 		character.setText(zwChar.getSimplifiedCharacter());
 	}
-	
+
 	public void nextChar() {
 		answer.setText("");
-		
+
 		zwChar = DataControler.get().next();
 
 		character.setText(zwChar.getSimplifiedCharacter());

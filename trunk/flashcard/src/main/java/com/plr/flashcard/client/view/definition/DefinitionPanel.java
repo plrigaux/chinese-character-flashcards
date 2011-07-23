@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.flashcard.client.CardData.CharDefinition;
+import com.plr.flashcard.client.Tone;
 import com.plr.flashcard.client.ZhongWenCharacter;
 
 /**
@@ -65,26 +66,9 @@ public class DefinitionPanel extends Composite {
 				lp.addStyleName("pinyin");
 
 				int tone = charDefinition.getTone();
-
-				String toneStyle;
-				switch (tone) {
-				case 1:
-					toneStyle = "tone1";
-					break;
-				case 2:
-					toneStyle = "tone2";
-					break;
-				case 3:
-					toneStyle = "tone3";
-					break;
-				case 4:
-					toneStyle = "tone4";
-					break;
-				default:
-					toneStyle = "tone5";
-
-				}
-
+				
+				String toneStyle = Tone.getTone(tone).getCssClass();
+				
 				lp.addStyleName(toneStyle);
 
 				definitionTable.setWidget(row, 0, lp);
