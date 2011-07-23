@@ -89,19 +89,19 @@ public class PinyinTest {
 //		testNormalise("yǔ", "yu", 3);
 //
 //	}
-
-	/**
-	 * @param string
-	 * @param string2
-	 * @param i
-	 */
-	private void testNormalise(String input, String expected, int tone) {
-		pinyin.extractTone(input);
-
-		String word = pinyin.getWord();
-
-		Assert.assertEquals("Word not good", expected, word);
-		Assert.assertEquals("Tone not good", tone, pinyin.getTone());
-
-	}
+//
+//	/**
+//	 * @param string
+//	 * @param string2
+//	 * @param i
+//	 */
+//	private void testNormalise(String input, String expected, int tone) {
+//		pinyin.extractTone(input);
+//
+//		String word = pinyin.getWord();
+//
+//		Assert.assertEquals("Word not good", expected, word);
+//		Assert.assertEquals("Tone not good", tone, pinyin.getTone());
+//
+//	}
 }

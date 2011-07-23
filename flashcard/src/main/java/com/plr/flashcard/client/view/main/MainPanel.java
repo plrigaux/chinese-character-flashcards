@@ -84,7 +84,17 @@ public class MainPanel extends Composite implements ValueChangeHandler<String> {
 			}
 		});
 		
+		
+		//When you reload, stay  on the same page
+		String hash = Window.Location.getHash();
+				
 		History.newItem("");
+		
+		if (hash.startsWith("#")) {
+			hash = hash.substring(1);
+		}
+		
+		History.newItem(hash);
 	}
 
 	@Override
