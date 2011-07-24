@@ -38,7 +38,10 @@ public class ShiShenme extends Composite implements DataDependant {
 	DivElement result;
 
 	@UiField
-	Style style;
+	DivElement explanation;
+
+	@UiField
+	StyleAnswer style;
 
 	ZhongWenCharacter zwChar = null;
 
@@ -82,14 +85,21 @@ public class ShiShenme extends Composite implements DataDependant {
 		}
 
 		StringBuilder displayAnswer = new StringBuilder();
-		displayAnswer.append("<p>Previous: ");
+
+		String htmlAnswer;
+
 		if (ok) {
-			displayAnswer.append("<span class='").append(style.ok()).append("'>对</span>");
+			htmlAnswer = "对";
+			result.removeClassName(style.wrong());
+			result.addClassName(style.ok());
 		} else {
-			displayAnswer.append("<span class='").append(style.wrong()).append("'>错</span>");
+			htmlAnswer = "错";
+			result.removeClassName(style.ok());
+			result.addClassName(style.wrong());
 		}
 
-		displayAnswer.append("<br/>");
+		result.setInnerHTML(htmlAnswer);
+
 		displayAnswer.append("<span class='" + style.askedChar() + "'>");
 		displayAnswer.append(zwChar.getSimplifiedCharacter());
 		displayAnswer.append("</span> is ");
@@ -114,8 +124,10 @@ public class ShiShenme extends Composite implements DataDependant {
 			displayAnswer.append("<span class='").append(toneStyle).append("'>").append(pinyin).append("</span>");
 		}
 
-		displayAnswer.append(".</p>");
-		result.setInnerHTML(displayAnswer.toString());
+		displayAnswer.append(".");
+		explanation.setInnerHTML(displayAnswer.toString());
+
+		new AnswerAnimation(result).run(750);
 
 		nextChar();
 	}

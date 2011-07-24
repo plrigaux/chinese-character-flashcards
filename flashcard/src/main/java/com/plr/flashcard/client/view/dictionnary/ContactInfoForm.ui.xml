@@ -31,7 +31,7 @@
 				</tr>
 				<tr>
 					<td class='{style.label}'>
-						Id:
+						Rank:
 					</td>
 					<td>
 						<g:Label ui:field='idLabel' />
