@@ -15,7 +15,7 @@
 					<g:Button text="◀" ui:field="previous" />
 				</td>
 				<td>
-					<g:Label ui:field="character" styleName="{otherStyle.chararter}" />
+					<g:SimplePanel ui:field="character" styleName="{otherStyle.chararter}" />
 				</td>
 				<td>
 					<g:Button text="▶" ui:field="next" />

@@ -12,6 +12,7 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.Range;
 
 public class DataControler {
 	private static DataControler instance = null;
@@ -20,70 +21,87 @@ public class DataControler {
 	/**
 	 * The provider that holds the list of contacts in the database.
 	 */
-	private ListDataProvider<ZhongWenCharacter> dataProvider = new ListDataProvider<ZhongWenCharacter>();
-	
-	private List<DataDependant> dataDependants = new ArrayList<DataDependant>();
-	
-	private boolean dataReady = false;
-	
-	private DataControler() {
-		final String resource = "data/out-1.json";
-		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, resource);
+	private ListDataProvider<ZhongWenCharacter> dataProvider = new ListDataProvider<ZhongWenCharacter>() {
+		@Override
+		protected void onRangeChanged(HasData<ZhongWenCharacter> display) {
 
-		rb.setCallback(new RequestCallback() {
+			Range visibleRange = display.getVisibleRange();
 
-			@Override
-			public void onResponseReceived(Request request, Response response) {
+			List<ZhongWenCharacter> zhongWenCharacters = dataProvider.getList();
 
-				int code = response.getStatusCode();
+			if (zhongWenCharacters.size() > visibleRange.getStart() + visibleRange.getLength()) {
+				super.onRangeChanged(display);
+			} else {
 
-				if (code < 200 && code >= 400) {
-					Window.alert(resource + " code http : " + code);
+				if (!hasData(visibleRange)) {
+					super.onRangeChanged(display);
 					return;
 				}
-
-				String jsonString = response.getText();
-
-				JsArray<CardData> cardDatas = buildCardData(jsonString);
-
-				List<ZhongWenCharacter> zhongWenCharacters = dataProvider.getList();
 				
-				for(int i = 0; i < cardDatas.length(); i++) {
-					zhongWenCharacters.add(cardDatas.get(i));
-				}
-				
-				dataReady = true;
-				 
-				for (DataDependant datadependant : dataDependants) {
-					datadependant.dataReady();
+				int lastRangeIndex = (visibleRange.getStart() + visibleRange.getLength() / 200) + 1;
+				final String resource = "data/out-" + lastRangeIndex + ".json";
+
+				RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, resource);
+
+				rb.setCallback(new RequestCallback() {
+
+					@Override
+					public void onResponseReceived(Request request, Response response) {
+
+						int code = response.getStatusCode();
+
+						if (code < 200 && code >= 400) {
+							Window.alert(resource + " code http : " + code);
+							return;
+						}
+
+						String jsonString = response.getText();
+
+						JsArray<CardData> cardDatas = buildCardData(jsonString);
+
+						List<ZhongWenCharacter> zhongWenCharacters = dataProvider.getList();
+
+						for (int i = 0; i < cardDatas.length(); i++) {
+							zhongWenCharacters.add(cardDatas.get(i));
+						}
+
+					}
+
+					@Override
+					public void onError(Request request, Throwable exception) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+				try {
+					rb.send();
+				} catch (RequestException e) {
+					e.printStackTrace();
 				}
 			}
-
-			@Override
-			public void onError(Request request, Throwable exception) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		try {
-			rb.send();
-		} catch (RequestException e) {
-			e.printStackTrace();
 		}
+	};
+
+	private List<DataDependant> dataDependants = new ArrayList<DataDependant>();
+
+	private boolean dataReady = false;
+
+	private DataControler() {
 
 	}
-	
+
 	public static DataControler get() {
-		if (instance  == null) {
+		if (instance == null) {
 			instance = new DataControler();
 		}
 		return instance;
-		
-		
-		
+
 	}
 
+	private boolean hasData(Range visibleRange) {
+		return visibleRange.getStart() + visibleRange.getLength() < 2600;
+	}
 
 	public static final native JsArray<CardData> buildCardData(String json) /*-{
 																			return eval('(' + json + ')');
@@ -96,7 +114,7 @@ public class DataControler {
 
 	public ZhongWenCharacter previous() {
 		index = index <= 0 ? 0 : index - 1;
-		return  dataProvider.getList().get(index);
+		return dataProvider.getList().get(index);
 	}
 
 	public ZhongWenCharacter current() {
@@ -105,24 +123,28 @@ public class DataControler {
 
 	public void generateContacts(int i) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void addDataDisplay(HasData<ZhongWenCharacter> display) {
 		dataProvider.addDataDisplay(display);
 	}
-	
+
 	/**
 	 * Refresh all displays.
 	 */
 	public void refreshDisplays() {
 		dataProvider.refresh();
 	}
-	
+
 	public void register(DataDependant dataDependant) {
 		dataDependants.add(dataDependant);
 		if (dataReady) {
 			dataDependant.dataReady();
 		}
+	}
+
+	public ZhongWenCharacter get(int index) {
+		return dataProvider.getList().get(index);
 	}
 }

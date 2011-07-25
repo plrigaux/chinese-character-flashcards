@@ -30,11 +30,6 @@
 					<s:ContactInfoForm ui:field='contactForm'  />
 				</td>
 			</tr>
-			<tr>
-				<td align='center'>
-					<s:ShowMorePagerPanel ui:field='pager' />
-				</td>
-			</tr>
 		</table>
 	</g:HTMLPanel>
 </ui:UiBinder>

@@ -29,7 +29,7 @@
 			height: 48px;
 			line-height:48px;
 			margin-bottom: 15px;
-			vertical-align: bottom;
+			vertical-align: middle;
 		}
 	</ui:style>
 	<g:HTMLPanel>

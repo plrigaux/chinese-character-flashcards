@@ -26,8 +26,10 @@ public class ShiShenme extends Composite implements DataDependant {
 
 	@UiField
 	Button answerValidate;
+
 	@UiField
 	Label character;
+
 	@UiField
 	DefinitionPanel definitionPanel;
 
@@ -43,17 +45,23 @@ public class ShiShenme extends Composite implements DataDependant {
 	@UiField
 	StyleAnswer style;
 
-	ZhongWenCharacter zwChar = null;
+	private ZhongWenCharacter zwChar = null;
 
 	interface Binder extends UiBinder<Widget, ShiShenme> {
 	}
 
+//	private final Storage stockStore;
+
+	CompiledResults compiledResults = new CompiledResults();
+	
 	public ShiShenme() {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		character.addStyleName("chararter");
 
 		DataControler.get().register(this);
+
+//		stockStore = Storage.getLocalStorageIfSupported();
 	}
 
 	@UiHandler("answerValidate")
@@ -91,11 +99,13 @@ public class ShiShenme extends Composite implements DataDependant {
 		if (ok) {
 			htmlAnswer = "对";
 			result.removeClassName(style.wrong());
-			result.addClassName(style.ok());
+			result.addClassName(style.ok());			
+			compiledResults.setOk(zwChar.getSimplifiedCharacter());
 		} else {
 			htmlAnswer = "错";
 			result.removeClassName(style.ok());
 			result.addClassName(style.wrong());
+			compiledResults.setWrong(zwChar.getSimplifiedCharacter());
 		}
 
 		result.setInnerHTML(htmlAnswer);
