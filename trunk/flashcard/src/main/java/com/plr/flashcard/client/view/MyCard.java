@@ -11,10 +11,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
-import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.Range;
@@ -38,16 +37,11 @@ public class MyCard extends Composite {
 	@UiField
 	Button previous;
 	@UiField
-	SimplePanel character;
+	Label character;
 	@UiField
 	DefinitionPanel definitionPanel;
 
 	ZhongWenCharacter zwChar = null;
-
-	// AbstractHasData<ZhongWenCharacter> a = new
-	// AbstractHasData<ZhongWenCharacter>();
-
-	SimplePager sp = null;
 
 	interface MyCardUiBinder extends UiBinder<Widget, MyCard> {
 	}
@@ -66,7 +60,7 @@ public class MyCard extends Composite {
 					SelectionModel<? super ZhongWenCharacter> selectionModel) {
 
 				zwChar = values.get(0);
-				super.renderRowValues(sb, values, start, selectionModel);
+				character.setText(zwChar.getSimplifiedCharacter());
 			}
 
 		};
@@ -81,8 +75,6 @@ public class MyCard extends Composite {
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 
 			public void onSelectionChange(SelectionChangeEvent event) {
-				// character.setText(selectionModel.getSelectedObject().getSimplifiedCharacter());
-				// zwChar = selectionModel.getSelectedObject();
 			}
 
 		});
@@ -101,25 +93,12 @@ public class MyCard extends Composite {
 			}
 		});
 
-		character.setWidget(cellList);
 	}
 
-	static class CharacterCell extends AbstractCell<ZhongWenCharacter> {
-
-		/**
-		 * The html of the image used for contacts.
-		 */
-
-		public CharacterCell() {
-		}
+	private static class CharacterCell extends AbstractCell<ZhongWenCharacter> {
 
 		@Override
 		public void render(Context context, ZhongWenCharacter value, SafeHtmlBuilder sb) {
-			// Value can be null, so do a null check..
-			if (value == null) {
-				return;
-			}
-			sb.appendEscaped(value.getSimplifiedCharacter());
 		}
 	}
 

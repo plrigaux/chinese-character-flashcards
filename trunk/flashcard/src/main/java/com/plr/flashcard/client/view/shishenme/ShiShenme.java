@@ -1,26 +1,35 @@
 package com.plr.flashcard.client.view.shishenme;
 
+import java.util.List;
+
+import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.RangeChangeEvent;
+import com.google.gwt.view.client.RowCountChangeEvent;
+import com.google.gwt.view.client.SelectionModel;
+import com.plr.flashcard.client.CardData;
 import com.plr.flashcard.client.CardData.CharDefinition;
 import com.plr.flashcard.client.DataControler;
-import com.plr.flashcard.client.DataDependant;
 import com.plr.flashcard.client.Tone;
 import com.plr.flashcard.client.ZhongWenCharacter;
 import com.plr.flashcard.client.view.definition.DefinitionPanel;
 
-public class ShiShenme extends Composite implements DataDependant {
+public class ShiShenme extends Composite {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
@@ -50,18 +59,42 @@ public class ShiShenme extends Composite implements DataDependant {
 	interface Binder extends UiBinder<Widget, ShiShenme> {
 	}
 
-//	private final Storage stockStore;
+	private CellList<ZhongWenCharacter> cellList;
 
 	CompiledResults compiledResults = new CompiledResults();
-	
+
 	public ShiShenme() {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		character.addStyleName("chararter");
 
-		DataControler.get().register(this);
+		
+		CharacterCell cCell = new CharacterCell();
+		
+		cellList = new CellList<ZhongWenCharacter>(cCell, CardData.KEY_PROVIDER) {
 
-//		stockStore = Storage.getLocalStorageIfSupported();
+			protected void renderRowValues(SafeHtmlBuilder sb, List<ZhongWenCharacter> values, int start,
+					SelectionModel<? super ZhongWenCharacter> selectionModel) {
+
+				zwChar = values.get(0);
+				character.setText(zwChar.getSimplifiedCharacter());
+			}
+
+		};
+		cellList.setPageSize(1);
+		cellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
+
+		DataControler.get().addDataDisplay(cellList);
+
+		cellList.addRangeChangeHandler(new RangeChangeEvent.Handler() {
+			public void onRangeChange(RangeChangeEvent event) {
+			}
+		});
+
+		cellList.addRowCountChangeHandler(new RowCountChangeEvent.Handler() {
+			public void onRowCountChange(RowCountChangeEvent event) {
+			}
+		});
 	}
 
 	@UiHandler("answerValidate")
@@ -99,7 +132,7 @@ public class ShiShenme extends Composite implements DataDependant {
 		if (ok) {
 			htmlAnswer = "对";
 			result.removeClassName(style.wrong());
-			result.addClassName(style.ok());			
+			result.addClassName(style.ok());
 			compiledResults.setOk(zwChar.getSimplifiedCharacter());
 		} else {
 			htmlAnswer = "错";
@@ -142,19 +175,19 @@ public class ShiShenme extends Composite implements DataDependant {
 		nextChar();
 	}
 
-	@Override
-	public void dataReady() {
-
-		zwChar = DataControler.get().current();
-
-		character.setText(zwChar.getSimplifiedCharacter());
-	}
+	private int idx = 0;
 
 	public void nextChar() {
 		answer.setText("");
 
-		zwChar = DataControler.get().next();
+		idx++;
+		cellList.setVisibleRange(idx, 1);
+	}
+	
+	static class CharacterCell extends AbstractCell<ZhongWenCharacter> {
+		@Override
+		public void render(Context context, ZhongWenCharacter value, SafeHtmlBuilder sb) {
 
-		character.setText(zwChar.getSimplifiedCharacter());
+		}
 	}
 }

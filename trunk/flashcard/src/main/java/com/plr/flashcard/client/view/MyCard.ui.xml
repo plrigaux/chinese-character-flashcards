@@ -6,7 +6,7 @@
 			font-weight: bold;
 		}
 	</ui:style>
-	<ui:style field='otherStyle' src="../../public/flashcard.css" />
+	<ui:style field='otherStyle' src="../../flashcard.css" />
 		
 	<g:HTMLPanel>
 		<table width="100%" style="text-align:center">
@@ -15,7 +15,7 @@
 					<g:Button text="◀" ui:field="previous" />
 				</td>
 				<td>
-					<g:SimplePanel ui:field="character" styleName="{otherStyle.chararter}" />
+					<g:Label ui:field="character" styleName="{otherStyle.chararter}" />
 				</td>
 				<td>
 					<g:Button text="▶" ui:field="next" />
