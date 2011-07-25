@@ -1,4 +1,4 @@
 $(function() {
 		$( "button" ).button();
-		$( "#accordion" ).accordion({ autoHeight: false, active: -1, collapsible: true });
+		$( "#accordion" ).accordion({ autoHeight: false, active: 10, collapsible: true });
 	});
