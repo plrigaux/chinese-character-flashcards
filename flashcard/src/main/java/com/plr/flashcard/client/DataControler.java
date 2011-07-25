@@ -1,6 +1,5 @@
 package com.plr.flashcard.client;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.JsArray;
@@ -16,7 +15,6 @@ import com.google.gwt.view.client.Range;
 
 public class DataControler {
 	private static DataControler instance = null;
-	private int index = 0;
 
 	/**
 	 * The provider that holds the list of contacts in the database.
@@ -83,8 +81,7 @@ public class DataControler {
 		}
 	};
 
-	private List<DataDependant> dataDependants = new ArrayList<DataDependant>();
-
+	
 	private boolean dataReady = false;
 
 	private DataControler() {
@@ -107,24 +104,10 @@ public class DataControler {
 																			return eval('(' + json + ')');
 																			}-*/;
 
-	public ZhongWenCharacter next() {
-		index = index <= (dataProvider.getList().size() - 2) ? index + 1 : dataProvider.getList().size() - 1;
-		return dataProvider.getList().get(index);
-	}
+	
+	
 
-	public ZhongWenCharacter previous() {
-		index = index <= 0 ? 0 : index - 1;
-		return dataProvider.getList().get(index);
-	}
 
-	public ZhongWenCharacter current() {
-		return dataProvider.getList().get(index);
-	}
-
-	public void generateContacts(int i) {
-		// TODO Auto-generated method stub
-
-	}
 
 	public void addDataDisplay(HasData<ZhongWenCharacter> display) {
 		dataProvider.addDataDisplay(display);
@@ -137,14 +120,6 @@ public class DataControler {
 		dataProvider.refresh();
 	}
 
-	public void register(DataDependant dataDependant) {
-		dataDependants.add(dataDependant);
-		if (dataReady) {
-			dataDependant.dataReady();
-		}
-	}
 
-	public ZhongWenCharacter get(int index) {
-		return dataProvider.getList().get(index);
-	}
+	
 }
