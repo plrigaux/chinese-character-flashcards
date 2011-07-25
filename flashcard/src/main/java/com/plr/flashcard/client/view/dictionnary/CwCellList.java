@@ -45,22 +45,10 @@ public class CwCellList extends ContentWidget {
 	interface Binder extends UiBinder<Widget, CwCellList> {
 	}
 
-	/**
-	 * The constants used in this Content Widget.
-	 */
-
-	/**
-	 * The images used for this example.
-	 */
-
-	// static interface Images extends ClientBundle {
-	// ImageResource contact();
-	// }
 
 	/**
 	 * The Cell used to render a {@link ContactInfo}.
 	 */
-
 	static class CharacterCell extends AbstractCell<ZhongWenCharacter> {
 
 		/**
@@ -77,17 +65,9 @@ public class CwCellList extends ContentWidget {
 				return;
 			}
 
-			// sb.appendHtmlConstant("<table>");
-			//
-			// // Add the contact image.
-			// sb.appendHtmlConstant("<tr><td>");
-			// sb.appendEscaped(""+value.getId());
-			// sb.appendHtmlConstant("</td><td>");
 			sb.appendHtmlConstant("<span style=\"font-size: large;\">");
 			sb.appendEscaped(value.getSimplifiedCharacter());
 			sb.appendHtmlConstant("</span>");
-
-			// sb.appendHtmlConstant("</td></tr></table>");
 		}
 	}
 
@@ -119,20 +99,8 @@ public class CwCellList extends ContentWidget {
 	private CellList<ZhongWenCharacter> cellList;
 
 	/**
-	 * Constructor.
-	 * 
-	 * @param constants
-	 *            the constants
-	 */
-	public CwCellList() {
-		super("cwCellListName", "sdf", false, "ContactDatabase.java", "CwCellList.ui.xml", "ContactInfoForm.java",
-				"ShowMorePagerPanel.java", "RangeLabelPager.java");
-	}
-
-	/**
 	 * Initialize this example.
 	 */
-
 	@Override
 	public Widget onInitialize() {
 		// Images images = GWT.create(Images.class);
@@ -164,7 +132,7 @@ public class CwCellList extends ContentWidget {
 		// Create the UiBinder.
 		Binder uiBinder = GWT.create(Binder.class);
 		Widget widget = uiBinder.createAndBindUi(this);
-
+	
 		// Add the CellList to the data provider in the database.
 		DataControler.get().addDataDisplay(cellList);
 

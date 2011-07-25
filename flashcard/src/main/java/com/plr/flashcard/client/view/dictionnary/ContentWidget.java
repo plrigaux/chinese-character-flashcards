@@ -17,20 +17,12 @@ package com.plr.flashcard.client.view.dictionnary;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.http.client.Request;
-import com.google.gwt.http.client.RequestBuilder;
-import com.google.gwt.http.client.RequestCallback;
-import com.google.gwt.http.client.RequestException;
-import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.LazyPanel;
@@ -73,42 +65,12 @@ public abstract class ContentWidget extends LazyPanel implements HasValueChangeH
 		return name.substring(name.lastIndexOf(".") + 1);
 	}
 
-	/**
-	 * A description of the example.
-	 */
-	private final String description;
-
-	/**
-	 * True if this example has associated styles, false if not.
-	 */
-	private final boolean hasStyle;
-
-	/**
-	 * The name of the example.
-	 */
-	private final String name;
-
-	/**
-	 * A mapping of filenames to their raw source code. The map is populated as
-	 * source is loaded.
-	 */
-	private final Map<String, String> rawSource = new HashMap<String, String>();
 
 	/**
 	 * A list of filenames of the raw source code included with this example.
 	 */
 	private final List<String> rawSourceFilenames = new ArrayList<String>();
-
-	/**
-	 * The source code associated with this widget.
-	 */
-	private String sourceCode;
-
-	/**
-	 * A style definitions used by this widget.
-	 */
-	private String styleDefs;
-
+	
 	/**
 	 * The view that holds the name, description, and example.
 	 */
@@ -124,29 +86,6 @@ public abstract class ContentWidget extends LazyPanel implements HasValueChangeH
 	 */
 	private boolean widgetInitializing;
 
-	/**
-	 * Construct a {@link ContentWidget}.
-	 * 
-	 * @param name
-	 *            the name of the example
-	 * @param description
-	 *            a description of the example
-	 * @param hasStyle
-	 *            true if the example has associated styles
-	 * @param rawSourceFiles
-	 *            the list of raw source files to include
-	 */
-	public ContentWidget(String name, String description, boolean hasStyle, String... rawSourceFiles) {
-		this.name = name;
-		this.description = description;
-		this.hasStyle = hasStyle;
-		if (rawSourceFiles != null) {
-			for (String rawSourceFile : rawSourceFiles) {
-				rawSourceFilenames.add(rawSourceFile);
-			}
-		}
-	}
-
 	public HandlerRegistration addValueChangeHandler(ValueChangeHandler<String> handler) {
 		return addHandler(handler, ValueChangeEvent.getType());
 	}
@@ -157,53 +96,7 @@ public abstract class ContentWidget extends LazyPanel implements HasValueChangeH
 		ensureWidgetInitialized();
 	}
 
-	/**
-	 * Get the description of this example.
-	 * 
-	 * @return a description for this example
-	 */
-	public final String getDescription() {
-		return description;
-	}
-
-	/**
-	 * Get the name of this example to use as a title.
-	 * 
-	 * @return a name for this example
-	 */
-	public final String getName() {
-		return name;
-	}
-
-	/**
-	 * Get the source code for a raw file.
-	 * 
-	 * @param filename
-	 *            the filename to load
-	 * @param callback
-	 *            the callback to call when loaded
-	 */
-	public void getRawSource(final String filename, final Callback<String> callback) {
-		if (rawSource.containsKey(filename)) {
-			callback.onSuccess(rawSource.get(filename));
-		} else {
-			RequestCallback rc = new RequestCallback() {
-				public void onError(Request request, Throwable exception) {
-					callback.onError();
-				}
-
-				public void onResponseReceived(Request request, Response response) {
-					String text = response.getText();
-					rawSource.put(filename, text);
-					callback.onSuccess(text);
-				}
-			};
-
-			String className = this.getClass().getName();
-			className = className.substring(className.lastIndexOf(".") + 1);
-			sendSourceRequest(rc, ShowcaseConstants.DST_SOURCE_RAW + filename + ".html");
-		}
-	}
+	
 
 	/**
 	 * Get the filenames of the raw source files.
@@ -214,72 +107,9 @@ public abstract class ContentWidget extends LazyPanel implements HasValueChangeH
 		return Collections.unmodifiableList(rawSourceFilenames);
 	}
 
-	/**
-	 * Request the styles associated with the widget.
-	 * 
-	 * @param callback
-	 *            the callback used when the styles become available
-	 */
-	public void getStyle(final Callback<String> callback) {
-		if (styleDefs != null) {
-			callback.onSuccess(styleDefs);
-		} else {
-			RequestCallback rc = new RequestCallback() {
-				public void onError(Request request, Throwable exception) {
-					callback.onError();
-				}
 
-				public void onResponseReceived(Request request, Response response) {
-					styleDefs = response.getText();
-					callback.onSuccess(styleDefs);
-				}
-			};
 
-			String srcPath = ShowcaseConstants.DST_SOURCE_STYLE + "standard";
-//			if (LocaleInfo.getCurrentLocale().isRTL()) {
-//				srcPath += "_rtl";
-//			}
-			String className = this.getClass().getName();
-			className = className.substring(className.lastIndexOf(".") + 1);
-			sendSourceRequest(rc, srcPath + "/" + className + ".html");
-		}
-	}
-
-	/**
-	 * Request the source code associated with the widget.
-	 * 
-	 * @param callback
-	 *            the callback used when the source become available
-	 */
-	public void getSource(final Callback<String> callback) {
-		if (sourceCode != null) {
-			callback.onSuccess(sourceCode);
-		} else {
-			RequestCallback rc = new RequestCallback() {
-				public void onError(Request request, Throwable exception) {
-					callback.onError();
-				}
-
-				public void onResponseReceived(Request request, Response response) {
-					sourceCode = response.getText();
-					callback.onSuccess(sourceCode);
-				}
-			};
-
-			String className = this.getClass().getName();
-			className = className.substring(className.lastIndexOf(".") + 1);
-			sendSourceRequest(rc, ShowcaseConstants.DST_SOURCE_EXAMPLE + className + ".html");
-		}
-	}
-
-	/**
-	 * Returns true if this widget has a style section.
-	 * 
-	 * @return true if style tab available
-	 */
-	public final boolean hasStyle() {
-		return hasStyle;
-	}
+	
 
 	/**
 	 * When the widget is first initialized, this method is called. If it
@@ -359,21 +189,5 @@ public abstract class ContentWidget extends LazyPanel implements HasValueChangeH
 		});
 	}
 
-	/**
-	 * Send a request for source code.
-	 * 
-	 * @param callback
-	 *            the {@link RequestCallback} to send
-	 * @param url
-	 *            the URL to target
-	 */
-	private void sendSourceRequest(RequestCallback callback, String url) {
-		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, GWT.getModuleBaseURL() + url);
-		builder.setCallback(callback);
-		try {
-			builder.send();
-		} catch (RequestException e) {
-			callback.onError(null, e);
-		}
-	}
+	
 }

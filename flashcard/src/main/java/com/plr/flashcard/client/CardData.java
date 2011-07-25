@@ -5,7 +5,7 @@ import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.view.client.ProvidesKey;
 
-public class CardData extends JavaScriptObject implements ZhongWenCharacter {
+public final class CardData extends JavaScriptObject implements ZhongWenCharacter {
 
 	protected CardData() {
 

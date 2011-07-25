@@ -47,7 +47,6 @@ public class ShowMorePagerPanel extends AbstractPager {
 	 * The scrollable panel.
 	 */
 	private final ScrollPanel scrollable = new ScrollPanel();
-
 	/**
 	 * Construct a new {@link ShowMorePagerPanel}.
 	 */
