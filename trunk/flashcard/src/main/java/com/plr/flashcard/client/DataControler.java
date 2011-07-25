@@ -35,10 +35,10 @@ public class DataControler {
 					super.onRangeChanged(display);
 					return;
 				}
-				
-				int lastRangeIndex = (visibleRange.getStart() + visibleRange.getLength() / 200) + 1;
-				final String resource = "data/out-" + lastRangeIndex + ".json";
 
+				int lastRangeIndex = ((visibleRange.getStart() + visibleRange.getLength()) / 200) + 1;
+				final String resource = "data/out-" + lastRangeIndex + ".json";
+				System.out.println(resource);
 				RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, resource);
 
 				rb.setCallback(new RequestCallback() {
@@ -81,7 +81,6 @@ public class DataControler {
 		}
 	};
 
-	
 	private boolean dataReady = false;
 
 	private DataControler() {
@@ -104,11 +103,6 @@ public class DataControler {
 																			return eval('(' + json + ')');
 																			}-*/;
 
-	
-	
-
-
-
 	public void addDataDisplay(HasData<ZhongWenCharacter> display) {
 		dataProvider.addDataDisplay(display);
 	}
@@ -120,6 +114,4 @@ public class DataControler {
 		dataProvider.refresh();
 	}
 
-
-	
 }

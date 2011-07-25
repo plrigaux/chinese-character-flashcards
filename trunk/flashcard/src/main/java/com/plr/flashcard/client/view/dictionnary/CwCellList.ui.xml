@@ -1,12 +1,11 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:c='urn:import:com.google.gwt.user.cellview.client'
-	xmlns:s="urn:import:com.plr.flashcard.client.view.dictionnary">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:c='urn:import:com.google.gwt.user.cellview.client'>
 
 	<ui:style>
 		.scrollable {
 			height: 400px;
-			width: 60px;
+			width: 160px;
 			border: 1px solid #ccc;
 			text-align: left;
 		}
@@ -14,20 +13,18 @@
 		.contactFormCell {
 			padding-left: 20px;
 		}
-		
-		
 	</ui:style>
 
 	<g:HTMLPanel>
 		<table>
 			<tr>
 				<td valign='top' align='center'>
-					<s:ShowMorePagerPanel addStyleNames='{style.scrollable}'
-						ui:field='pagerPanel' />
-					<s:RangeLabelPager ui:field='rangeLabelPager' />
+					<c:SimplePager ui:field='pager' />
+					<c:CellTable addStyleNames='{style.scrollable}'
+						ui:field='cellTable' />
 				</td>
 				<td class='{style.contactFormCell}' valign='top' align='center'>
-					<s:ContactInfoForm ui:field='contactForm'  />
+					<s:ContactInfoForm ui:field='contactForm' />
 				</td>
 			</tr>
 		</table>

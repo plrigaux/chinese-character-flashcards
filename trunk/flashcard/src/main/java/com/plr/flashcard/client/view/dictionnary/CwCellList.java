@@ -21,9 +21,12 @@ import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
+import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -44,7 +47,6 @@ public class CwCellList extends ContentWidget {
 
 	interface Binder extends UiBinder<Widget, CwCellList> {
 	}
-
 
 	/**
 	 * The Cell used to render a {@link ContactInfo}.
@@ -82,45 +84,61 @@ public class CwCellList extends ContentWidget {
 	 * The pager used to change the range of data.
 	 */
 
-	@UiField
-	ShowMorePagerPanel pagerPanel;
+	// @UiField
+	// ShowMorePagerPanel pagerPanel;
 
 	/**
 	 * The pager used to display the current range.
 	 */
 
-	@UiField
-	RangeLabelPager rangeLabelPager;
+	@UiField(provided = true)
+	SimplePager pager;
 
 	/**
 	 * The CellList.
 	 */
-
-	private CellList<ZhongWenCharacter> cellList;
+	@UiField(provided = true)
+	CellTable<ZhongWenCharacter> cellTable;
 
 	/**
 	 * Initialize this example.
 	 */
 	@Override
 	public Widget onInitialize() {
-		// Images images = GWT.create(Images.class);
 
-		// Create a CellList.
-		CharacterCell contactCell = new CharacterCell();
+		cellTable = new CellTable<ZhongWenCharacter>(CardData.KEY_PROVIDER);
 
-		// Set a key provider that provides a unique key for each contact. If
-		// key is
-		// used to identify contacts when fields (such as the name and address)
-		// change.
-		cellList = new CellList<ZhongWenCharacter>(contactCell, CardData.KEY_PROVIDER);
-		cellList.setPageSize(30);
-		cellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
-		cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+		// Create rank column.
+		TextColumn<ZhongWenCharacter> rankColumn = new TextColumn<ZhongWenCharacter>() {
+			@Override
+			public String getValue(ZhongWenCharacter zwChar) {
+				return "" + zwChar.getId();
+			}
+		};
+
+		TextColumn<ZhongWenCharacter> zhCharColumn = new TextColumn<ZhongWenCharacter>() {
+			@Override
+			public String getValue(ZhongWenCharacter zwChar) {
+				return zwChar.getSimplifiedCharacter();
+			}
+		};
+
+		cellTable.addColumn(rankColumn, "Rank");
+		cellTable.addColumn(zhCharColumn, "Simplified");
+
+		cellTable.setPageSize(15);
+		cellTable.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
+		cellTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+
+		// // Create a Pager to control the table.
+		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+		pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
+		pager.setDisplay(cellTable);
 
 		// Add a selection model so we can select cells.
 		final SingleSelectionModel<ZhongWenCharacter> selectionModel = new SingleSelectionModel<ZhongWenCharacter>(
 				CardData.KEY_PROVIDER);
-		cellList.setSelectionModel(selectionModel);
+		cellTable.setSelectionModel(selectionModel);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 
 			public void onSelectionChange(SelectionChangeEvent event) {
@@ -129,12 +147,8 @@ public class CwCellList extends ContentWidget {
 
 		});
 
-		// Create the UiBinder.
-		Binder uiBinder = GWT.create(Binder.class);
-		Widget widget = uiBinder.createAndBindUi(this);
-	
 		// Add the CellList to the data provider in the database.
-		DataControler.get().addDataDisplay(cellList);
+		DataControler.get().addDataDisplay(cellTable);
 
 		// Set the cellList as the display of the pagers. This example has two
 		// pagers. pagerPanel is a scrollable pager that extends the range when
@@ -142,10 +156,57 @@ public class CwCellList extends ContentWidget {
 		// user scrolls to the bottom. rangeLabelPager is a pager that displays
 		// the
 		// current range, but does not have any controls to change the range.
-		pagerPanel.setDisplay(cellList);
-		rangeLabelPager.setDisplay(cellList);
 
+		// rangeLabelPager.setDisplay(table);
+		// Create the UiBinder.
+		Binder uiBinder = GWT.create(Binder.class);
+		Widget widget = uiBinder.createAndBindUi(this);
+
+		// pagerPanel.setDisplay(cellTable);
 		return widget;
+
+		// // Images images = GWT.create(Images.class);
+		//
+		// // Create a CellList.
+		// CharacterCell contactCell = new CharacterCell();
+		//
+		// // Set a key provider that provides a unique key for each contact. If
+		// // key is
+		// // used to identify contacts when fields (such as the name and
+		// // address)
+		// // change.
+		// cellList = new CellList<ZhongWenCharacter>(contactCell,
+		// CardData.KEY_PROVIDER);
+		// cellList.setPageSize(30);
+		// cellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
+		// cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+		//
+		// // Add a selection model so we can select cells.
+		// final SingleSelectionModel<ZhongWenCharacter> selectionModel = new
+		// SingleSelectionModel<ZhongWenCharacter>(
+		// CardData.KEY_PROVIDER);
+		// cellList.setSelectionModel(selectionModel);
+		// selectionModel.addSelectionChangeHandler(new
+		// SelectionChangeEvent.Handler() {
+		//
+		// public void onSelectionChange(SelectionChangeEvent event) {
+		// contactForm.setCharater(selectionModel.getSelectedObject());
+		// }
+		//
+		// });
+		//
+		// // Create the UiBinder.
+		// Binder uiBinder = GWT.create(Binder.class);
+		// Widget widget = uiBinder.createAndBindUi(this);
+		//
+		// // Add the CellList to the data provider in the database.
+		// DataControler.get().addDataDisplay(cellList);
+		//
+		//
+		// pagerPanel.setDisplay(cellList);
+		// rangeLabelPager.setDisplay(cellList);
+		//
+		// return widget;
 	}
 
 	@Override
