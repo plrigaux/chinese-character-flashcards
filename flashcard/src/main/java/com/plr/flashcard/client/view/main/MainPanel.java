@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.flashcard.client.view.MyCard;
-import com.plr.flashcard.client.view.dictionnary.CwCellList;
+import com.plr.flashcard.client.view.dictionnary.ZwCharBrowser;
 import com.plr.flashcard.client.view.shishenme.ShiShenme;
 import com.plr.flashcard.client.view.welcome.Welcome;
 
@@ -49,36 +49,42 @@ public class MainPanel extends Composite implements ValueChangeHandler<String> {
 		
 		
 		help.setCommand(new Command() {
+			@Override
 			public void execute() {
 				Window.alert("help");
 			}
 		});
 
 		about.setCommand(new Command() {
+			@Override
 			public void execute() {
 				Window.alert("about");
 			}
 		});
 		
 		flashcards.setCommand(new Command() {
+			@Override
 			public void execute() {
 				History.newItem(FLASH);
 			}
 		});
 		
 		guesser.setCommand(new Command() {
+			@Override
 			public void execute() {
 				History.newItem(SHI_SHENME);
 			}
 		});
 		
 		browser.setCommand(new Command() {
+			@Override
 			public void execute() {
 				History.newItem(DICTIONNARY);
 			}
 		});
 		
 		home.setCommand(new Command() {
+			@Override
 			public void execute() {
 				History.newItem("");
 			}
@@ -108,7 +114,7 @@ public class MainPanel extends Composite implements ValueChangeHandler<String> {
 			insidePanel.add(mc);
 		} else if (DICTIONNARY.equals(value)) {
 			insidePanel.clear();
-			CwCellList charDictionnary = new CwCellList();
+			ZwCharBrowser charDictionnary = new ZwCharBrowser();
 			insidePanel.add(charDictionnary);
 		} else if (SHI_SHENME.equals(value)) {
 			insidePanel.clear();

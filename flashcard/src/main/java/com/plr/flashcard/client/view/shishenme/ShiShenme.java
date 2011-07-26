@@ -73,6 +73,7 @@ public class ShiShenme extends Composite {
 		
 		cellList = new CellList<ZhongWenCharacter>(cCell, CardData.KEY_PROVIDER) {
 
+			@Override
 			protected void renderRowValues(SafeHtmlBuilder sb, List<ZhongWenCharacter> values, int start,
 					SelectionModel<? super ZhongWenCharacter> selectionModel) {
 
@@ -87,11 +88,13 @@ public class ShiShenme extends Composite {
 		DataControler.get().addDataDisplay(cellList);
 
 		cellList.addRangeChangeHandler(new RangeChangeEvent.Handler() {
+			@Override
 			public void onRangeChange(RangeChangeEvent event) {
 			}
 		});
 
 		cellList.addRowCountChangeHandler(new RowCountChangeEvent.Handler() {
+			@Override
 			public void onRowCountChange(RowCountChangeEvent event) {
 			}
 		});

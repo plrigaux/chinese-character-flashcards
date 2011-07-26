@@ -56,6 +56,7 @@ public class MyCard extends Composite {
 
 		cellList = new CellList<ZhongWenCharacter>(contactCell, CardData.KEY_PROVIDER) {
 
+			@Override
 			protected void renderRowValues(SafeHtmlBuilder sb, List<ZhongWenCharacter> values, int start,
 					SelectionModel<? super ZhongWenCharacter> selectionModel) {
 
@@ -74,6 +75,7 @@ public class MyCard extends Composite {
 		final NoSelectionModel<ZhongWenCharacter> selectionModel = new NoSelectionModel<ZhongWenCharacter>(CardData.KEY_PROVIDER);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 
+			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 			}
 
@@ -82,12 +84,14 @@ public class MyCard extends Composite {
 		cellList.setSelectionModel(selectionModel);
 
 		cellList.addRangeChangeHandler(new RangeChangeEvent.Handler() {
+			@Override
 			public void onRangeChange(RangeChangeEvent event) {
 				MyCard.this.onRangeChange(event.getNewRange());
 			}
 		});
 
 		cellList.addRowCountChangeHandler(new RowCountChangeEvent.Handler() {
+			@Override
 			public void onRowCountChange(RowCountChangeEvent event) {
 				onRangeOrRowCountChanged();
 			}

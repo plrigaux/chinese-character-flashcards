@@ -15,15 +15,18 @@ public final class CardData extends JavaScriptObject implements ZhongWenCharacte
 	 * The key provider that provides the unique ID of a contact.
 	 */
 	public static final ProvidesKey<ZhongWenCharacter> KEY_PROVIDER = new ProvidesKey<ZhongWenCharacter>() {
+		@Override
 		public Object getKey(ZhongWenCharacter item) {
 			return item == null ? null : item.getId();
 		}
 	};
 	
+	@Override
 	public final native int getId() /*-{
 	return this.i;
 }-*/;
 	
+	@Override
 	public final native String getSimplifiedCharacter() /*-{
 		return this.s;
 	}-*/;
