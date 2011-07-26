@@ -12,8 +12,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Widget;
-import com.plr.flashcard.client.view.MyCard;
 import com.plr.flashcard.client.view.dictionnary.ZwCharBrowser;
+import com.plr.flashcard.client.view.flashcard.FlashCard;
 import com.plr.flashcard.client.view.shishenme.ShiShenme;
 import com.plr.flashcard.client.view.welcome.Welcome;
 
@@ -110,7 +110,7 @@ public class MainPanel extends Composite implements ValueChangeHandler<String> {
 
 		if (FLASH.equals(value)) {
 			insidePanel.clear();
-			MyCard mc = new MyCard();
+			FlashCard mc = new FlashCard();
 			insidePanel.add(mc);
 		} else if (DICTIONNARY.equals(value)) {
 			insidePanel.clear();
