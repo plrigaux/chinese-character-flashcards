@@ -27,11 +27,11 @@ import com.plr.flashcard.client.view.definition.DefinitionPanel;
 /**
  * A form used for editing contacts.
  */
-public class ContactInfoForm extends Composite {
+public class ZwCharDetails extends Composite {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
-	interface Binder extends UiBinder<Widget, ContactInfoForm> {
+	interface Binder extends UiBinder<Widget, ZwCharDetails> {
 	}
 
 	@UiField
@@ -43,7 +43,7 @@ public class ContactInfoForm extends Composite {
 
 //	private ZhongWenCharacter contactInfo;
 
-	public ContactInfoForm() {
+	public ZwCharDetails() {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		// Add the categories to the category box.

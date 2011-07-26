@@ -14,6 +14,8 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.Range;
 
 public class DataControler {
+	private static final int LIMIT = 2400;
+
 	private static DataControler instance = null;
 
 	/**
@@ -21,18 +23,18 @@ public class DataControler {
 	 */
 	private ListDataProvider<ZhongWenCharacter> dataProvider = new ListDataProvider<ZhongWenCharacter>() {
 		@Override
-		protected void onRangeChanged(HasData<ZhongWenCharacter> display) {
+		protected void onRangeChanged(final HasData<ZhongWenCharacter> display) {
 
 			Range visibleRange = display.getVisibleRange();
 
 			List<ZhongWenCharacter> zhongWenCharacters = dataProvider.getList();
 
 			if (zhongWenCharacters.size() > visibleRange.getStart() + visibleRange.getLength()) {
-				super.onRangeChanged(display);
+				onRangeChangedSuper(display);
 			} else {
 
 				if (!hasData(visibleRange)) {
-					super.onRangeChanged(display);
+					onRangeChangedSuper(display);
 					return;
 				}
 
@@ -41,6 +43,8 @@ public class DataControler {
 				System.out.println(resource);
 				RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, resource);
 
+			
+				
 				rb.setCallback(new RequestCallback() {
 
 					@Override
@@ -62,7 +66,7 @@ public class DataControler {
 						for (int i = 0; i < cardDatas.length(); i++) {
 							zhongWenCharacters.add(cardDatas.get(i));
 						}
-
+						onRangeChangedSuper(display);
 					}
 
 					@Override
@@ -78,6 +82,10 @@ public class DataControler {
 					e.printStackTrace();
 				}
 			}
+		}
+		
+		private void onRangeChangedSuper(HasData<ZhongWenCharacter> display){
+			super.onRangeChanged(display);
 		}
 	};
 
@@ -96,7 +104,7 @@ public class DataControler {
 	}
 
 	private boolean hasData(Range visibleRange) {
-		return visibleRange.getStart() + visibleRange.getLength() < 2600;
+		return visibleRange.getStart() + visibleRange.getLength() < LIMIT;
 	}
 
 	public static final native JsArray<CardData> buildCardData(String json) /*-{
