@@ -2,6 +2,7 @@ package com.plr.flashcard.client.view.flashcard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
@@ -31,6 +32,8 @@ import com.plr.flashcard.client.ZhongWenCharacter;
 import com.plr.flashcard.client.view.definition.DefinitionPanel;
 
 public class FlashCard extends Composite {
+
+	private static final int PAGE_SIZE = 15;
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
@@ -80,14 +83,11 @@ public class FlashCard extends Composite {
 					SelectionModel<? super ZhongWenCharacter> selectionModel) {
 
 				shuffle(values);
-
-
 			}
-
 		};
-		cellList.setPageSize(15);
+		
+		cellList.setPageSize(PAGE_SIZE);
 		cellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
-		// cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
 		DataControler.get().addDataDisplay(cellList);
 
@@ -143,6 +143,7 @@ public class FlashCard extends Composite {
 	}
 
 	private int idx = 0;
+	private int pageIdx = 1;
 
 	private void onRangeOrRowCountChanged() {
 
@@ -163,14 +164,10 @@ public class FlashCard extends Composite {
 		buttonsDiv.setClassName(style.disabled());
 		definitionPanel.setVisible(false);
 
-		// idx++;
-		// cellList.setVisibleRange(idx, 1);
-
 		if (idx >= theList.size()) {
-			cellList.setVisibleRange(idx, 15);
+			cellList.setVisibleRange(pageIdx++ * PAGE_SIZE, PAGE_SIZE);
 		} else {
-			zwChar = theList.get(idx++);
-			character.setText(zwChar.getSimplifiedCharacter());
+			setChar();
 		}
 	}
 
@@ -204,8 +201,13 @@ public class FlashCard extends Composite {
 			theList.set(i, c2);
 		}
 		
+		setChar();
+
+	}
+
+	private void setChar() {
 		zwChar = theList.get(idx++);
 		character.setText(zwChar.getSimplifiedCharacter());
-
+		AppResources.logger.log(Level.INFO, "Rank " + zwChar.getId() + " char: "+ zwChar.getSimplifiedCharacter());
 	}
 }
