@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.plr.flashcard.client.AppResources;
 import com.plr.flashcard.client.CardData.CharDefinition;
 import com.plr.flashcard.client.Tone;
 import com.plr.flashcard.client.ZhongWenCharacter;
@@ -63,7 +64,7 @@ public class DefinitionPanel extends Composite {
 				CharDefinition charDefinition = zwChar.getDefinition(j);
 
 				Label lp = new Label(charDefinition.getPinyin());
-				lp.addStyleName("pinyin");
+				lp.addStyleName(AppResources.INSTANCE.style().pinyin());
 
 				int tone = charDefinition.getTone();
 				

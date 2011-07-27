@@ -21,6 +21,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.plr.flashcard.client.AppResources;
 import com.plr.flashcard.client.ZhongWenCharacter;
 import com.plr.flashcard.client.view.definition.DefinitionPanel;
 
@@ -37,7 +38,7 @@ public class ZwCharDetails extends Composite {
 	@UiField
 	Label idLabel;
 	@UiField
-	Label chararterLabel;
+	Label characterLabel;
 	@UiField
 	DefinitionPanel definitionPanel;
 
@@ -51,6 +52,9 @@ public class ZwCharDetails extends Composite {
 		// Initialize the contact to null.
 		setCharater(null);
 
+		characterLabel.addStyleName(AppResources.INSTANCE.style().character());
+		
+		System.out.println(AppResources.INSTANCE.style().character());
 	}
 
 	public void setCharater(ZhongWenCharacter zwChar) {
@@ -58,7 +62,7 @@ public class ZwCharDetails extends Composite {
 		// updateButton.setEnabled(contact != null);
 		if (zwChar != null) {
 			idLabel.setText("" + zwChar.getId());
-			chararterLabel.setText(zwChar.getSimplifiedCharacter());
+			characterLabel.setText(zwChar.getSimplifiedCharacter());
 			
 			definitionPanel.setCharater(zwChar);
 		}

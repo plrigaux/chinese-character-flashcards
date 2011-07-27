@@ -13,6 +13,7 @@ public class Application implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 
+		AppResources.INSTANCE.style().ensureInjected();
 		
 		RootLayoutPanel rootPanel = RootLayoutPanel.get();
 		// ScrollPanel sp = new ScrollPanel();

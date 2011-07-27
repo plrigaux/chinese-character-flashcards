@@ -43,8 +43,6 @@ public class DataControler {
 				System.out.println(resource);
 				RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, resource);
 
-			
-				
 				rb.setCallback(new RequestCallback() {
 
 					@Override
@@ -83,8 +81,8 @@ public class DataControler {
 				}
 			}
 		}
-		
-		private void onRangeChangedSuper(HasData<ZhongWenCharacter> display){
+
+		private void onRangeChangedSuper(HasData<ZhongWenCharacter> display) {
 			super.onRangeChanged(display);
 		}
 	};
