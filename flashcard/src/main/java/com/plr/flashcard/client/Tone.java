@@ -2,7 +2,9 @@ package com.plr.flashcard.client;
 
 public enum Tone {
 
-	TONE1('\u0304', "tone1"), TONE2('\u0301', "tone2"), TONE3('\u030C', "tone3"), TONE4('\u0300', "tone4"), TONE5(null, "tone5");
+	TONE1('\u0304', AppResources.INSTANCE.style().tone1()), TONE2('\u0301', AppResources.INSTANCE.style().tone2()), TONE3(
+			'\u030C', AppResources.INSTANCE.style().tone3()), TONE4('\u0300', AppResources.INSTANCE.style().tone4()), TONE5(null,
+			AppResources.INSTANCE.style().tone5());
 
 	public Character getToneChar() {
 		return toneChar;

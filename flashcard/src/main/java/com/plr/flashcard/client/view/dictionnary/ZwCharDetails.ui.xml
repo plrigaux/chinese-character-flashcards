@@ -37,7 +37,7 @@
 							Character:
 						</td>
 						<td>
-							<g:Label ui:field='chararterLabel' styleName="chararter" />
+							<g:Label ui:field='characterLabel' />
 						</td>
 					</tr>
 

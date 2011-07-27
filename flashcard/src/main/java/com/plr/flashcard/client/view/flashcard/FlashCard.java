@@ -22,6 +22,7 @@ import com.google.gwt.view.client.RangeChangeEvent;
 import com.google.gwt.view.client.RowCountChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionModel;
+import com.plr.flashcard.client.AppResources;
 import com.plr.flashcard.client.CardData;
 import com.plr.flashcard.client.DataControler;
 import com.plr.flashcard.client.ZhongWenCharacter;
@@ -118,6 +119,7 @@ public class FlashCard extends Composite {
 
 		show.addStyleName(style.showButton());
 
+		character.addStyleName(AppResources.INSTANCE.style().character());
 	}
 
 	private static class CharacterCell extends AbstractCell<ZhongWenCharacter> {

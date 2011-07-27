@@ -25,6 +25,7 @@ import com.google.gwt.view.client.SelectionModel;
 import com.plr.flashcard.client.CardData;
 import com.plr.flashcard.client.CardData.CharDefinition;
 import com.plr.flashcard.client.DataControler;
+import com.plr.flashcard.client.AppResources;
 import com.plr.flashcard.client.Tone;
 import com.plr.flashcard.client.ZhongWenCharacter;
 import com.plr.flashcard.client.view.definition.DefinitionPanel;
@@ -66,7 +67,9 @@ public class ShiShenme extends Composite {
 	public ShiShenme() {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		character.addStyleName("chararter");
+		
+		
+		character.addStyleName(AppResources.INSTANCE.style().character());
 
 		
 		CharacterCell cCell = new CharacterCell();

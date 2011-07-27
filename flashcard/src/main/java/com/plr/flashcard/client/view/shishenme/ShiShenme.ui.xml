@@ -32,9 +32,12 @@
 			vertical-align: middle;
 		}
 	</ui:style>
+	
+	<ui:with field='res' type='com.plr.flashcard.client.AppResources'/>
+	
 	<g:HTMLPanel>
 		<div style="text-align:center">
-			<g:Label ui:field="character" />
+			<g:Label ui:field="character"  />
 
 
 			<g:TextBox ui:field='answer' width="75px" />

@@ -33,7 +33,7 @@
 			width:80% 
 		}
 	</ui:style>
-	<ui:style field='otherStyle' src="../../../flashcard.css" />
+	<ui:with field='res' type='com.plr.flashcard.client.AppResources'/>
 		
 	<g:HTMLPanel styleName="{style.panel}">
 	
@@ -51,7 +51,7 @@
 		</div>
 
 		<div>
-			<g:Label ui:field="character" styleName="{otherStyle.chararter}" />
+			<g:Label ui:field="character" />
 		</div>
 		<div class="{style.definitionPanel}">
 			<d:DefinitionPanel ui:field='definitionPanel'
