@@ -1,5 +1,6 @@
 package com.plr.flashcard.client.view.flashcard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.cell.client.AbstractCell;
@@ -12,6 +13,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
+import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
@@ -63,6 +65,8 @@ public class FlashCard extends Composite {
 
 	private CellList<ZhongWenCharacter> cellList;
 
+	List<ZhongWenCharacter> theList = new ArrayList<ZhongWenCharacter>();
+
 	public FlashCard() {
 		initWidget(uiBinder.createAndBindUi(this));
 
@@ -75,12 +79,13 @@ public class FlashCard extends Composite {
 			protected void renderRowValues(SafeHtmlBuilder sb, List<ZhongWenCharacter> values, int start,
 					SelectionModel<? super ZhongWenCharacter> selectionModel) {
 
-				zwChar = values.get(0);
-				character.setText(zwChar.getSimplifiedCharacter());
+				shuffle(values);
+
+
 			}
 
 		};
-		cellList.setPageSize(1);
+		cellList.setPageSize(15);
 		cellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
 		// cellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
@@ -139,26 +144,6 @@ public class FlashCard extends Composite {
 
 	private int idx = 0;
 
-	// @UiHandler("previous")
-	// void onPreviousClick(ClickEvent event) {
-	// definitionPanel.clear();
-	//
-	// idx = idx == 0 ? 0 : idx - 1;
-	// cellList.setVisibleRange(idx, 1);
-	//
-	// // ZhongWenCharacter zwChar = DataControler.get().previous();
-	// // character.setText(zwChar.getSimplifiedCharacter());
-	// }
-
-	// @UiHandler("next")
-	// void onNextClick(ClickEvent event) {
-	// definitionPanel.clear();
-	//
-	// idx++;
-	// cellList.setVisibleRange(idx, 1);
-	//
-	// }
-
 	private void onRangeOrRowCountChanged() {
 
 	}
@@ -178,8 +163,15 @@ public class FlashCard extends Composite {
 		buttonsDiv.setClassName(style.disabled());
 		definitionPanel.setVisible(false);
 
-		idx++;
-		cellList.setVisibleRange(idx, 1);
+		// idx++;
+		// cellList.setVisibleRange(idx, 1);
+
+		if (idx >= theList.size()) {
+			cellList.setVisibleRange(idx, 15);
+		} else {
+			zwChar = theList.get(idx++);
+			character.setText(zwChar.getSimplifiedCharacter());
+		}
 	}
 
 	@UiHandler("hard")
@@ -195,5 +187,25 @@ public class FlashCard extends Composite {
 	@UiHandler("easy")
 	void onEasyClick(ClickEvent event) {
 		nextZwChar();
+	}
+
+	private void shuffle(List<ZhongWenCharacter> values) {
+		idx = 0;
+
+		theList.clear();
+		theList.addAll(values);
+
+		for (int i = 0; i < theList.size(); i++) {
+			int index = Random.nextInt(theList.size());
+
+			ZhongWenCharacter c1 = theList.get(i);
+			ZhongWenCharacter c2 = theList.get(index);
+			theList.set(index, c1);
+			theList.set(i, c2);
+		}
+		
+		zwChar = theList.get(idx++);
+		character.setText(zwChar.getSimplifiedCharacter());
+
 	}
 }
