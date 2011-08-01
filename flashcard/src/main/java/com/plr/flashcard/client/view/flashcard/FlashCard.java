@@ -29,6 +29,8 @@ import com.plr.flashcard.client.AppResources;
 import com.plr.flashcard.client.CardData;
 import com.plr.flashcard.client.DataControler;
 import com.plr.flashcard.client.ZhongWenCharacter;
+import com.plr.flashcard.client.system.LeitnerSystem;
+import com.plr.flashcard.client.system.LeitnerSystem.LEVEL;
 import com.plr.flashcard.client.view.definition.DefinitionPanel;
 
 public class FlashCard extends Composite {
@@ -68,10 +70,16 @@ public class FlashCard extends Composite {
 
 	private CellList<ZhongWenCharacter> cellList;
 
-	List<ZhongWenCharacter> theList = new ArrayList<ZhongWenCharacter>();
+	// List<ZhongWenCharacter> theList = new ArrayList<ZhongWenCharacter>();
+
+	private final LeitnerSystem leitnerSystem;
 
 	public FlashCard() {
 		initWidget(uiBinder.createAndBindUi(this));
+
+		leitnerSystem = new LeitnerSystem();
+		
+		leitnerSystem.setNew(10);
 
 		// Create a CellList.
 		CharacterCell contactCell = new CharacterCell();
@@ -81,12 +89,12 @@ public class FlashCard extends Composite {
 			@Override
 			protected void renderRowValues(SafeHtmlBuilder sb, List<ZhongWenCharacter> values, int start,
 					SelectionModel<? super ZhongWenCharacter> selectionModel) {
-
-				shuffle(values);
+				setChar(values);
+				// shuffle(values);
 			}
 		};
-		
-		cellList.setPageSize(PAGE_SIZE);
+
+		// cellList.setPageSize(PAGE_SIZE);
 		cellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
 
 		DataControler.get().addDataDisplay(cellList);
@@ -125,6 +133,8 @@ public class FlashCard extends Composite {
 		show.addStyleName(style.showButton());
 
 		character.addStyleName(AppResources.INSTANCE.style().character());
+		
+		nextZwChar();
 	}
 
 	private static class CharacterCell extends AbstractCell<ZhongWenCharacter> {
@@ -142,8 +152,8 @@ public class FlashCard extends Composite {
 		showDiv.setClassName(style.disabled());
 	}
 
-	private int idx = 0;
-	private int pageIdx = 1;
+//	private int idx = 0;
+//	private int pageIdx = 1;
 
 	private void onRangeOrRowCountChanged() {
 
@@ -155,59 +165,67 @@ public class FlashCard extends Composite {
 
 	@UiHandler("again")
 	void onAgainClick(ClickEvent event) {
+		
+		leitnerSystem.answerCard(LEVEL.LEVEL_1, zwChar);
 		nextZwChar();
-
 	}
 
-	private void nextZwChar() {
-		showDiv.setClassName(style.enabled());
-		buttonsDiv.setClassName(style.disabled());
-		definitionPanel.setVisible(false);
-
-		if (idx >= theList.size()) {
-			cellList.setVisibleRange(pageIdx++ * PAGE_SIZE, PAGE_SIZE);
-		} else {
-			setChar();
-		}
-	}
 
 	@UiHandler("hard")
 	void onHardClick(ClickEvent event) {
+		leitnerSystem.answerCard(LEVEL.LEVEL_2, zwChar);
 		nextZwChar();
 	}
 
 	@UiHandler("good")
 	void onGoodClick(ClickEvent event) {
+		leitnerSystem.answerCard(LEVEL.LEVEL_3, zwChar);
 		nextZwChar();
 	}
 
 	@UiHandler("easy")
 	void onEasyClick(ClickEvent event) {
+		leitnerSystem.answerCard(LEVEL.LEVEL_4, zwChar);
 		nextZwChar();
 	}
+	
+	private void nextZwChar() {
+		showDiv.setClassName(style.enabled());
+		buttonsDiv.setClassName(style.disabled());
+		definitionPanel.setVisible(false);
 
-	private void shuffle(List<ZhongWenCharacter> values) {
-		idx = 0;
+		int charRank = leitnerSystem.getNextCard();
 
-		theList.clear();
-		theList.addAll(values);
-
-		for (int i = 0; i < theList.size(); i++) {
-			int index = Random.nextInt(theList.size());
-
-			ZhongWenCharacter c1 = theList.get(i);
-			ZhongWenCharacter c2 = theList.get(index);
-			theList.set(index, c1);
-			theList.set(i, c2);
-		}
-		
-		setChar();
-
+		cellList.setVisibleRange(charRank, 1);
 	}
 
-	private void setChar() {
-		zwChar = theList.get(idx++);
+
+	// private void shuffle(List<ZhongWenCharacter> values) {
+	// idx = 0;
+	//
+	// theList.clear();
+	// theList.addAll(values);
+	//
+	// for (int i = 0; i < theList.size(); i++) {
+	// int index = Random.nextInt(theList.size());
+	//
+	// ZhongWenCharacter c1 = theList.get(i);
+	// ZhongWenCharacter c2 = theList.get(index);
+	// theList.set(index, c1);
+	// theList.set(i, c2);
+	// }
+	//
+	// setChar();
+	//
+	// }
+
+	private void setChar(List<ZhongWenCharacter> values) {
+		if (values.isEmpty()) {
+			return;
+		}
+		
+		zwChar = values.get(0);
 		character.setText(zwChar.getSimplifiedCharacter());
-		AppResources.logger.log(Level.INFO, "Rank " + zwChar.getId() + " char: "+ zwChar.getSimplifiedCharacter());
+		AppResources.logger.log(Level.INFO, "Rank " + zwChar.getId() + " char: " + zwChar.getSimplifiedCharacter());
 	}
 }

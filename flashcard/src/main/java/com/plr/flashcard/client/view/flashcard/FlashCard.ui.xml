@@ -48,6 +48,8 @@
 			<g:Button ui:field="good" text="Good" />
 			
 			<g:Button ui:field="easy" text="Easy"  />
+			
+<!-- 			<g:Button ui:field="trivial" text="Trivial"  /> -->
 		</div>
 
 		<div>
