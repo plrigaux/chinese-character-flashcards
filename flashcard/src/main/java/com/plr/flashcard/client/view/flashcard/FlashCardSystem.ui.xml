@@ -1,0 +1,60 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:d='urn:import:com.plr.flashcard.client.view.definition'>
+	<ui:style type="com.plr.flashcard.client.view.flashcard.FlashCardStyle">
+		.important {
+			font-weight: bold;
+		}
+		
+		.enabled {
+			display: block;
+		}
+		
+		.disabled {
+			display: none;
+		}
+		
+		.panel {
+			text-align: center;
+		}
+		
+		.button {
+			margin: 0px 15px;
+			width: 60px;
+		}
+		
+		.showButton {
+			width: 80%;
+		}
+		
+		.definitionPanel {
+			margin: 0px auto;
+			text-align: left;
+			width: 80%
+		}
+	</ui:style>
+	<ui:with field='res' type='com.plr.flashcard.client.AppResources' />
+
+	<g:HTMLPanel styleName="{style.panel}">
+		<table>
+			<tr>
+				<td>
+					new Characters
+				</td>
+				<td>
+					<g:TextBox ui:field='newCharacters' />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Training nb
+				</td>
+				<td>
+					<g:TextBox ui:field='trainingNb' />
+				</td>
+			</tr>
+		</table>
+		<g:FlexTable  ui:field="results"/>
+		<g:Button ui:field="start" text="Start" />
+	</g:HTMLPanel>
+</ui:UiBinder> 

@@ -1,7 +1,9 @@
 package com.plr.flashcard.client.system;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
@@ -69,8 +71,11 @@ public class LeitnerSystem {
 	public void setNew(int newNb) {
 		LinkedHashSet<Integer> learningBox = LeitnerLearningBoxes.get(LEVEL.LEVEL_1);
 
-		for (int i = 0; i < newNb; i++) {
+		int limit = newNb + maxId;
+		for (int i = maxId; i < limit; i++) {
 			learningBox.add(i + 1);
+
+			maxId = Math.max(i + 1, maxId);
 		}
 
 	}
@@ -100,7 +105,8 @@ public class LeitnerSystem {
 			}
 		}
 
-		if (zc != -1) {
+		//Not found
+		if (zc == -1) {
 			out: for (int i = l.ordinal(); i < LEVEL.values().length; i++) {
 
 				LinkedHashSet<Integer> learningBox = LeitnerLearningBoxes.get(LEVEL.values()[i]);
@@ -129,4 +135,35 @@ public class LeitnerSystem {
 		maxId = Math.max(zwchar.getId(), maxId);
 	}
 
+	public void shuffle(List<Integer> values) {
+
+		Random r = new Random();
+		for (int i = 0; i < values.size(); i++) {
+			int index = r.nextInt(values.size());
+
+			Integer c1 = values.get(i);
+			Integer c2 = values.get(index);
+			values.set(index, c1);
+			values.set(i, c2);
+		}
+	}
+
+	public int size(LEVEL l) {
+		return LeitnerLearningBoxes.get(l).size();
+	}
+
+	public List<Integer> getTrainingList(int listSize) {
+		List<Integer> l = new ArrayList<Integer>();
+
+		for (int i = 0; i < listSize; i++) {
+			int charIdx = getNextCard();
+			if (charIdx != -1) {
+				l.add(charIdx);
+			} else {
+				break;
+			}
+		}
+		shuffle(l);
+		return l;
+	}
 }

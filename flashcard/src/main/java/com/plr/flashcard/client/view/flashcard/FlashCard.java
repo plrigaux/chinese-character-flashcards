@@ -1,6 +1,5 @@
 package com.plr.flashcard.client.view.flashcard;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -14,10 +13,10 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
-import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.Range;
@@ -34,8 +33,6 @@ import com.plr.flashcard.client.system.LeitnerSystem.LEVEL;
 import com.plr.flashcard.client.view.definition.DefinitionPanel;
 
 public class FlashCard extends Composite {
-
-	private static final int PAGE_SIZE = 15;
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
@@ -74,12 +71,20 @@ public class FlashCard extends Composite {
 
 	private final LeitnerSystem leitnerSystem;
 
-	public FlashCard() {
+	private final List<Integer> trainingList;
+
+	private final FlashCardSystem flashCardSystem;
+
+	public FlashCard(FlashCardSystem flashCardSystem, int newItems, int listSize) {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		leitnerSystem = new LeitnerSystem();
-		
-		leitnerSystem.setNew(10);
+		this.flashCardSystem = flashCardSystem;
+
+		leitnerSystem = flashCardSystem.getLeitnerSystem();
+
+		leitnerSystem.setNew(newItems);
+
+		trainingList = leitnerSystem.getTrainingList(listSize);
 
 		// Create a CellList.
 		CharacterCell contactCell = new CharacterCell();
@@ -133,7 +138,7 @@ public class FlashCard extends Composite {
 		show.addStyleName(style.showButton());
 
 		character.addStyleName(AppResources.INSTANCE.style().character());
-		
+
 		nextZwChar();
 	}
 
@@ -152,8 +157,8 @@ public class FlashCard extends Composite {
 		showDiv.setClassName(style.disabled());
 	}
 
-//	private int idx = 0;
-//	private int pageIdx = 1;
+	// private int idx = 0;
+	// private int pageIdx = 1;
 
 	private void onRangeOrRowCountChanged() {
 
@@ -165,11 +170,10 @@ public class FlashCard extends Composite {
 
 	@UiHandler("again")
 	void onAgainClick(ClickEvent event) {
-		
+
 		leitnerSystem.answerCard(LEVEL.LEVEL_1, zwChar);
 		nextZwChar();
 	}
-
 
 	@UiHandler("hard")
 	void onHardClick(ClickEvent event) {
@@ -188,42 +192,31 @@ public class FlashCard extends Composite {
 		leitnerSystem.answerCard(LEVEL.LEVEL_4, zwChar);
 		nextZwChar();
 	}
-	
+
 	private void nextZwChar() {
 		showDiv.setClassName(style.enabled());
 		buttonsDiv.setClassName(style.disabled());
 		definitionPanel.setVisible(false);
 
-		int charRank = leitnerSystem.getNextCard();
+		if (trainingList.isEmpty()) {
+			Panel panel = (Panel) this.getParent();
+			this.removeFromParent();
+			flashCardSystem.init();
+			panel.add(flashCardSystem);
+			return;
+		}
 
-		cellList.setVisibleRange(charRank, 1);
+		int charRank = trainingList.remove(trainingList.size() - 1);
+
+		//cause the rank start at 1 and index start at 0
+		cellList.setVisibleRange(charRank - 1, 1);
 	}
-
-
-	// private void shuffle(List<ZhongWenCharacter> values) {
-	// idx = 0;
-	//
-	// theList.clear();
-	// theList.addAll(values);
-	//
-	// for (int i = 0; i < theList.size(); i++) {
-	// int index = Random.nextInt(theList.size());
-	//
-	// ZhongWenCharacter c1 = theList.get(i);
-	// ZhongWenCharacter c2 = theList.get(index);
-	// theList.set(index, c1);
-	// theList.set(i, c2);
-	// }
-	//
-	// setChar();
-	//
-	// }
 
 	private void setChar(List<ZhongWenCharacter> values) {
 		if (values.isEmpty()) {
 			return;
 		}
-		
+
 		zwChar = values.get(0);
 		character.setText(zwChar.getSimplifiedCharacter());
 		AppResources.logger.log(Level.INFO, "Rank " + zwChar.getId() + " char: " + zwChar.getSimplifiedCharacter());
