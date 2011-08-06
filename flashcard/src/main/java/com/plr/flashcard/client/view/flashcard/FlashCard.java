@@ -28,7 +28,6 @@ import com.plr.flashcard.client.AppResources;
 import com.plr.flashcard.client.CardData;
 import com.plr.flashcard.client.DataControler;
 import com.plr.flashcard.client.ZhongWenCharacter;
-import com.plr.flashcard.client.system.LeitnerSystem;
 import com.plr.flashcard.client.system.LeitnerSystem.LEVEL;
 import com.plr.flashcard.client.view.definition.DefinitionPanel;
 
@@ -69,8 +68,7 @@ public class FlashCard extends Composite {
 
 	// List<ZhongWenCharacter> theList = new ArrayList<ZhongWenCharacter>();
 
-	private final LeitnerSystem leitnerSystem;
-
+	
 	private final List<Integer> trainingList;
 
 	private final FlashCardSystem flashCardSystem;
@@ -80,11 +78,9 @@ public class FlashCard extends Composite {
 
 		this.flashCardSystem = flashCardSystem;
 
-		leitnerSystem = flashCardSystem.getLeitnerSystem();
+		flashCardSystem.getLeitnerSystem().setNew(newItems);
 
-		leitnerSystem.setNew(newItems);
-
-		trainingList = leitnerSystem.getTrainingList(listSize);
+		trainingList = flashCardSystem.getLeitnerSystem().getTrainingList(listSize);
 
 		// Create a CellList.
 		CharacterCell contactCell = new CharacterCell();
@@ -171,25 +167,25 @@ public class FlashCard extends Composite {
 	@UiHandler("again")
 	void onAgainClick(ClickEvent event) {
 
-		leitnerSystem.answerCard(LEVEL.LEVEL_1, zwChar);
+		flashCardSystem.getLeitnerSystem().answerCard(LEVEL.LEVEL_1, zwChar);
 		nextZwChar();
 	}
 
 	@UiHandler("hard")
 	void onHardClick(ClickEvent event) {
-		leitnerSystem.answerCard(LEVEL.LEVEL_2, zwChar);
+		flashCardSystem.getLeitnerSystem().answerCard(LEVEL.LEVEL_2, zwChar);
 		nextZwChar();
 	}
 
 	@UiHandler("good")
 	void onGoodClick(ClickEvent event) {
-		leitnerSystem.answerCard(LEVEL.LEVEL_3, zwChar);
+		flashCardSystem.getLeitnerSystem().answerCard(LEVEL.LEVEL_3, zwChar);
 		nextZwChar();
 	}
 
 	@UiHandler("easy")
 	void onEasyClick(ClickEvent event) {
-		leitnerSystem.answerCard(LEVEL.LEVEL_4, zwChar);
+		flashCardSystem.getLeitnerSystem().answerCard(LEVEL.LEVEL_4, zwChar);
 		nextZwChar();
 	}
 
