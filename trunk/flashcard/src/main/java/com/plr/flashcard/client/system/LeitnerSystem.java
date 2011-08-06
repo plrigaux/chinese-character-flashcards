@@ -7,12 +7,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
+import java.util.logging.Level;
 
+import com.google.gwt.storage.client.Storage;
+import com.plr.flashcard.client.AppResources;
 import com.plr.flashcard.client.ZhongWenCharacter;
 
 public class LeitnerSystem {
 
-	private Map<LEVEL, LinkedHashSet<Integer>> LeitnerLearningBoxes = new TreeMap<LEVEL, LinkedHashSet<Integer>>();
+	private static final String CHINESE_FLASHCARD_LEITNER = "chinese.flashcard.leitner";
+
+	private Map<LEVEL, LinkedHashSet<Integer>> leitnerLearningBoxes = new TreeMap<LEVEL, LinkedHashSet<Integer>>();
 
 	private LinkedHashSet<Integer> buffer = new LinkedHashSet<Integer>();
 
@@ -54,10 +59,28 @@ public class LeitnerSystem {
 		}
 	}
 
-	public LeitnerSystem() {
+	private LeitnerSystem() {
 		for (LEVEL l : LEVEL.values()) {
-			LeitnerLearningBoxes.put(l, new LinkedHashSet<Integer>());
+			leitnerLearningBoxes.put(l, new LinkedHashSet<Integer>());
 		}
+	}
+
+	private LeitnerSystem(Map<Double, List<Integer>> map) {
+		this();
+
+		if (map != null) {
+			for (Map.Entry<Double, List<Integer>> en : map.entrySet()) {
+
+				double kl = en.getKey();
+				LEVEL l = LEVEL.values()[(int)kl];
+
+				LinkedHashSet<Integer> set = new LinkedHashSet<Integer>();
+				set.addAll(en.getValue());
+
+				leitnerLearningBoxes.put(l, set);
+			}
+		}
+
 	}
 
 	int newToday() {
@@ -69,7 +92,7 @@ public class LeitnerSystem {
 	}
 
 	public void setNew(int newNb) {
-		LinkedHashSet<Integer> learningBox = LeitnerLearningBoxes.get(LEVEL.LEVEL_1);
+		LinkedHashSet<Integer> learningBox = leitnerLearningBoxes.get(LEVEL.LEVEL_1);
 
 		int limit = newNb + maxId;
 		for (int i = maxId; i < limit; i++) {
@@ -82,7 +105,7 @@ public class LeitnerSystem {
 
 	public int totalSize() {
 		int totalSize = 0;
-		for (LinkedHashSet<Integer> learningBox : LeitnerLearningBoxes.values()) {
+		for (LinkedHashSet<Integer> learningBox : leitnerLearningBoxes.values()) {
 			totalSize += learningBox.size();
 		}
 		return totalSize;
@@ -95,7 +118,7 @@ public class LeitnerSystem {
 
 		out: for (int i = l.ordinal(); i >= 0; i--) {
 
-			LinkedHashSet<Integer> learningBox = LeitnerLearningBoxes.get(LEVEL.values()[i]);
+			LinkedHashSet<Integer> learningBox = leitnerLearningBoxes.get(LEVEL.values()[i]);
 
 			Iterator<Integer> it = learningBox.iterator();
 			while (it.hasNext()) {
@@ -105,11 +128,11 @@ public class LeitnerSystem {
 			}
 		}
 
-		//Not found
+		// Not found
 		if (zc == -1) {
 			out: for (int i = l.ordinal(); i < LEVEL.values().length; i++) {
 
-				LinkedHashSet<Integer> learningBox = LeitnerLearningBoxes.get(LEVEL.values()[i]);
+				LinkedHashSet<Integer> learningBox = leitnerLearningBoxes.get(LEVEL.values()[i]);
 
 				Iterator<Integer> it = learningBox.iterator();
 				while (it.hasNext()) {
@@ -129,7 +152,7 @@ public class LeitnerSystem {
 
 	public void answerCard(LEVEL level, ZhongWenCharacter zwchar) {
 		buffer.remove(zwchar.getSimplifiedCharacter());
-		LinkedHashSet<Integer> levelMap = LeitnerLearningBoxes.get(level);
+		LinkedHashSet<Integer> levelMap = leitnerLearningBoxes.get(level);
 		levelMap.add(zwchar.getId());
 
 		maxId = Math.max(zwchar.getId(), maxId);
@@ -149,7 +172,7 @@ public class LeitnerSystem {
 	}
 
 	public int size(LEVEL l) {
-		return LeitnerLearningBoxes.get(l).size();
+		return leitnerLearningBoxes.get(l).size();
 	}
 
 	public List<Integer> getTrainingList(int listSize) {
@@ -165,5 +188,60 @@ public class LeitnerSystem {
 		}
 		shuffle(l);
 		return l;
+	}
+
+	public void save() {
+		LeitnerSaverFactory saverFactory = new LeitnerSaverFactory();
+		LeitnerSaver saver = saverFactory.createSaver();
+
+		Map<Double, List<Integer>> map = new TreeMap<Double, List<Integer>>();
+
+		for (Map.Entry<LEVEL, LinkedHashSet<Integer>> en : leitnerLearningBoxes.entrySet()) {
+
+			double level = en.getKey().ordinal();
+			ArrayList<Integer> list = new ArrayList<Integer>();
+
+			list.addAll(en.getValue());
+
+			map.put(level, list);
+		}
+
+		saver.setMap(map);
+
+		String saveString = saverFactory.serializeToJson(saver);
+
+		AppResources.logger.log(Level.INFO, "saveString: " + saveString);
+
+		Storage stockStore = Storage.getLocalStorageIfSupported();
+		if (stockStore != null) {
+			stockStore.setItem(CHINESE_FLASHCARD_LEITNER, saveString);
+		} else {
+			AppResources.logger.log(Level.ALL, "Local storage not Suported");
+		}
+
+	}
+
+	static public LeitnerSystem load() {
+		Storage stockStore = Storage.getLocalStorageIfSupported();
+		if (stockStore != null) {
+			String saveString = stockStore.getItem(CHINESE_FLASHCARD_LEITNER);
+
+			AppResources.logger.log(Level.INFO, "saveString: " + saveString);
+			if (saveString != null) {
+				LeitnerSaverFactory saverFactory = new LeitnerSaverFactory();
+
+				LeitnerSaver saver = saverFactory.deserializeFromJson(saveString);
+
+				Map<Double, List<Integer>> map = saver.getMap();
+
+				LeitnerSystem ls = new LeitnerSystem(map);
+
+				return ls;
+			}
+		} else {
+			AppResources.logger.log(Level.ALL, "Local storage not Suported");
+		}
+
+		return new LeitnerSystem();
 	}
 }

@@ -30,12 +30,12 @@ public class FlashCardSystem extends Composite {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
-	private LeitnerSystem ls = null;
+	private LeitnerSystem leitnerSystem = null;
 
 	public FlashCardSystem() {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		ls = new LeitnerSystem();
+		leitnerSystem =  LeitnerSystem.load();
 
 		init();
 	}
@@ -74,13 +74,16 @@ public class FlashCardSystem extends Composite {
 		for (LeitnerSystem.LEVEL l : LeitnerSystem.LEVEL.values()) {
 
 			results.setText(row, 0, l.name());
-			results.setText(row, 1, "" + ls.size(l));
+			results.setText(row, 1, "" + leitnerSystem.size(l));
 			row++;
 		}
+		newCharacters.setText("5");
+		trainingNb.setText("20");
+		leitnerSystem.save();
 	}
 
 	public LeitnerSystem getLeitnerSystem() {
-		return ls;
+		return leitnerSystem;
 	}
 
 }

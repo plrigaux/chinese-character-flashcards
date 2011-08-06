@@ -27,6 +27,8 @@
 
 	<inherits name="com.google.gwt.resources.Resources" />
 	<inherits name="com.google.gwt.json.JSON" />
+	
+	<inherits name="com.google.web.bindery.autobean.AutoBean" />
 	<!-- <inherits name="com.google.gwt.i18n.I18N" /> -->
 
 	<!-- English language, independent of country -->
