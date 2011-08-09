@@ -7,21 +7,20 @@ import com.google.web.bindery.autobean.shared.AutoBeanUtils;
 
 public class LeitnerSaverFactory {
 	// Instantiate the factory
-	MyFactory factory = GWT.create(MyFactory.class);
+	LeitnerFactory factory = GWT.create(LeitnerFactory.class);
 
 	// In non-GWT code, use AutoBeanFactoryMagic.create(MyFactory.class);
 
 	public LeitnerSaver createSaver() {
 		// Construct the AutoBean
-		AutoBean<LeitnerSaver> person = factory.person();
+		AutoBean<LeitnerSaver> saver = factory.leitnerSaver();
 
-		// Return the Person interface shim
-		return person.as();
+		return saver.as();
 	}
 
-	public String serializeToJson(LeitnerSaver person) {
+	public String serializeToJson(LeitnerSaver saver) {
 		// Retrieve the AutoBean controller
-		AutoBean<LeitnerSaver> bean = AutoBeanUtils.getAutoBean(person);
+		AutoBean<LeitnerSaver> bean = AutoBeanUtils.getAutoBean(saver);
 
 		return AutoBeanCodex.encode(bean).getPayload();
 	}
@@ -30,5 +29,12 @@ public class LeitnerSaverFactory {
 		AutoBean<LeitnerSaver> bean = AutoBeanCodex.decode(factory,
 				LeitnerSaver.class, json);
 		return bean.as();
+	}
+
+	public LeitnerBoxSaver createBoxSaver() {
+		// Construct the AutoBean
+		AutoBean<LeitnerBoxSaver> saver = factory.leitnerBoxSaver();
+
+		return saver.as();
 	}
 }
