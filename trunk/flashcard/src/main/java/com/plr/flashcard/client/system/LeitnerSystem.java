@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.TreeMap;
 import java.util.logging.Level;
 
+import com.google.gwt.event.shared.UmbrellaException;
 import com.google.gwt.storage.client.Storage;
 import com.plr.flashcard.client.AppResources;
 import com.plr.flashcard.client.ZhongWenCharacter;
@@ -24,7 +25,7 @@ public class LeitnerSystem {
 	private int maxId = 0;
 
 	public enum LEVEL {
-		LEVEL_1(750), LEVEL_2(250), LEVEL_3(100), LEVEL_4(50);
+		NEW(0), LEVEL_1(750), LEVEL_2(250), LEVEL_3(100), LEVEL_4(50);
 
 		final int weight;
 		int sumWeight;
@@ -72,7 +73,7 @@ public class LeitnerSystem {
 			for (Map.Entry<Double, List<Integer>> en : map.entrySet()) {
 
 				double kl = en.getKey();
-				LEVEL l = LEVEL.values()[(int)kl];
+				LEVEL l = LEVEL.values()[(int) kl];
 
 				LinkedHashSet<Integer> set = new LinkedHashSet<Integer>();
 				set.addAll(en.getValue());
@@ -81,6 +82,31 @@ public class LeitnerSystem {
 			}
 		}
 
+	}
+
+	private LeitnerSystem(LeitnerSaver saver) {
+		this();
+
+		maxId = saver.getMaxId();
+		
+		for (LeitnerBoxSaver leitnerBoxes : saver.getLeitnerBoxes()) {
+
+			int kl = leitnerBoxes.getBoxId();
+			LEVEL l = getSafeLevel(kl);
+
+			LinkedHashSet<Integer> set = new LinkedHashSet<Integer>(leitnerBoxes.getElements());
+
+			leitnerLearningBoxes.put(l, set);
+		}
+	}
+
+	private LEVEL getSafeLevel(int kl) {
+
+		kl = Math.min(LEVEL.values().length - 1, kl);
+		kl = Math.max(0, kl);
+
+		LEVEL l = LEVEL.values()[kl];
+		return l;
 	}
 
 	int newToday() {
@@ -92,7 +118,7 @@ public class LeitnerSystem {
 	}
 
 	public void setNew(int newNb) {
-		LinkedHashSet<Integer> learningBox = leitnerLearningBoxes.get(LEVEL.LEVEL_1);
+		LinkedHashSet<Integer> learningBox = leitnerLearningBoxes.get(LEVEL.NEW);
 
 		int limit = newNb + maxId;
 		for (int i = maxId; i < limit; i++) {
@@ -100,7 +126,6 @@ public class LeitnerSystem {
 
 			maxId = Math.max(i + 1, maxId);
 		}
-
 	}
 
 	public int totalSize() {
@@ -114,37 +139,51 @@ public class LeitnerSystem {
 	public int getNextCard() {
 		int zc = -1;
 
-		LEVEL l = LEVEL.getLevelRand();
+		zc = getAndRemove(LEVEL.NEW);
 
-		out: for (int i = l.ordinal(); i >= 0; i--) {
-
-			LinkedHashSet<Integer> learningBox = leitnerLearningBoxes.get(LEVEL.values()[i]);
-
-			Iterator<Integer> it = learningBox.iterator();
-			while (it.hasNext()) {
-				zc = it.next();
-				it.remove();
-				break out;
-			}
-		}
-
+		
+		
 		// Not found
 		if (zc == -1) {
-			out: for (int i = l.ordinal(); i < LEVEL.values().length; i++) {
+			LEVEL level = LEVEL.getLevelRand();
+			for (int i = level.ordinal(); i >= 0; i--) {
 
-				LinkedHashSet<Integer> learningBox = leitnerLearningBoxes.get(LEVEL.values()[i]);
+				zc = getAndRemove(LEVEL.values()[i]);
 
-				Iterator<Integer> it = learningBox.iterator();
-				while (it.hasNext()) {
-					zc = it.next();
-					it.remove();
-					break out;
+				if (zc != -1) {
+					break;
+				}
+			}
+			
+			// Not found
+			if (zc == -1) {
+				for (int i = level.ordinal(); i < LEVEL.values().length; i++) {
+
+					zc = getAndRemove(LEVEL.values()[i]);
+
+					if (zc != -1) {
+						break;
+					}
 				}
 			}
 		}
 
 		if (zc != -1) {
 			buffer.add(zc);
+		}
+
+		return zc;
+	}
+
+	private int getAndRemove(LEVEL level) {
+		int zc = -1;
+		LinkedHashSet<Integer> learningBox = leitnerLearningBoxes.get(level);
+
+		Iterator<Integer> it = learningBox.iterator();
+		while (it.hasNext()) {
+			zc = it.next();
+			it.remove();
+			break;
 		}
 
 		return zc;
@@ -194,19 +233,24 @@ public class LeitnerSystem {
 		LeitnerSaverFactory saverFactory = new LeitnerSaverFactory();
 		LeitnerSaver saver = saverFactory.createSaver();
 
-		Map<Double, List<Integer>> map = new TreeMap<Double, List<Integer>>();
+		ArrayList<LeitnerBoxSaver> leitnerBoxes = new ArrayList<LeitnerBoxSaver>();
 
 		for (Map.Entry<LEVEL, LinkedHashSet<Integer>> en : leitnerLearningBoxes.entrySet()) {
 
-			double level = en.getKey().ordinal();
-			ArrayList<Integer> list = new ArrayList<Integer>();
+			LeitnerBoxSaver boxSaver = saverFactory.createBoxSaver();
 
-			list.addAll(en.getValue());
+			int level = en.getKey().ordinal();
+			ArrayList<Integer> elements = new ArrayList<Integer>(en.getValue());
 
-			map.put(level, list);
+			boxSaver.setBoxId(level);
+			boxSaver.setElements(elements);
+
+			leitnerBoxes.add(boxSaver);
 		}
 
-		saver.setMap(map);
+		saver.setLeitnerBoxes(leitnerBoxes);
+		
+		saver.setMaxId(maxId);
 
 		String saveString = saverFactory.serializeToJson(saver);
 
@@ -232,11 +276,14 @@ public class LeitnerSystem {
 
 				LeitnerSaver saver = saverFactory.deserializeFromJson(saveString);
 
-				Map<Double, List<Integer>> map = saver.getMap();
+				try {
+					LeitnerSystem ls = new LeitnerSystem(saver);
 
-				LeitnerSystem ls = new LeitnerSystem(map);
-
-				return ls;
+					return ls;
+				} catch (UmbrellaException e) {
+					// some Auto bin error so clean
+					stockStore.removeItem(CHINESE_FLASHCARD_LEITNER);
+				}
 			}
 		} else {
 			AppResources.logger.log(Level.ALL, "Local storage not Suported");
