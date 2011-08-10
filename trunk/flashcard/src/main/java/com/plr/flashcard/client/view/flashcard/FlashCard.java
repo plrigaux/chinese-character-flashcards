@@ -14,9 +14,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.Range;
@@ -29,9 +27,10 @@ import com.plr.flashcard.client.CardData;
 import com.plr.flashcard.client.DataControler;
 import com.plr.flashcard.client.ZhongWenCharacter;
 import com.plr.flashcard.client.system.LeitnerSystem.LEVEL;
+import com.plr.flashcard.client.system.controler.ControlerSystemWidget;
 import com.plr.flashcard.client.view.definition.DefinitionPanel;
 
-public class FlashCard extends Composite {
+public class FlashCard extends ControlerSystemWidget {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
@@ -68,19 +67,9 @@ public class FlashCard extends Composite {
 
 	// List<ZhongWenCharacter> theList = new ArrayList<ZhongWenCharacter>();
 
-	
-	private final List<Integer> trainingList;
-
-	private final FlashCardSystem flashCardSystem;
-
-	public FlashCard(FlashCardSystem flashCardSystem, int newItems, int listSize) {
+	public FlashCard(FlashCardSystem flashCardSystem) {
+		super(flashCardSystem);
 		initWidget(uiBinder.createAndBindUi(this));
-
-		this.flashCardSystem = flashCardSystem;
-
-		flashCardSystem.getLeitnerSystem().setNew(newItems);
-
-		trainingList = flashCardSystem.getLeitnerSystem().getTrainingList(listSize);
 
 		// Create a CellList.
 		CharacterCell contactCell = new CharacterCell();
@@ -167,25 +156,25 @@ public class FlashCard extends Composite {
 	@UiHandler("again")
 	void onAgainClick(ClickEvent event) {
 
-		flashCardSystem.getLeitnerSystem().answerCard(LEVEL.LEVEL_1, zwChar);
+		getLeitnerSystem().answerCard(LEVEL.LEVEL_1, zwChar);
 		nextZwChar();
 	}
 
 	@UiHandler("hard")
 	void onHardClick(ClickEvent event) {
-		flashCardSystem.getLeitnerSystem().answerCard(LEVEL.LEVEL_2, zwChar);
+		getLeitnerSystem().answerCard(LEVEL.LEVEL_2, zwChar);
 		nextZwChar();
 	}
 
 	@UiHandler("good")
 	void onGoodClick(ClickEvent event) {
-		flashCardSystem.getLeitnerSystem().answerCard(LEVEL.LEVEL_3, zwChar);
+		getLeitnerSystem().answerCard(LEVEL.LEVEL_3, zwChar);
 		nextZwChar();
 	}
 
 	@UiHandler("easy")
 	void onEasyClick(ClickEvent event) {
-		flashCardSystem.getLeitnerSystem().answerCard(LEVEL.LEVEL_4, zwChar);
+		getLeitnerSystem().answerCard(LEVEL.LEVEL_4, zwChar);
 		nextZwChar();
 	}
 
@@ -194,18 +183,12 @@ public class FlashCard extends Composite {
 		buttonsDiv.setClassName(style.disabled());
 		definitionPanel.setVisible(false);
 
-		if (trainingList.isEmpty()) {
-			Panel panel = (Panel) this.getParent();
-			this.removeFromParent();
-			flashCardSystem.init();
-			panel.add(flashCardSystem);
-			return;
+		int charRank = super.nextChar();
+
+		if (charRank >= 0) {
+			// cause the rank start at 1 and index start at 0
+			cellList.setVisibleRange(charRank - 1, 1);
 		}
-
-		int charRank = trainingList.remove(trainingList.size() - 1);
-
-		//cause the rank start at 1 and index start at 0
-		cellList.setVisibleRange(charRank - 1, 1);
 	}
 
 	private void setChar(List<ZhongWenCharacter> values) {
