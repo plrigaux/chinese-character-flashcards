@@ -15,22 +15,22 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.RangeChangeEvent;
 import com.google.gwt.view.client.RowCountChangeEvent;
 import com.google.gwt.view.client.SelectionModel;
+import com.plr.flashcard.client.AppResources;
 import com.plr.flashcard.client.CardData;
 import com.plr.flashcard.client.CardData.CharDefinition;
 import com.plr.flashcard.client.DataControler;
-import com.plr.flashcard.client.AppResources;
 import com.plr.flashcard.client.Tone;
 import com.plr.flashcard.client.ZhongWenCharacter;
+import com.plr.flashcard.client.system.controler.ControlerSystemWidget;
 import com.plr.flashcard.client.view.definition.DefinitionPanel;
 
-public class ShiShenme extends Composite {
+public class ShiShenme extends ControlerSystemWidget {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
@@ -64,16 +64,14 @@ public class ShiShenme extends Composite {
 
 	CompiledResults compiledResults = new CompiledResults();
 
-	public ShiShenme() {
+	public ShiShenme(ShiShenmeSystem shiShenmeSystem) {
+		super(shiShenmeSystem);
 		initWidget(uiBinder.createAndBindUi(this));
 
-		
-		
 		character.addStyleName(AppResources.INSTANCE.style().character());
 
-		
 		CharacterCell cCell = new CharacterCell();
-		
+
 		cellList = new CellList<ZhongWenCharacter>(cCell, CardData.KEY_PROVIDER) {
 
 			@Override
@@ -106,6 +104,7 @@ public class ShiShenme extends Composite {
 	@UiHandler("answerValidate")
 	void onAnswerValidateClick(ClickEvent event) {
 		doValidate();
+		answer.setFocus(true);
 	}
 
 	@UiHandler("answer")
@@ -178,18 +177,21 @@ public class ShiShenme extends Composite {
 
 		new AnswerAnimation(result).run(750);
 
-		nextChar();
+		nextZwChar();
 	}
 
-	private int idx = 0;
-
-	public void nextChar() {
+	public void nextZwChar() {
 		answer.setText("");
 
-		idx++;
-		cellList.setVisibleRange(idx, 1);
+		int charRank = super.nextChar();
+
+		if (charRank >= 0) {
+			// cause the rank start at 1 and index start at 0
+			cellList.setVisibleRange(charRank - 1, 1);
+		}
+
 	}
-	
+
 	static class CharacterCell extends AbstractCell<ZhongWenCharacter> {
 		@Override
 		public void render(Context context, ZhongWenCharacter value, SafeHtmlBuilder sb) {

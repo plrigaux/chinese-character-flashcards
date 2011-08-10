@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.flashcard.client.view.dictionnary.ZwCharBrowser;
 import com.plr.flashcard.client.view.flashcard.FlashCardSystem;
-import com.plr.flashcard.client.view.shishenme.ShiShenme;
+import com.plr.flashcard.client.view.shishenme.ShiShenmeSystem;
 import com.plr.flashcard.client.view.welcome.Welcome;
 
 public class MainPanel extends Composite implements ValueChangeHandler<String> {
@@ -118,7 +118,7 @@ public class MainPanel extends Composite implements ValueChangeHandler<String> {
 			insidePanel.add(charDictionnary);
 		} else if (SHI_SHENME.equals(value)) {
 			insidePanel.clear();
-			ShiShenme charDictionnary = new ShiShenme();
+			ShiShenmeSystem charDictionnary = new ShiShenmeSystem();
 			insidePanel.add(charDictionnary);
 		} else {
 			insidePanel.clear();
