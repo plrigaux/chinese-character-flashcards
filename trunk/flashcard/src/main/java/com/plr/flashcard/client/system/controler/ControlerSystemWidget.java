@@ -4,34 +4,38 @@ import java.util.List;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Panel;
+import com.plr.flashcard.client.system.CharInfo;
 import com.plr.flashcard.client.system.LeitnerSystem;
 
 public abstract class ControlerSystemWidget extends Composite {
 
-	protected final List<Integer> trainingList;
+	protected final List<CharInfo> trainingList;
 
 	protected final ControlerSystem controlerSystem;
+	
+	protected CharInfo charInfo = null;
 
 	protected ControlerSystemWidget(ControlerSystem controlerSystem) {
 		this.controlerSystem = controlerSystem;
+		
+		int newItems = controlerSystem.getNewItemNb();
+		getLeitnerSystem().setNew(newItems);
+		
 		trainingList = controlerSystem.getTrainingList();
-		getLeitnerSystem().setNew(controlerSystem.getNewItemNb());
 	}
 
 	protected LeitnerSystem getLeitnerSystem() {
 		return controlerSystem.getLeitnerSystem();
 	}
 
-	protected int nextChar() {
+	protected void nextChar() {
 		if (trainingList.isEmpty()) {
 			Panel panel = (Panel) this.getParent();
 			this.removeFromParent();
 			controlerSystem.init();
 			panel.add(controlerSystem);
-			return -1;
 		}
 		
-		int charRank = trainingList.remove(trainingList.size() - 1);
-		return charRank;
+		charInfo = trainingList.remove(trainingList.size() - 1);
 	}
 }

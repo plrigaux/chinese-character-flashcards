@@ -59,6 +59,7 @@ public class FlashCard extends ControlerSystemWidget {
 	FlashCardStyle style;
 
 	ZhongWenCharacter zwChar = null;
+	
 
 	interface Binder extends UiBinder<Widget, FlashCard> {
 	}
@@ -156,25 +157,31 @@ public class FlashCard extends ControlerSystemWidget {
 	@UiHandler("again")
 	void onAgainClick(ClickEvent event) {
 
-		getLeitnerSystem().answerCard(LEVEL.LEVEL_1, zwChar);
+		getLeitnerSystem().answerCard(LEVEL.NEW, charInfo);
 		nextZwChar();
 	}
 
 	@UiHandler("hard")
 	void onHardClick(ClickEvent event) {
-		getLeitnerSystem().answerCard(LEVEL.LEVEL_2, zwChar);
+		getLeitnerSystem().answerCard(LEVEL.LEVEL_1, charInfo);
 		nextZwChar();
 	}
 
 	@UiHandler("good")
 	void onGoodClick(ClickEvent event) {
-		getLeitnerSystem().answerCard(LEVEL.LEVEL_3, zwChar);
+		getLeitnerSystem().answerCard(LEVEL.LEVEL_2, charInfo);
 		nextZwChar();
 	}
 
 	@UiHandler("easy")
 	void onEasyClick(ClickEvent event) {
-		getLeitnerSystem().answerCard(LEVEL.LEVEL_4, zwChar);
+		getLeitnerSystem().answerCard(LEVEL.LEVEL_3, charInfo);
+		nextZwChar();
+	}
+	
+	@UiHandler("trivial")
+	void onTrivialClick(ClickEvent event) {
+		getLeitnerSystem().answerCard(LEVEL.LEVEL_4, charInfo);
 		nextZwChar();
 	}
 
@@ -183,11 +190,11 @@ public class FlashCard extends ControlerSystemWidget {
 		buttonsDiv.setClassName(style.disabled());
 		definitionPanel.setVisible(false);
 
-		int charRank = super.nextChar();
+		super.nextChar();
 
-		if (charRank >= 0) {
+		if (charInfo != null) {
 			// cause the rank start at 1 and index start at 0
-			cellList.setVisibleRange(charRank - 1, 1);
+			cellList.setVisibleRange(charInfo.getCharId() - 1, 1);
 		}
 	}
 

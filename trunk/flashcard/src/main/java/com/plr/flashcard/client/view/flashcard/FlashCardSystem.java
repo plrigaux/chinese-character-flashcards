@@ -10,6 +10,11 @@ public class FlashCardSystem extends ControlerSystem {
 		return new FlashCard(this);
 	}
 
+	@Override
+	protected String getSaverKey() {
+		return "chinese.character.trainer.flashcard.leitner";
+	}
+
 	
 	
 }

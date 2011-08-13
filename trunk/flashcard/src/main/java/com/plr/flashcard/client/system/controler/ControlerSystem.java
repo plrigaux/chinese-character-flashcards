@@ -14,9 +14,14 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.plr.flashcard.client.system.CharInfo;
 import com.plr.flashcard.client.system.LeitnerSystem;
+import com.plr.flashcard.client.system.LeitnerSystem.LEVEL;
 
 public abstract class ControlerSystem extends Composite {
+	private static final int DEFAULT_NEW = 5;
+	
+	private static final int SESSION_NUMBER = 20;
 	@UiField
 	TextBox newCharacters;
 	@UiField
@@ -34,10 +39,16 @@ public abstract class ControlerSystem extends Composite {
 
 	private LeitnerSystem leitnerSystem = null;
 
+	private int training = SESSION_NUMBER;
+
+	private int newItem = 0;
+
+	protected abstract String getSaverKey();
+
 	public ControlerSystem() {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		leitnerSystem = LeitnerSystem.load();
+		leitnerSystem = LeitnerSystem.load(getSaverKey());
 
 		init();
 	}
@@ -63,52 +74,53 @@ public abstract class ControlerSystem extends Composite {
 			return;
 		}
 
-
 		Widget widget = getWidget();
 		Panel panel = (Panel) this.getParent();
-		
-		
-		
+
 		this.removeFromParent();
 		panel.add(widget);
-		
-		
+
 	}
 
 	public abstract Widget getWidget();
-
-	private int training;
 
 	public int getTrainingNb() {
 		return training;
 	}
 
-	private int newItem;
-
 	public int getNewItemNb() {
 		return newItem;
 	}
-	
-	public List<Integer> getTrainingList() {
-		return leitnerSystem.getTrainingList(getTrainingNb());
+
+	public List<CharInfo> getTrainingList() {
+		int nb = getTrainingNb();
+		return leitnerSystem.getTrainingList(nb);
 	}
 
 	public void init() {
 		results.clear();
 		int row = 0;
+
 		for (LeitnerSystem.LEVEL l : LeitnerSystem.LEVEL.values()) {
 
 			results.setText(row, 0, l.name());
 			results.setText(row, 1, "" + leitnerSystem.size(l));
 			row++;
 		}
-		newCharacters.setText("5");
-		trainingNb.setText("20");
-		leitnerSystem.save();
+
+		setNewSize();
+		newCharacters.setText("" + getNewItemNb());
+		trainingNb.setText("" + getTrainingNb());
+		leitnerSystem.save(getSaverKey());
 	}
 
 	public LeitnerSystem getLeitnerSystem() {
 		return leitnerSystem;
 	}
 
+	private void setNewSize() {
+		int newSize = leitnerSystem.size(LEVEL.NEW);
+		newItem = DEFAULT_NEW - newSize;
+		newItem = Math.max(0, newItem);
+	}
 }

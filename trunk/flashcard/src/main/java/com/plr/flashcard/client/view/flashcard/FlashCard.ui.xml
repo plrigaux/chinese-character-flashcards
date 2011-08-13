@@ -49,7 +49,7 @@
 			
 			<g:Button ui:field="easy" text="Easy"  />
 			
-<!-- 			<g:Button ui:field="trivial" text="Trivial"  /> -->
+			<g:Button ui:field="trivial" text="Trivial"  /> 
 		</div>
 
 		<div>
