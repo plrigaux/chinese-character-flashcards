@@ -7,9 +7,11 @@ public class ShiShenmeSystem extends ControlerSystem {
 
 	@Override
 	public Widget getWidget() {
-		
 		return new ShiShenme(this);
 	}
-	
 
+	@Override
+	protected String getSaverKey() {
+		return "chinese.character.trainer.shishenme.leitner";
+	}
 }

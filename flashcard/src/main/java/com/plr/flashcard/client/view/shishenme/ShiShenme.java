@@ -56,7 +56,7 @@ public class ShiShenme extends ControlerSystemWidget {
 	StyleAnswer style;
 
 	private ZhongWenCharacter zwChar = null;
-
+	
 	interface Binder extends UiBinder<Widget, ShiShenme> {
 	}
 
@@ -139,18 +139,20 @@ public class ShiShenme extends ControlerSystemWidget {
 			result.removeClassName(style.wrong());
 			result.addClassName(style.ok());
 			compiledResults.setOk(zwChar.getSimplifiedCharacter());
+			getLeitnerSystem().answerOk(charInfo);
 		} else {
 			htmlAnswer = "错";
 			result.removeClassName(style.ok());
 			result.addClassName(style.wrong());
 			compiledResults.setWrong(zwChar.getSimplifiedCharacter());
+			getLeitnerSystem().answerWrong(charInfo);
 		}
 
 		result.setInnerHTML(htmlAnswer);
 
 		displayAnswer.append("<span class='" + style.askedChar() + "'>");
 		displayAnswer.append(zwChar.getSimplifiedCharacter());
-		displayAnswer.append("</span> is ");
+		displayAnswer.append("</span> 是 ");
 
 		int count = zwChar.definitionCount();
 		for (int i = 0; i < count; i++) {
@@ -159,7 +161,7 @@ public class ShiShenme extends ControlerSystemWidget {
 				if (i + 1 == count) {
 					displayAnswer.append(" or ");
 				} else {
-					displayAnswer.append(", ");
+					displayAnswer.append(",");
 				}
 			}
 
@@ -176,18 +178,18 @@ public class ShiShenme extends ControlerSystemWidget {
 		explanation.setInnerHTML(displayAnswer.toString());
 
 		new AnswerAnimation(result).run(750);
-
+		
 		nextZwChar();
 	}
 
 	public void nextZwChar() {
 		answer.setText("");
 
-		int charRank = super.nextChar();
+		super.nextChar();
 
-		if (charRank >= 0) {
+		if (charInfo != null) {
 			// cause the rank start at 1 and index start at 0
-			cellList.setVisibleRange(charRank - 1, 1);
+			cellList.setVisibleRange(charInfo.getCharId() - 1, 1);
 		}
 
 	}
