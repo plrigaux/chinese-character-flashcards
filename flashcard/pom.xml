@@ -13,7 +13,7 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- convenience to define GWT version in one place -->
-		<gwt.version>2.3.0</gwt.version>
+		<gwt.version>2.4.0</gwt.version>
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 	</properties>
 	<build>
@@ -123,11 +123,11 @@
 			<classifier>sources</classifier>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>gwt-maven-plugin</artifactId>
-			<version>${gwt.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.codehaus.mojo</groupId> -->
+<!-- 			<artifactId>gwt-maven-plugin</artifactId> -->
+<!-- 			<version>${gwt.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
