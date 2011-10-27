@@ -1,0 +1,17 @@
+{
+"name": "Hanzi",
+"description": "An Hanzi trainer",
+"version": "1.0",
+"icons": {
+"128": "logo.png"
+},
+"app": {
+    "launch": {
+      "local_path": "main.html"
+    }
+},
+"permissions": [
+"unlimitedStorage",
+"notifications"
+]
+}
