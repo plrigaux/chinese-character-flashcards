@@ -7,7 +7,7 @@
 },
 "app": {
     "launch": {
-      "local_path": "main.html"
+      "local_path": "Flashcard.html"
     }
 },
 "permissions": [
