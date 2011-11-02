@@ -48,11 +48,11 @@
 
 				</dependencies>
 				<configuration>
-					<runTarget>Flashcard.html</runTarget>
+					<runTarget>hanzi.html</runTarget>
 					<server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
 					<workDir> ${webappDirectory}</workDir>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
-					<appEngineVersion>1.5.1</appEngineVersion>
+					<appEngineVersion>1.5.5</appEngineVersion>
 					<port>8088</port>
 					<warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
 					<module>com.plr.flashcard.Flashcard</module>
