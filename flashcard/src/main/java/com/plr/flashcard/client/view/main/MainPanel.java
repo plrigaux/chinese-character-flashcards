@@ -1,6 +1,8 @@
 package com.plr.flashcard.client.view.main;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -8,9 +10,14 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.HasAlignment;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuItem;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.flashcard.client.view.dictionnary.ZwCharBrowser;
 import com.plr.flashcard.client.view.flashcard.FlashCardSystem;
@@ -51,14 +58,15 @@ public class MainPanel extends Composite implements ValueChangeHandler<String> {
 		help.setCommand(new Command() {
 			@Override
 			public void execute() {
-				Window.alert("help");
+				alertWidget("Help", "Help").center();
 			}
 		});
 
 		about.setCommand(new Command() {
 			@Override
 			public void execute() {
-				Window.alert("about");
+	
+				alertWidget("About", "About").center();
 			}
 		});
 		
@@ -127,5 +135,27 @@ public class MainPanel extends Composite implements ValueChangeHandler<String> {
 		}
 
 	}
-
+	public static DialogBox alertWidget(final String header, final String content) {
+        final DialogBox box = new DialogBox();
+        final VerticalPanel panel = new VerticalPanel();
+        box.setText(header);
+        panel.add(new Label(content));
+        final Button buttonClose = new Button("Close",new ClickHandler() {
+            @Override
+            public void onClick(final ClickEvent event) {
+                box.hide();
+            }
+        });
+        // few empty labels to make widget larger
+        final Label emptyLabel = new Label("");
+        emptyLabel.setSize("auto","25px");
+        panel.add(emptyLabel);
+        panel.add(emptyLabel);
+        buttonClose.setWidth("90px");
+        panel.add(buttonClose);
+        panel.setCellHorizontalAlignment(buttonClose, HasAlignment.ALIGN_RIGHT);
+        box.add(panel);
+        box.setGlassEnabled(true);
+        return box;
+    }
 }
