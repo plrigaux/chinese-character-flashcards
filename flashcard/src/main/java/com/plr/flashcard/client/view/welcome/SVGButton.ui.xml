@@ -6,10 +6,11 @@
 		.customButton {
 			font-weight: bold;
 			font-size: 18px;
+			text-align: center;
 		}
 	</ui:style>
 
-	<g:Button ui:field="clickMeButton" width="160px"
+	<g:Button ui:field="clickMeButton" 
 		addStyleNames='{style.customButton}'>
 		Click me !
 	</g:Button>

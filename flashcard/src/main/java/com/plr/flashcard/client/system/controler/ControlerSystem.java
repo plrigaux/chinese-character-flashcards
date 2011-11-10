@@ -8,7 +8,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Panel;
@@ -17,6 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.plr.flashcard.client.system.CharInfo;
 import com.plr.flashcard.client.system.LeitnerSystem;
 import com.plr.flashcard.client.system.LeitnerSystem.LEVEL;
+import com.plr.flashcard.client.view.welcome.SVGButton;
 
 public abstract class ControlerSystem extends Composite {
 	private static final int DEFAULT_NEW = 5;
@@ -30,7 +30,7 @@ public abstract class ControlerSystem extends Composite {
 	@UiField
 	FlexTable results;
 	@UiField
-	Button start;
+	SVGButton start;
 
 	interface Binder extends UiBinder<Widget, ControlerSystem> {
 	}
