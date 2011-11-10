@@ -10,7 +10,7 @@
 	
 		
 	</ui:style>
-	<g:VerticalPanel spacing="5" horizontalAlignment="ALIGN_CENTER"
+	<g:VerticalPanel spacing="10" horizontalAlignment="ALIGN_CENTER"
 		width="100%">
 		<w:SVGButton text="Flashcards" ui:field="flashcards" />
 		<w:SVGButton text="Guess" ui:field="guesser" />
