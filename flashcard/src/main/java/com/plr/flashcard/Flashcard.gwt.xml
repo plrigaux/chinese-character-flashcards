@@ -3,6 +3,8 @@
 	<set-configuration-property name="UiBinder.usesafeHtmlTemplates"
 		value="true" />
 
+	<inherits name='org.vectomatic.libgwtsvg' />
+
 	<!-- Inherit the core Web Toolkit stuff. -->
 	<inherits name='com.google.gwt.user.User' />
 
@@ -24,6 +26,9 @@
 
 
 	<!-- <set-property name="locale" value="default"/> -->
+
+	
+
 
 	<inherits name="com.google.gwt.resources.Resources" />
 	<inherits name="com.google.gwt.json.JSON" />

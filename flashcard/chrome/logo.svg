@@ -16,10 +16,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.2 r9819"
-   sodipodi:docname="logo.png"
-   inkscape:export-filename="C:\Users\Pier\workspace\flashcard\chrome\logo16.png"
-   inkscape:export-xdpi="11.25"
-   inkscape:export-ydpi="11.25">
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="C:\Users\Pier\workspace\flashcard\chrome\logo.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
     <linearGradient
@@ -97,7 +97,7 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4.77"
+     inkscape:zoom="12.931172"
      inkscape:cx="27.700757"
      inkscape:cy="58.862213"
      inkscape:document-units="px"
@@ -105,8 +105,8 @@
      showgrid="false"
      inkscape:window-width="1508"
      inkscape:window-height="863"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-x="-32000"
+     inkscape:window-y="-32000"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
