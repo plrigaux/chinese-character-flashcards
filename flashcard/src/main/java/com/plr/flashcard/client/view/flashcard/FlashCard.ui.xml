@@ -55,9 +55,11 @@
 		<div>
 			<g:Label ui:field="character" />
 		</div>
-		<div class="{style.definitionPanel}">
+		<g:ScrollPanel stylePrimaryName="{style.definitionPanel}" >
+<!-- 		<div class="{style.definitionPanel}"> -->
 			<d:DefinitionPanel ui:field='definitionPanel'
 				width="100%"  />
-		</div>
+<!-- 		</div> -->
+		</g:ScrollPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
