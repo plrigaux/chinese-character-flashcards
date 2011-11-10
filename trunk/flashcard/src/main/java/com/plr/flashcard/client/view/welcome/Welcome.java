@@ -1,7 +1,5 @@
 package com.plr.flashcard.client.view.welcome;
 
-import org.vectomatic.dom.svg.ui.SVGPushButton;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
