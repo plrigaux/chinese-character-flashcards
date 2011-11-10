@@ -29,21 +29,22 @@ import com.plr.flashcard.client.ZhongWenCharacter;
 import com.plr.flashcard.client.system.LeitnerSystem.LEVEL;
 import com.plr.flashcard.client.system.controler.ControlerSystemWidget;
 import com.plr.flashcard.client.view.definition.DefinitionPanel;
+import com.plr.flashcard.client.view.welcome.SVGButton;
 
 public class FlashCard extends ControlerSystemWidget {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
 	@UiField
-	Button show;
+	SVGButton show;
 	@UiField
-	Button again;
+	SVGButton again;
 	@UiField
-	Button hard;
+	SVGButton hard;
 	@UiField
-	Button good;
+	SVGButton good;
 	@UiField
-	Button easy;
+	SVGButton easy;
 	@UiField
 	Label character;
 	@UiField

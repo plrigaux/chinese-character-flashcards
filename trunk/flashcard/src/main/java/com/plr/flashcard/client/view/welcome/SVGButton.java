@@ -2,6 +2,7 @@ package com.plr.flashcard.client.view.welcome;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
@@ -26,7 +27,15 @@ public class SVGButton extends Composite {
 		clickMeButton.setText(value);
 	}
 
-	public void addClickHandler(ClickHandler clickHandler) {
-		clickMeButton.addClickHandler(clickHandler);
+	public HandlerRegistration addClickHandler(ClickHandler clickHandler) {
+		return clickMeButton.addClickHandler(clickHandler);
+	}
+	
+	public void addStyleNames(String style) {
+		clickMeButton.addStyleName(style);
+	}
+	
+	public void setWidth(String width) {
+		clickMeButton.setWidth(width);
 	}
 }

@@ -5,6 +5,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -37,51 +38,35 @@ public class Welcome extends Composite implements PanelConst {
 	public Welcome() {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		help.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-
-				alertWidget("Help", "Help").center();
-			}
-		});
-
-		// about.addClickHandler(new ClickHandler() {
-		//
-		// @Override
-		// public void onClick(ClickEvent event) {
-		//
-		// alertWidget("About", "About").center();
-		// }
-		// });
-
-		flashcards.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				History.newItem(FLASH);
-			}
-		});
-
-		guesser.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				History.newItem(SHI_SHENME);
-			}
-		});
-
-		browser.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				History.newItem(DICTIONNARY);
-			}
-		});
-
 	}
 
-	public static DialogBox alertWidget(final String header, final String content) {
+	@UiHandler("about")
+	void onAboutClick(ClickEvent event) {
+		alertWidget("About", "About").center();
+	}
+
+	@UiHandler("help")
+	void onHelpClick(ClickEvent event) {
+		alertWidget("Help", "Help").center();
+	}
+
+	@UiHandler("flashcards")
+	void onFlashcardsClick(ClickEvent event) {
+		History.newItem(FLASH);
+	}
+
+	@UiHandler("browser")
+	void onBrowserClick(ClickEvent event) {
+		History.newItem(DICTIONNARY);
+	}
+
+	@UiHandler("guesser")
+	void onGuesserClick(ClickEvent event) {
+		History.newItem(SHI_SHENME);
+	}
+
+	public static DialogBox alertWidget(final String header,
+			final String content) {
 		final DialogBox box = new DialogBox();
 		final VerticalPanel panel = new VerticalPanel();
 		box.setText(header);

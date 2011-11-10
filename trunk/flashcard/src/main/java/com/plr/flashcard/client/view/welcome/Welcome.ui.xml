@@ -1,20 +1,20 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.plr.flashcard.client.view.welcome">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.plr.flashcard.client.view.welcome">
 
 	<ui:style>
 		.panel {
 			margin: 0px auto;
 		}
 	</ui:style>
-	<g:VerticalPanel styleName="{style.panel}" spacing="10"
-		horizontalAlignment="ALIGN_CENTER">
-		<w:SVGButton text="Flashcards" ui:field="flashcards" />
-		<w:SVGButton text="Guess" ui:field="guesser" />
-		<w:SVGButton text="Char Browser" ui:field="browser" />
+	<g:HTMLPanel>
+		<g:VerticalPanel styleName="{style.panel}" spacing="10" horizontalAlignment="ALIGN_CENTER">
+			<w:SVGButton text="Flashcards" ui:field="flashcards" width="160px" />
+			<w:SVGButton text="Guess" ui:field="guesser" width="160px"/>
+			<w:SVGButton text="Char Browser" ui:field="browser" width="160px"/>
 
-		<w:SVGButton text="Help" ui:field="help" />
-		<w:SVGButton text="About" ui:field="about" />
+			<w:SVGButton text="Help" ui:field="help" width="160px"/>
+			<w:SVGButton text="About" ui:field="about" width="160px"/>
 
-	</g:VerticalPanel>
+		</g:VerticalPanel>
+	</g:HTMLPanel>
 </ui:UiBinder> 
