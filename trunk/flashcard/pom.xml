@@ -67,7 +67,8 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
 				<configuration>
-					<packagingExcludes>WEB-INF/**</packagingExcludes>
+					<!-- 					Produce a skinny war as only the GWT-generated files are of interest -->
+					<packagingExcludes>WEB-INF/lib/*.jar,WEB-INF/classes/**</packagingExcludes>
 					<webResources>
 						<resource>
 							<directory>chrome</directory>
