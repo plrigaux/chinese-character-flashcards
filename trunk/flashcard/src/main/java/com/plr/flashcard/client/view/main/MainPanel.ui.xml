@@ -6,12 +6,11 @@
 			font-weight: bold;
 		}
 		
-		.centerPanel {<!--
-			margin: 0px auto; -->
-			width: 100%;
+		.centerPanel {
+			width:100%;
 		}
 	</ui:style>
-	<g:HTMLPanel styleName='{style.centerPanel}'  ui:field="mainPanel">
+	<g:HTMLPanel styleName='{style.centerPanel}' ui:field="mainPanel">
 		<d:Welcome />
 	</g:HTMLPanel>
 

@@ -3,14 +3,14 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 
 	<ui:style>
-		.btn1 {
+		.customButton {
 			font-weight: bold;
 			font-size: 18px;
 		}
 	</ui:style>
 
-	<g:Button ui:field="clickMeButton" styleName="{style.btn1}"
-		width="160px">
+	<g:Button ui:field="clickMeButton" width="160px"
+		addStyleNames='{style.customButton}'>
 		Click me !
 	</g:Button>
 

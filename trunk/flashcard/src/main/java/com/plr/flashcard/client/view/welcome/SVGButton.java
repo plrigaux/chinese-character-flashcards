@@ -9,7 +9,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SVGButton extends Composite {
-	private static SVGButtonUiBinder uiBinder = GWT.create(SVGButtonUiBinder.class);
+	private static SVGButtonUiBinder uiBinder = GWT
+			.create(SVGButtonUiBinder.class);
 
 	interface SVGButtonUiBinder extends UiBinder<Widget, SVGButton> {
 	}
@@ -17,13 +18,10 @@ public class SVGButton extends Composite {
 	@UiField
 	Button clickMeButton;
 
-//	@UiField
-//	OMSVGTextElement text;
-	
 	public SVGButton() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-	
+
 	public void setText(String value) {
 		clickMeButton.setText(value);
 	}
