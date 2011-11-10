@@ -52,12 +52,14 @@
 					<server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
 					<workDir> ${webappDirectory}</workDir>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
-					<appEngineVersion>1.5.5</appEngineVersion>
+					<appEngineVersion>1.6.0</appEngineVersion>
 					<port>8088</port>
 					<warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
 					<module>com.plr.flashcard.Flashcard</module>
 					<debugSuspend>false</debugSuspend>
 					<debugPort>30303</debugPort>
+						<style>DETAILED</style>
+						<extraJvmArgs>-Xmx512m</extraJvmArgs>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -93,7 +95,11 @@
 
 
 	<dependencies>
-		<!-- GWT dependencies (from central repo) -->
+		<dependency>
+			<groupId>org.vectomatic</groupId>
+			<artifactId>lib-gwt-svg</artifactId>
+			<version>0.5.4</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.google.gwt</groupId>
@@ -146,6 +152,8 @@
 			<artifactId>json</artifactId>
 			<version>20090211</version>
 		</dependency>
+
+		
 	</dependencies>
 
 </project>

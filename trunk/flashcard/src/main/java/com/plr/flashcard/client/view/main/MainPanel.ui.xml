@@ -11,24 +11,8 @@
 			width: 100%;
 		}
 	</ui:style>
-	<g:HTMLPanel styleName='{style.centerPanel}'>
-
-		<g:MenuBar animationEnabled="true" ui:field="menuBar">
-			<g:MenuItem text="App">
-				<g:MenuBar vertical="true">
-					<g:MenuItem text="Home" ui:field="home" />
-					<g:MenuItem text="Flashcards" ui:field="flashcards" />
-					<g:MenuItem text="Guess" ui:field="guesser" />
-					<g:MenuItem text="Char Browser" ui:field="browser" />
-				</g:MenuBar>
-			</g:MenuItem>
-			<g:MenuItem text="Help" ui:field="help" />
-			<g:MenuItem text="About" ui:field="about" />
-		</g:MenuBar>
-
-		<g:HTMLPanel ui:field="insidePanel">
-			<d:Welcome></d:Welcome>
-		</g:HTMLPanel>
+	<g:HTMLPanel styleName='{style.centerPanel}'  ui:field="mainPanel">
+		<d:Welcome />
 	</g:HTMLPanel>
 
 </ui:UiBinder> 

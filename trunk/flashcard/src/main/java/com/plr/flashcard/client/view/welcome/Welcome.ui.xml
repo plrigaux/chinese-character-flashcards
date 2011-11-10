@@ -1,12 +1,23 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.plr.flashcard.client.view.welcome">
+	
 	<ui:style>
 		.important {
 			font-weight: bold;
 		}
+		
+	
+		
 	</ui:style>
-	<g:HTMLPanel>
-		Welcome
-	</g:HTMLPanel>
+	<g:VerticalPanel spacing="5" horizontalAlignment="ALIGN_CENTER"
+		width="100%">
+		<w:SVGButton text="Flashcards" ui:field="flashcards" />
+		<w:SVGButton text="Guess" ui:field="guesser" />
+		<w:SVGButton text="Char Browser" ui:field="browser" />
+
+		<w:SVGButton text="Help" ui:field="help" />
+		<w:SVGButton text="About" ui:field="about" />
+
+	</g:VerticalPanel>
 </ui:UiBinder> 
