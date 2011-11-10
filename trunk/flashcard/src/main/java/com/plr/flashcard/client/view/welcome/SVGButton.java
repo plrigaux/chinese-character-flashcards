@@ -1,12 +1,10 @@
 package com.plr.flashcard.client.view.welcome;
 
-import org.vectomatic.dom.svg.OMSVGTextElement;
-import org.vectomatic.dom.svg.ui.SVGPushButton;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -17,17 +15,17 @@ public class SVGButton extends Composite {
 	}
 
 	@UiField
-	SVGPushButton clickMeButton;
+	Button clickMeButton;
 
-	@UiField
-	OMSVGTextElement text;
+//	@UiField
+//	OMSVGTextElement text;
 	
 	public SVGButton() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
 	public void setText(String value) {
-		this.text.getFirstChild().setNodeValue(value);
+		clickMeButton.setText(value);
 	}
 
 	public void addClickHandler(ClickHandler clickHandler) {
