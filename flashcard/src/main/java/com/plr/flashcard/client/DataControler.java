@@ -33,19 +33,29 @@ public class DataControler {
 
 			Range visibleRange = display.getVisibleRange();
 
+			
+			System.out.println("visibleRange " + visibleRange);
 			List<ZhongWenCharacter> zhongWenCharacters = dataProvider.getList();
 
+			System.out.println("zhongWenCharacters.size() " + zhongWenCharacters.size());
+			System.out.println("visibleRange.getStart() + visibleRange.getLength() " + visibleRange.getStart() + visibleRange.getLength());
+
+			//no need to load data
 			if (zhongWenCharacters.size() > visibleRange.getStart() + visibleRange.getLength()) {
+				System.out.println("onRangeChangedSuper(display); ");
 				onRangeChangedSuper(display);
 			} else {
 
 				if (!hasData(visibleRange)) {
+					System.out.println("!hasData(visibleRange)");
 					onRangeChangedSuper(display);
 					return;
 				}
 
 				final int lastRangeIndex = ((visibleRange.getStart() + visibleRange.getLength()) / CHAR_BY_FILE) + 1;
 
+				System.out.println("lastRangeIndex " + lastRangeIndex);
+				
 				loadData(display, lastRangeIndex);
 			}
 		}
@@ -53,16 +63,18 @@ public class DataControler {
 		private void loadData(final HasData<ZhongWenCharacter> display, final int lastRangeIndex) {
 			final int indexToLoad = lastLoadedIndex + 1;
 			final String resource = "data/out-" + indexToLoad + ".json";
+			System.out.println(resource);
 			LOGGER.info(resource);
-			RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, resource);
+			RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, resource);
 
-			rb.setCallback(new RequestCallback() {
+			requestBuilder.setCallback(new RequestCallback() {
 
 				@Override
 				public void onResponseReceived(Request request, Response response) {
 
 					int code = response.getStatusCode();
 
+					System.out.println("code " + code);
 					if (code < 200 && code >= 400) {
 						LOGGER.log(Level.SEVERE, resource + " code http : " + code);
 						return;
@@ -70,19 +82,27 @@ public class DataControler {
 
 					String jsonString = response.getText();
 
+//					System.out.println("jsonString " + jsonString);
+					
 					JsArray<CardData> cardDatas = buildCardData(jsonString);
 
 					List<ZhongWenCharacter> zhongWenCharacters = dataProvider.getList();
-
+					
 					for (int i = 0; i < cardDatas.length(); i++) {
 						zhongWenCharacters.add(cardDatas.get(i));
 					}
-					onRangeChangedSuper(display);
+					
+					System.out.println(" " + resource + " " +zhongWenCharacters.size());
 
+					System.out.println("lastLoadedIndex " + lastLoadedIndex);
+					System.out.println("indexToLoad " + indexToLoad);
+					System.out.println("lastRangeIndex " + lastRangeIndex);
 					lastLoadedIndex = indexToLoad;
 
 					if (lastLoadedIndex < lastRangeIndex) {
 						loadData(display, lastRangeIndex);
+					} else {
+						onRangeChangedSuper(display);
 					}
 				}
 
@@ -93,7 +113,9 @@ public class DataControler {
 			});
 
 			try {
-				rb.send();
+				
+				System.out.println("URL " + requestBuilder.getUrl()); 
+				requestBuilder.send();
 			} catch (RequestException e) {
 				LOGGER.log(Level.SEVERE, e.getMessage());
 			}

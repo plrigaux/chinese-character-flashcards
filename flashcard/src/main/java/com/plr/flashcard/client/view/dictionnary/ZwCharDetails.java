@@ -52,8 +52,8 @@ public class ZwCharDetails extends Composite {
 	@UiField
 	DefinitionPanel definitionPanel;
 
-//	private ZhongWenCharacter contactInfo;
-	
+	// private ZhongWenCharacter contactInfo;
+
 	private CellList<ZhongWenCharacter> cellList;
 
 	public ZwCharDetails() {
@@ -65,11 +65,11 @@ public class ZwCharDetails extends Composite {
 		setCharater(null);
 
 		characterLabel.addStyleName(AppResources.INSTANCE.style().character());
-		
+
 		System.out.println(AppResources.INSTANCE.style().character());
-		
+
 		CharacterCell contactCell = new CharacterCell();
-		
+
 		cellList = new CellList<ZhongWenCharacter>(contactCell, CardData.KEY_PROVIDER) {
 
 			@Override
@@ -79,7 +79,7 @@ public class ZwCharDetails extends Composite {
 				// shuffle(values);
 			}
 		};
-		
+
 		cellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
 
 		DataControler.get().addDataDisplay(cellList);
@@ -89,38 +89,37 @@ public class ZwCharDetails extends Composite {
 		if (values.isEmpty()) {
 			return;
 		}
-System.out.println("setChar " + values);
+		System.out.println("setChar " + values);
 		ZhongWenCharacter zwChar = values.get(0);
 		setCharater(zwChar);
-		
+
 	}
-	
-	
+
 	private static class CharacterCell extends AbstractCell<ZhongWenCharacter> {
 
 		@Override
 		public void render(Context context, ZhongWenCharacter value, SafeHtmlBuilder sb) {
 		}
 	}
-	
+
 	public void setCharater(ZhongWenCharacter zwChar) {
-//		this.contactInfo = contact;
+		// this.contactInfo = contact;
 		// updateButton.setEnabled(contact != null);
 		if (zwChar != null) {
 			idLabel.setText("" + zwChar.getId());
 			characterLabel.setText(zwChar.getSimplifiedCharacter());
-			
+
 			definitionPanel.setCharater(zwChar);
-			
+
 			AppResources.logger.log(Level.INFO, "Rank " + zwChar.getId() + " char: " + zwChar.getSimplifiedCharacter());
 		}
 	}
 
 	public void setCharaterId(String charId) {
-		
+
 		int id = Integer.valueOf(charId);
-		
-		System.out.println("id: " +id);
+
+		System.out.println("id: " + id);
 		cellList.setVisibleRange(id - 1, 1);
 	}
 }

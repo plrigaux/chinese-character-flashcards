@@ -13,44 +13,45 @@
 			font-weight: bold;
 			width: 75px;
 		}
-
+		
+		.panel {
+			margin: 0px auto;
+		}
 	</ui:style>
-	<g:DecoratorPanel>
-		<g:ScrollPanel>
-			<g:HTMLPanel height="400px" width="380px">
-				<table width="370px">
-					<tr>
-						<td colspan='2' align='center' class='{style.header}'>
-							Character
-						</td>
-					</tr>
-					<tr>
-						<td class='{style.label}'>
-							Rank:
-						</td>
-						<td>
-							<g:Label ui:field='idLabel' />
-						</td>
-					</tr>
-					<tr>
-						<td class='{style.label}'>
-							Character:
-						</td>
-						<td>
-							<g:Label ui:field='characterLabel' />
-						</td>
-					</tr>
 
-					<tr>
-						<td class='{style.label}'>
-							Definition:
-						</td>
-						<td>
-							<d:DefinitionPanel ui:field='definitionPanel' />
-						</td>
-					</tr>
-				</table>
-			</g:HTMLPanel>
-		</g:ScrollPanel>
-	</g:DecoratorPanel>
+	<g:HTMLPanel>
+		<table class="{style.panel}" width="380px">
+			<tr>
+				<td colspan='2' align='center' class='{style.header}'>
+					Character
+				</td>
+			</tr>
+			<tr>
+				<td class='{style.label}'>
+					Rank:
+				</td>
+				<td>
+					<g:Label ui:field='idLabel' />
+				</td>
+			</tr>
+			<tr>
+				<td class='{style.label}'>
+					Character:
+				</td>
+				<td>
+					<g:Label ui:field='characterLabel' />
+				</td>
+			</tr>
+
+			<tr>
+				<td class='{style.label}'>
+					Definition:
+				</td>
+				<td>
+					<d:DefinitionPanel ui:field='definitionPanel' />
+				</td>
+			</tr>
+		</table>
+	</g:HTMLPanel>
+
 </ui:UiBinder>
