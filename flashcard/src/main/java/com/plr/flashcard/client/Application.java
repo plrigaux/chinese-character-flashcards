@@ -2,7 +2,6 @@ package com.plr.flashcard.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
-import com.plr.flashcard.client.view.main.MainPanel;
 import com.plr.flashcard.client.view.welcome.Welcome;
 
 /**
@@ -10,6 +9,9 @@ import com.plr.flashcard.client.view.welcome.Welcome;
  */
 public class Application implements EntryPoint {
 
+	@SuppressWarnings("unused")
+	private HistoryManager historyManager = null;
+	
 	@Override
 	public void onModuleLoad() {
 
@@ -21,7 +23,7 @@ public class Application implements EntryPoint {
 		Welcome welcome = new Welcome();
 		rootPanel.add(welcome);
 		
-		new MainPanel();
+		historyManager = new HistoryManager();
 	}
 
 }

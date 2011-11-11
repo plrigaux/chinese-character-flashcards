@@ -14,9 +14,9 @@ import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.plr.flashcard.client.view.main.PanelConst;
+import com.plr.flashcard.client.ApplicationConst;
 
-public class Welcome extends Composite implements PanelConst {
+public class Welcome extends Composite implements ApplicationConst {
 
 	private static WelcomeUiBinder uiBinder = GWT.create(WelcomeUiBinder.class);
 

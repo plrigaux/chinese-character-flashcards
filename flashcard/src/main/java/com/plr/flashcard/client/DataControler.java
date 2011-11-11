@@ -1,6 +1,8 @@
 package com.plr.flashcard.client;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +26,8 @@ public class DataControler {
 	static private Logger LOGGER = Logger.getLogger(DataControler.class.getName());
 
 	private int lastLoadedIndex = 0;
+
+	private Set<String> resources = new HashSet<String>();
 	/**
 	 * The provider that holds the list of contacts in the database.
 	 */
@@ -33,16 +37,17 @@ public class DataControler {
 
 			Range visibleRange = display.getVisibleRange();
 
-			
-			System.out.println("visibleRange " + visibleRange);
+			// System.out.println("visibleRange " + visibleRange);
 			List<ZhongWenCharacter> zhongWenCharacters = dataProvider.getList();
 
-			System.out.println("zhongWenCharacters.size() " + zhongWenCharacters.size());
-			System.out.println("visibleRange.getStart() + visibleRange.getLength() " + visibleRange.getStart() + visibleRange.getLength());
+			// System.out.println("zhongWenCharacters.size() " +
+			// zhongWenCharacters.size());
+			// System.out.println("visibleRange.getStart() + visibleRange.getLength() "
+			// + visibleRange.getStart() + visibleRange.getLength());
 
-			//no need to load data
+			// no need to load data
 			if (zhongWenCharacters.size() > visibleRange.getStart() + visibleRange.getLength()) {
-				System.out.println("onRangeChangedSuper(display); ");
+				// System.out.println("onRangeChangedSuper(display); ");
 				onRangeChangedSuper(display);
 			} else {
 
@@ -54,8 +59,9 @@ public class DataControler {
 
 				final int lastRangeIndex = ((visibleRange.getStart() + visibleRange.getLength()) / CHAR_BY_FILE) + 1;
 
-				System.out.println("lastRangeIndex " + lastRangeIndex);
-				
+				// System.out.println("lastRangeIndex " + lastRangeIndex);
+
+				// System.out.println("call loadData form change" );
 				loadData(display, lastRangeIndex);
 			}
 		}
@@ -63,7 +69,8 @@ public class DataControler {
 		private void loadData(final HasData<ZhongWenCharacter> display, final int lastRangeIndex) {
 			final int indexToLoad = lastLoadedIndex + 1;
 			final String resource = "data/out-" + indexToLoad + ".json";
-			System.out.println(resource);
+			// System.out.println(resource);
+
 			LOGGER.info(resource);
 			RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, resource);
 
@@ -79,27 +86,38 @@ public class DataControler {
 						LOGGER.log(Level.SEVERE, resource + " code http : " + code);
 						return;
 					}
-
-					String jsonString = response.getText();
-
-//					System.out.println("jsonString " + jsonString);
 					
-					JsArray<CardData> cardDatas = buildCardData(jsonString);
+					// System.out.println("jsonString " + jsonString);
 
-					List<ZhongWenCharacter> zhongWenCharacters = dataProvider.getList();
-					
-					for (int i = 0; i < cardDatas.length(); i++) {
-						zhongWenCharacters.add(cardDatas.get(i));
+					// Load only one time the resource
+					if (resources.add(resource)) {
+						// System.out.println("Already loaded " + resource + " "
+						// + resources);
+						String jsonString = response.getText();
+						
+						JsArray<CardData> cardDatas = buildCardData(jsonString);
+
+						List<ZhongWenCharacter> zhongWenCharacters = dataProvider.getList();
+
+						for (int i = 0; i < cardDatas.length(); i++) {
+
+							zhongWenCharacters.add(cardDatas.get(i));
+						}
+						
+						lastLoadedIndex = indexToLoad;
 					}
-					
-					System.out.println(" " + resource + " " +zhongWenCharacters.size());
 
-					System.out.println("lastLoadedIndex " + lastLoadedIndex);
-					System.out.println("indexToLoad " + indexToLoad);
-					System.out.println("lastRangeIndex " + lastRangeIndex);
-					lastLoadedIndex = indexToLoad;
+					// System.out.println(" " + resource + " "
+					// +zhongWenCharacters.size());
+					//
+					// System.out.println("lastLoadedIndex " + lastLoadedIndex);
+					// System.out.println("indexToLoad " + indexToLoad);
+					// System.out.println("lastRangeIndex " + lastRangeIndex);
+				
 
-					if (lastLoadedIndex < lastRangeIndex) {
+					//We going to get the next range
+					if (indexToLoad < lastRangeIndex) {
+						// System.out.println("call loadData form load" );
 						loadData(display, lastRangeIndex);
 					} else {
 						onRangeChangedSuper(display);
@@ -113,8 +131,8 @@ public class DataControler {
 			});
 
 			try {
-				
-				System.out.println("URL " + requestBuilder.getUrl()); 
+
+				System.out.println("URL " + requestBuilder.getUrl());
 				requestBuilder.send();
 			} catch (RequestException e) {
 				LOGGER.log(Level.SEVERE, e.getMessage());
@@ -163,5 +181,4 @@ public class DataControler {
 		return dataProvider.getList().get(rank);
 	}
 
-	
 }
