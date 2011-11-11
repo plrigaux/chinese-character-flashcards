@@ -27,12 +27,14 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.Range;
+import com.google.gwt.view.client.RangeChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.plr.flashcard.client.CardData;
 import com.plr.flashcard.client.DataControler;
+import com.plr.flashcard.client.ApplicationConst;
 import com.plr.flashcard.client.ZhongWenCharacter;
-import com.plr.flashcard.client.view.main.PanelConst;
 
 /**
  * Display all the characters
@@ -56,9 +58,8 @@ public class ZwCharBrowser extends Composite {
 	@UiField(provided = true)
 	CellTable<ZhongWenCharacter> cellTable;
 
-	/**
-	 * Initialize this example.
-	 */
+	private static Range lastAccessedRange = null;
+	
 	public ZwCharBrowser() {
 
 		cellTable = new CellTable<ZhongWenCharacter>(CardData.KEY_PROVIDER);
@@ -89,7 +90,7 @@ public class ZwCharBrowser extends Composite {
 		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
 		pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
 		pager.setDisplay(cellTable);
-
+		
 		// Add a selection model so we can select cells.
 		final SingleSelectionModel<ZhongWenCharacter> selectionModel = new SingleSelectionModel<ZhongWenCharacter>(
 				CardData.KEY_PROVIDER);
@@ -98,34 +99,33 @@ public class ZwCharBrowser extends Composite {
 
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				ZhongWenCharacter zwChar = selectionModel.getSelectedObject();
-
-
-				History.newItem(PanelConst.DICTIONNARY + "/" + zwChar.getId());
-				
-				
-				History.newItem(PanelConst.CHARARCTER + "/" + zwChar.getId());
+				ZhongWenCharacter zwChar = selectionModel.getSelectedObject();	
+				History.newItem(ApplicationConst.CHARARCTER + "/" + zwChar.getId());
 			}
-
 		});
 
 		// Add the CellList to the data provider in the database.
 		DataControler.get().addDataDisplay(cellTable);
 
-		initWidget(uiBinder.createAndBindUi(this));
-	}
-
-	public void setCharaterId(String charId) {
-		try {
-			int index = Integer.valueOf(charId);
-			cellTable.setVisibleRange(index - 1, getPageSize());
-		} catch (NumberFormatException e) {
-			History.newItem(PanelConst.DICTIONNARY, false);
+		cellTable.addRangeChangeHandler(new RangeChangeEvent.Handler() {
+			@Override
+			public void onRangeChange(RangeChangeEvent event) {
+				lastAccessedRange = event.getNewRange();
+			}
+		});
+		
+		if (lastAccessedRange != null) {
+			cellTable.setVisibleRange(lastAccessedRange);
 		}
+		
+		
+		initWidget(uiBinder.createAndBindUi(this));
 	}
 
 	private int getPageSize() {
 		return 15;
 	}
+
+	
 
 }
