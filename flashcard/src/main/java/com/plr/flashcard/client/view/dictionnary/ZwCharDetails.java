@@ -15,13 +15,23 @@
  */
 package com.plr.flashcard.client.view.dictionnary;
 
+import java.util.List;
+import java.util.logging.Level;
+
+import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.SelectionModel;
 import com.plr.flashcard.client.AppResources;
+import com.plr.flashcard.client.CardData;
+import com.plr.flashcard.client.DataControler;
 import com.plr.flashcard.client.ZhongWenCharacter;
 import com.plr.flashcard.client.view.definition.DefinitionPanel;
 
@@ -43,6 +53,8 @@ public class ZwCharDetails extends Composite {
 	DefinitionPanel definitionPanel;
 
 //	private ZhongWenCharacter contactInfo;
+	
+	private CellList<ZhongWenCharacter> cellList;
 
 	public ZwCharDetails() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -55,8 +67,42 @@ public class ZwCharDetails extends Composite {
 		characterLabel.addStyleName(AppResources.INSTANCE.style().character());
 		
 		System.out.println(AppResources.INSTANCE.style().character());
+		
+		CharacterCell contactCell = new CharacterCell();
+		
+		cellList = new CellList<ZhongWenCharacter>(contactCell, CardData.KEY_PROVIDER) {
+
+			@Override
+			protected void renderRowValues(SafeHtmlBuilder sb, List<ZhongWenCharacter> values, int start,
+					SelectionModel<? super ZhongWenCharacter> selectionModel) {
+				setChar(values);
+				// shuffle(values);
+			}
+		};
+		
+		cellList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
+
+		DataControler.get().addDataDisplay(cellList);
 	}
 
+	private void setChar(List<ZhongWenCharacter> values) {
+		if (values.isEmpty()) {
+			return;
+		}
+System.out.println("setChar " + values);
+		ZhongWenCharacter zwChar = values.get(0);
+		setCharater(zwChar);
+		
+	}
+	
+	
+	private static class CharacterCell extends AbstractCell<ZhongWenCharacter> {
+
+		@Override
+		public void render(Context context, ZhongWenCharacter value, SafeHtmlBuilder sb) {
+		}
+	}
+	
 	public void setCharater(ZhongWenCharacter zwChar) {
 //		this.contactInfo = contact;
 		// updateButton.setEnabled(contact != null);
@@ -65,6 +111,16 @@ public class ZwCharDetails extends Composite {
 			characterLabel.setText(zwChar.getSimplifiedCharacter());
 			
 			definitionPanel.setCharater(zwChar);
+			
+			AppResources.logger.log(Level.INFO, "Rank " + zwChar.getId() + " char: " + zwChar.getSimplifiedCharacter());
 		}
+	}
+
+	public void setCharaterId(String charId) {
+		
+		int id = Integer.valueOf(charId);
+		
+		System.out.println("id: " +id);
+		cellList.setVisibleRange(id - 1, 1);
 	}
 }

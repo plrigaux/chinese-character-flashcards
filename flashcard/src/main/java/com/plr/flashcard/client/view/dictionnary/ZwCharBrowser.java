@@ -24,6 +24,7 @@ import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSe
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -31,6 +32,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.plr.flashcard.client.CardData;
 import com.plr.flashcard.client.DataControler;
 import com.plr.flashcard.client.ZhongWenCharacter;
+import com.plr.flashcard.client.view.main.PanelConst;
 
 /**
  * Display all the characters
@@ -41,9 +43,6 @@ public class ZwCharBrowser extends Composite {
 	}
 
 	private static Binder uiBinder = GWT.create(Binder.class);
-
-	@UiField
-	ZwCharDetails contactForm;
 
 	/**
 	 * The pager used to display the current range.
@@ -82,7 +81,7 @@ public class ZwCharBrowser extends Composite {
 		cellTable.addColumn(rankColumn, "Rank");
 		cellTable.addColumn(zhCharColumn, "Simplified");
 
-		cellTable.setPageSize(15);
+		cellTable.setPageSize(getPageSize());
 		cellTable.setKeyboardPagingPolicy(KeyboardPagingPolicy.CHANGE_PAGE);
 		cellTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
 
@@ -99,7 +98,14 @@ public class ZwCharBrowser extends Composite {
 
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
-				contactForm.setCharater(selectionModel.getSelectedObject());
+				ZhongWenCharacter zwChar = selectionModel.getSelectedObject();
+
+				//History.back();
+				History.
+				History.newItem(PanelConst.DICTIONNARY + "/" + zwChar.getId());
+				
+				
+				History.newItem(PanelConst.CHARARCTER + "/" + zwChar.getId());
 			}
 
 		});
@@ -108,6 +114,19 @@ public class ZwCharBrowser extends Composite {
 		DataControler.get().addDataDisplay(cellTable);
 
 		initWidget(uiBinder.createAndBindUi(this));
+	}
+
+	public void setCharaterId(String charId) {
+		try {
+			int index = Integer.valueOf(charId);
+			cellTable.setVisibleRange(index - 1, getPageSize());
+		} catch (NumberFormatException e) {
+			History.newItem(PanelConst.DICTIONNARY, false);
+		}
+	}
+
+	private int getPageSize() {
+		return 15;
 	}
 
 }

@@ -17,17 +17,11 @@
 	</ui:style>
 
 	<g:HTMLPanel>
-		<table>
-			<tr>
-				<td valign='top' align='center'>
-					<c:SimplePager ui:field='pager' />
-					<c:CellTable addStyleNames='{style.scrollable}'
-						ui:field='cellTable' />
-				</td>
-				<td class='{style.contactFormCell}' valign='top' align='center'>
-					<s:ZwCharDetails ui:field='contactForm' />
-				</td>
-			</tr>
-		</table>
+
+		<c:SimplePager ui:field='pager' />
+		<c:CellTable addStyleNames='{style.scrollable}' ui:field='cellTable' />
+
+		<!-- <s:ZwCharDetails ui:field='contactForm' /> -->
+
 	</g:HTMLPanel>
 </ui:UiBinder>
