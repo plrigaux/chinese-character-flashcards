@@ -100,8 +100,7 @@ public class ZwCharBrowser extends Composite {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				ZhongWenCharacter zwChar = selectionModel.getSelectedObject();
 
-				//History.back();
-				History.
+
 				History.newItem(PanelConst.DICTIONNARY + "/" + zwChar.getId());
 				
 				

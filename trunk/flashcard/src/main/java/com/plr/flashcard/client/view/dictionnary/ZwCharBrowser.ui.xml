@@ -14,12 +14,16 @@
 		.contactFormCell {
 			padding-left: 20px;
 		}
+		
+		.panel {
+			margin: 0px auto;
+		}
 	</ui:style>
 
 	<g:HTMLPanel>
 
-		<c:SimplePager ui:field='pager' />
-		<c:CellTable addStyleNames='{style.scrollable}' ui:field='cellTable' />
+		<c:SimplePager ui:field='pager' addStyleNames='{style.panel}'/>
+		<c:CellTable addStyleNames='{style.scrollable} {style.panel}' ui:field='cellTable' />
 
 		<!-- <s:ZwCharDetails ui:field='contactForm' /> -->
 
