@@ -19,12 +19,11 @@
 		}
 		
 		.button {
-			margin: 0px 15px;
-			width: 60px;
+			
 		}
 		
 		.showButton {
-			width: 80%;
+			width: 100%;
 		}
 		
 		.labelPanel {
