@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import com.google.common.base.Splitter;
 
 public class Data {
-	private int id;
+	private int rankId;
 	private Character tc;
-	private Character sc;
+	private Character simpleCharacter;
 	private Character ac;
 
 	private ArrayList<Definision> pron = new ArrayList<Definision>();
@@ -46,11 +46,11 @@ public class Data {
 	}
 
 	public void setId(int i) {
-		this.id = i;
+		this.rankId = i;
 	}
 
 	public void setCharaters(String chars) {
-		sc = chars.charAt(0);
+		simpleCharacter = chars.charAt(0);
 
 
 		if (chars.length() > 4 && chars.charAt(2) == 'F') {
@@ -80,13 +80,17 @@ public class Data {
 	}
 
 	public int getId() {
-		return id;
+		return rankId;
 	}
 
 	public Character getS() {
-		return sc;
+		return simpleCharacter;
 	}
 
+	public Character setSimpleCharacter(Character simpleCharacter) {
+		return this.simpleCharacter = simpleCharacter;
+	}
+	
 	public Character getT() {
 		return tc;
 	}
@@ -98,5 +102,11 @@ public class Data {
 
 	public ArrayList<Definision> getDefs() {
 		return pron;
+	}
+	
+	@Override
+	public String toString() {
+		
+		return "rankId " + rankId + " sc " +simpleCharacter;
 	}
 }
