@@ -14,7 +14,7 @@ public class Data {
 
 	private ArrayList<Definision> pron = new ArrayList<Definision>();
 
-	static class Definision {
+	static public class Definision {
 		private String pinyin;
 		private String pinyinNum;
 		private ArrayList<String> def = new ArrayList<String>();
@@ -29,6 +29,23 @@ public class Data {
 			}
 						
 			pinyinNum = Pinyin.convertNum(pinyin);
+		}
+
+		
+		public void setNum(String pinyinNum, Iterable<String> it) {
+			
+			pinyin = Pinyin.convertNum(pinyinNum);
+			
+			this.pinyin = Pinyin.convertToAccent(pinyinNum);
+			for (String s : it) {
+				def.add(s);
+			}
+						
+			this.pinyinNum = pinyinNum;
+		}
+		
+		public Definision() {
+			// TODO Auto-generated constructor stub
 		}
 
 		public String getPy() {
@@ -70,15 +87,27 @@ public class Data {
 		int c = string.indexOf(']');
 
 		if (c != -1 && b != -1) {
-			String pinying = string.substring(b + 1, c);
+			String pinyin = string.substring(b + 1, c);
 		
 			Iterable<String> it = s.split(string.substring(c + 1));
-			Definision d = new Definision(pinying, it);
-
-			pron.add(d);
+			addDefinition(pinyin, it);
 		}
 	}
 
+	public void addDefinition(String pinying, Iterable<String> it) {
+		Definision d = new Definision(pinying, it);
+
+		pron.add(d);
+	}
+
+	public void addDefinitionNum(String pinyinNum, Iterable<String> it) {
+		Definision d = new Definision();
+
+		d.setNum(pinyinNum, it);
+		
+		pron.add(d);
+	}
+	
 	public int getId() {
 		return rankId;
 	}
