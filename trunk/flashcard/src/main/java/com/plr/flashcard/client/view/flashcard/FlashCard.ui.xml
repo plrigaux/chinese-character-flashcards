@@ -20,10 +20,12 @@
 		
 		.button {
 			
+			height: 100%;
 		}
 		
 		.showButton {
 			width: 100%;
+			height: 100%;
 		}
 		
 		.labelPanel {
@@ -60,9 +62,9 @@
 
 		<g:south size='3'>
 			<g:HTMLPanel styleName="{style.panel}">
-				<div ui:field="showDiv" class="{style.enabled}">
-					<w:SVGButton ui:field="show" text="Show" />
-				</div>
+<!-- 				<div ui:field="showDiv" class="{style.enabled}" width="100%" height="100%"> -->
+					<w:SVGButton ui:field="show" text="Show" addStyleNames="{style.showButton}" />
+<!-- 				</div> -->
 				<div ui:field="buttonsDiv" class="{style.disabled}">
 					<w:SVGButton ui:field="again" text="Again" />
 

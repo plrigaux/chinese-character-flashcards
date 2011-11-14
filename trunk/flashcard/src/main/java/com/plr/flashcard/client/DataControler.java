@@ -68,7 +68,7 @@ public class DataControler {
 
 		private void loadData(final HasData<ZhongWenCharacter> display, final int lastRangeIndex) {
 			final int indexToLoad = lastLoadedIndex + 1;
-			final String resource = "data/out-" + indexToLoad + ".json";
+			final String resource = "data/chineseChar-" + indexToLoad + ".json";
 			// System.out.println(resource);
 
 			LOGGER.info(resource);

@@ -49,8 +49,8 @@ public class FlashCard extends ControlerSystemWidget {
 	@UiField
 	DefinitionPanel definitionPanel;
 
-	@UiField
-	DivElement showDiv;
+//	@UiField
+//	DivElement showDiv;
 
 	@UiField
 	DivElement buttonsDiv;
@@ -121,7 +121,7 @@ public class FlashCard extends ControlerSystemWidget {
 		good.addStyleName(style.button());
 		easy.addStyleName(style.button());
 
-		show.addStyleName(style.showButton());
+		//show.addStyleName(style.showButton());
 
 		character.addStyleName(AppResources.INSTANCE.style().character());
 
@@ -140,7 +140,8 @@ public class FlashCard extends ControlerSystemWidget {
 		definitionPanel.setVisible(true);
 		definitionPanel.setCharater(zwChar);
 		buttonsDiv.setClassName(style.enabled());
-		showDiv.setClassName(style.disabled());
+//		showDiv.setClassName(style.disabled());
+		show.addStyleName(style.disabled());
 	}
 
 	// private int idx = 0;
@@ -186,7 +187,8 @@ public class FlashCard extends ControlerSystemWidget {
 	}
 
 	private void nextZwChar() {
-		showDiv.setClassName(style.enabled());
+//		showDiv.setClassName(style.enabled());
+		show.removeStyleName(style.disabled());
 		buttonsDiv.setClassName(style.disabled());
 		definitionPanel.setVisible(false);
 
