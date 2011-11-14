@@ -435,7 +435,7 @@ public class Pinyin {
 	 * @param actual
 	 * @return
 	 */
-	public String convertToAccent(String input) {
+	public static String convertToAccent(String input) {
 
 		StringBuilder sb = new StringBuilder(input.length());
 
@@ -467,5 +467,9 @@ public class Pinyin {
 	
 	public static void main(String[] args) {
 		System.out.println("n"+COMBINING_GRAVE_ACCENT);
+	
+		
+		System.out.println(convertToAccent("ye2")); 
+		System.out.println(convertToAccent("ye2").length()); 
 	}
 }

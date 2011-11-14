@@ -4,18 +4,23 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.common.base.Splitter;
 import com.plr.cvstojson.Data;
 
 public class CharOcc {
 
-	
+	private static final int CHARNUM = 5000;
 	Map<Character, Data> charMap = new HashMap<>();
-	
+
 	public static void main(String[] args) {
 
 		CharOcc m = new CharOcc();
@@ -41,7 +46,7 @@ public class CharOcc {
 
 		Splitter splitter = Splitter.on('\t');
 		DataInputStream in = new DataInputStream(u);
-		
+
 		int i = 0;
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"))) {
 
@@ -50,24 +55,23 @@ public class CharOcc {
 				if (line.startsWith("#")) {
 					continue;
 				}
-				
+
 				i++;
 				Iterable<String> ite = splitter.split(line);
 				Iterator<String> it = ite.iterator();
-				
+
 				Character c = null;
-				
+
 				it.next();
 				c = it.next().charAt(0);
-				
+
 				Data d = new Data();
 				d.setId(i);
 				d.setSimpleCharacter(c);
-				
+
 				charMap.put(c, d);
-				
-				
-				if (i > 100) {
+
+				if (i >= CHARNUM) {
 					break;
 				}
 			}
@@ -76,20 +80,69 @@ public class CharOcc {
 
 		}
 
-		
-		System.out.println(charMap);
-		// CSVReader cvsReader = new CSVReader(br);
-		//
-		// List<String[]> listRows = cvsReader.readAll();
-		//
-		// cvsReader.close();
+		u = this.getClass().getResourceAsStream("../cvstojson/cedict_ts.u8");
 
-		
+		if (u == null) {
+			System.err.println("snif");
+		}
 
-		// Writer writer = new Writer();
-		//
-		// writer.write(listRows);
-		//
+		// fstream = new FileInputStream("charset.csv");
+
+		in = new DataInputStream(u);
+
+		Pattern p = Pattern.compile("(\\S+)\\s(\\S+)\\s\\[(.+?)\\]\\s(.+)");
+		String line = null;
+		Splitter splitterSlash = Splitter.on('/').omitEmptyStrings();
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"))) {
+
+			while ((line = br.readLine()) != null) {
+				if (line.startsWith("#")) {
+					continue;
+				}
+
+				Matcher m = p.matcher(line);
+
+				if (m.find()) {
+					// String trad = m.group(1);
+					String simple = m.group(2);
+
+					if (simple.length() != 1) {
+						continue;
+					}
+
+					String pinyin = m.group(3);
+					String description = m.group(4);
+
+					Character c = simple.charAt(0);
+
+					Data d = charMap.get(c);
+
+					if (d != null) {
+						Iterable<String> ite = splitterSlash.split(description);
+						d.addDefinitionNum(pinyin, ite);
+					}
+				}
+
+			}
+
+		} catch (Exception e) {
+			System.err.println(e.getMessage() + " line: " + line);
+			e.printStackTrace();
+		}
+
+		CharOccWriter writer = new CharOccWriter();
+
+		Set<Data> set = new TreeSet<>(new Comparator<Data>() {
+
+			@Override
+			public int compare(Data o1, Data o2) {
+				return o1.getId() - o2.getId();
+			}
+		});
+
+		set.addAll(charMap.values());
+
+		writer.write(set);
 
 	}
 }
