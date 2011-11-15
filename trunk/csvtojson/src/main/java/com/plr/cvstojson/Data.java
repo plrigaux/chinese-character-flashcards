@@ -3,8 +3,12 @@ package com.plr.cvstojson;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 
 import com.google.common.base.Splitter;
+import com.google.common.collect.Multiset;
+import com.google.common.collect.TreeMultiset;
 
 public class Data {
 	private int rankId;
@@ -12,7 +16,13 @@ public class Data {
 	private Character simpleCharacter;
 	private Character ac;
 
-	private ArrayList<Definision> pron = new ArrayList<Definision>();
+	private Multiset<Definision> pron = TreeMultiset.create(new Comparator<Definision>() {
+
+		@Override
+		public int compare(Definision o1, Definision o2) {
+			return o1.getPyNum().compareToIgnoreCase(o2.getPyNum());
+		}
+	});
 
 	static public class Definision {
 		private String pinyin;
@@ -20,30 +30,29 @@ public class Data {
 		private ArrayList<String> def = new ArrayList<String>();
 
 		Definision(String pinyin, Iterable<String> it) {
-			
+
 			pinyin = Normalizer.normalize(pinyin, Form.NFC);
-			
+
 			this.pinyin = pinyin;
 			for (String s : it) {
 				def.add(s);
 			}
-						
+
 			pinyinNum = Pinyin.convertNum(pinyin);
 		}
 
-		
 		public void setNum(String pinyinNum, Iterable<String> it) {
-			
+
 			pinyin = Pinyin.convertNum(pinyinNum);
-			
+
 			this.pinyin = Pinyin.convertToAccent(pinyinNum);
 			for (String s : it) {
 				def.add(s);
 			}
-						
+
 			this.pinyinNum = pinyinNum;
 		}
-		
+
 		public Definision() {
 			// TODO Auto-generated constructor stub
 		}
@@ -53,7 +62,7 @@ public class Data {
 		}
 
 		public ArrayList<String> getDefs() {
-			
+
 			return def;
 		}
 
@@ -69,11 +78,10 @@ public class Data {
 	public void setCharaters(String chars) {
 		simpleCharacter = chars.charAt(0);
 
-
 		if (chars.length() > 4 && chars.charAt(2) == 'F') {
 			tc = chars.charAt(3);
 		}
-		
+
 		if (chars.length() > 4 && chars.charAt(2) == 'A') {
 			ac = chars.charAt(3);
 		}
@@ -88,7 +96,7 @@ public class Data {
 
 		if (c != -1 && b != -1) {
 			String pinyin = string.substring(b + 1, c);
-		
+
 			Iterable<String> it = s.split(string.substring(c + 1));
 			addDefinition(pinyin, it);
 		}
@@ -104,10 +112,10 @@ public class Data {
 		Definision d = new Definision();
 
 		d.setNum(pinyinNum, it);
-		
+
 		pron.add(d);
 	}
-	
+
 	public int getId() {
 		return rankId;
 	}
@@ -119,23 +127,22 @@ public class Data {
 	public Character setSimpleCharacter(Character simpleCharacter) {
 		return this.simpleCharacter = simpleCharacter;
 	}
-	
+
 	public Character getT() {
 		return tc;
 	}
-	
+
 	public Character getA() {
 		return ac;
 	}
 
-
-	public ArrayList<Definision> getDefs() {
+	public Collection<Definision> getDefs() {
 		return pron;
 	}
-	
+
 	@Override
 	public String toString() {
-		
-		return "rankId " + rankId + " sc " +simpleCharacter;
+
+		return "rankId " + rankId + " sc " + simpleCharacter;
 	}
 }
