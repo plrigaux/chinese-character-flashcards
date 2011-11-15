@@ -37,7 +37,7 @@ public class CharOccWriter {
 		int nbBatch = csvRows.size() / BATCH;
 
 		Iterator<Data> it = csvRows.iterator();
-		
+
 		for (int i = 1; i <= nbBatch; i++) {
 
 			doABatch(i, it);
@@ -64,6 +64,8 @@ public class CharOccWriter {
 
 				jw.key(k);
 				jw.value(v);
+				
+//				System.out.println(k + " " + v);
 			}
 			jw.endObject();
 		} finally {
@@ -82,12 +84,10 @@ public class CharOccWriter {
 		OutputStreamWriter ow = new OutputStreamWriter(fo, "UTF-8");
 
 		int dataWrote = 0;
-		
+
 		JSONWriter jw = new JSONWriter(ow);
 		try {
 			jw.array();
-
-		
 
 			while (it.hasNext()) {
 				Data data = it.next();
@@ -136,8 +136,8 @@ public class CharOccWriter {
 
 		for (Data.Definision def : d.getDefs()) {
 			jw.object();
-			jw.key("p");
-			jw.value(def.getPy());
+			// jw.key("p");
+			// jw.value(def.getPy());
 
 			jw.key("n");
 			jw.value(def.getPyNum());
@@ -150,7 +150,7 @@ public class CharOccWriter {
 			jw.endArray();
 			jw.endObject();
 
-			num2pinyin.put(def.getPyNum(), def.getPy());
+			num2pinyin.put(def.getPyNum().toLowerCase(), def.getPy().toLowerCase());
 		}
 
 		jw.endArray();
