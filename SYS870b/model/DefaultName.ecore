@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="defaultname"
+    nsURI="http://defaultname/1.0" nsPrefix="defaultname">
+  <eClassifiers xsi:type="ecore:EClass" name="Personne">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="joue le role" eType="#//Client"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Commis"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="EReference1" eType="#//Gestionnaire"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Client">
+    <eOperations name="réserve"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Possède" upperBound="-1"
+        eType="#//Réservation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="a" eType="#//Location"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Réservation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Réfère" lowerBound="1"
+        eType="#//Véhicule"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Période"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="catégorie" eType="#//Catégorie"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Véhicule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="est" eType="#//Catégorie"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Agence">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Possède" eType="#//Véhicule"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="a" lowerBound="1" upperBound="-1"
+        eType="#//Commis"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="a" lowerBound="1" eType="#//Gestionnaire"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Commis"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Gestionnaire"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Location">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="a" lowerBound="1" eType="#//Véhicule"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Période"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Catégorie"/>
+</ecore:EPackage>
