@@ -46,7 +46,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateFin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Catégorie"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Dossier Client"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Dossier Client">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="refère" lowerBound="1"
+        eType="#//Client"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Société">
     <eStructuralFeatures xsi:type="ecore:EReference" name="possède Agence" upperBound="-1"
         eType="#//Agence"/>
