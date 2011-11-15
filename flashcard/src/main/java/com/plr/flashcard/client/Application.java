@@ -14,7 +14,9 @@ public class Application implements EntryPoint {
 	
 	@Override
 	public void onModuleLoad() {
-
+		//init the pinyin converter
+		PinyinConverter.getPinyinConverter();
+		
 		AppResources.INSTANCE.style().ensureInjected();
 
 		RootLayoutPanel rootPanel = RootLayoutPanel.get();

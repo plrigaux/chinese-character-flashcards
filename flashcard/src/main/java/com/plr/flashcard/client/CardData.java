@@ -40,9 +40,9 @@ public final class CardData extends JavaScriptObject implements ZhongWenCharacte
 
 		}
 
-		public final native String getPinyin() /*-{
-			return this.p;
-		}-*/;
+		public final  String getPinyin() {
+			return PinyinConverter.getConvert(getPinyinNum());
+		}
 
 		public final native JsArrayString getDefinition() /*-{
 			return this.d;
