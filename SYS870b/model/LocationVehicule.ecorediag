@@ -3,6 +3,14 @@
   <children xmi:type="notation:Node" xmi:id="_cMn9IA8zEeGCVpfI0mDftA" type="1001">
     <children xmi:type="notation:Node" xmi:id="_cMrngA8zEeGCVpfI0mDftA" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_cMtcsA8zEeGCVpfI0mDftA" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_uSWAYA-3EeGLG-vlU9W3HA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="LocationVehicule.ecore#//Personne/nom"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_uSWAYQ-3EeGLG-vlU9W3HA"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_v5AcMA-3EeGLG-vlU9W3HA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="LocationVehicule.ecore#//Personne/prénom"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_v5AcMQ-3EeGLG-vlU9W3HA"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_cMtcsQ8zEeGCVpfI0mDftA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_cMtcsg8zEeGCVpfI0mDftA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_cMtcsw8zEeGCVpfI0mDftA"/>
@@ -53,7 +61,7 @@
     </children>
     <children xmi:type="notation:Node" xmi:id="_rvlUsA8zEeGCVpfI0mDftA" type="5002">
       <children xmi:type="notation:Node" xmi:id="_aLvA0A-eEeG52exE_Oqrfw" type="2002">
-        <element xmi:type="ecore:EOperation" href="LocationVehicule.ecore#//Réservation/getPériode"/>
+        <element xmi:type="ecore:EOperation" href="LocationVehicule.ecore#//Réservation/getPériodeLocation"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_aLvA0Q-eEeG52exE_Oqrfw"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_rvlUsQ8zEeGCVpfI0mDftA"/>
@@ -67,6 +75,10 @@
   <children xmi:type="notation:Node" xmi:id="_49CNcA8zEeGCVpfI0mDftA" type="1001">
     <children xmi:type="notation:Node" xmi:id="_49DbkA8zEeGCVpfI0mDftA" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_49ECoA8zEeGCVpfI0mDftA" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_SZ9HwA-4EeGLG-vlU9W3HA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="LocationVehicule.ecore#//Véhicule/id"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_SZ9HwQ-4EeGLG-vlU9W3HA"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_49ECoQ8zEeGCVpfI0mDftA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_49ECog8zEeGCVpfI0mDftA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_49ECow8zEeGCVpfI0mDftA"/>
@@ -87,6 +99,10 @@
         <element xmi:type="ecore:EAttribute" href="LocationVehicule.ecore#//Agence/nombreVéhicule"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_-W5n8Q-dEeG52exE_Oqrfw"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_m8DvUA-3EeGLG-vlU9W3HA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="LocationVehicule.ecore#//Agence/nom"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_m8DvUQ-3EeGLG-vlU9W3HA"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_3LuycQ80EeGPsb9apRAsng"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_3Luycg80EeGPsb9apRAsng"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_3Luycw80EeGPsb9apRAsng"/>
@@ -95,6 +111,10 @@
       <children xmi:type="notation:Node" xmi:id="_mGrI0A-eEeG52exE_Oqrfw" type="2002">
         <element xmi:type="ecore:EOperation" href="LocationVehicule.ecore#//Agence/aVéhiculeDisponible"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_mGrI0Q-eEeG52exE_Oqrfw"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_FL3V0A-4EeGLG-vlU9W3HA" type="2002">
+        <element xmi:type="ecore:EOperation" href="LocationVehicule.ecore#//Agence/demandeVéhicule%20à%20autre%20agence"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_FL3V0Q-4EeGLG-vlU9W3HA"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_3LwAkQ80EeGPsb9apRAsng"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_3LwAkg80EeGPsb9apRAsng"/>
@@ -171,6 +191,10 @@
   <children xmi:type="notation:Node" xmi:id="_LpO78A82EeGPsb9apRAsng" type="1001">
     <children xmi:type="notation:Node" xmi:id="_LpQKEA82EeGPsb9apRAsng" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_LpQKEQ82EeGPsb9apRAsng" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_MqMvoA-4EeGLG-vlU9W3HA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="LocationVehicule.ecore#//Catégorie/nom"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_MqMvoQ-4EeGLG-vlU9W3HA"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_LpQKEg82EeGPsb9apRAsng"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_LpQKEw82EeGPsb9apRAsng"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_LpQxIA82EeGPsb9apRAsng"/>
@@ -204,7 +228,7 @@
     <children xmi:type="notation:Node" xmi:id="_lRTcgw-dEeG52exE_Oqrfw" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_lRTchA-dEeG52exE_Oqrfw" type="5001">
       <children xmi:type="notation:Node" xmi:id="_FwFX0A-lEeG52exE_Oqrfw" type="2001">
-        <element xmi:type="ecore:EAttribute" href="LocationVehicule.ecore#//Société/EAttribute0"/>
+        <element xmi:type="ecore:EAttribute" href="LocationVehicule.ecore#//Société/Nom"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_FwFX0Q-lEeG52exE_Oqrfw"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_lRTchQ-dEeG52exE_Oqrfw"/>

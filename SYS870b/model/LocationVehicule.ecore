@@ -7,6 +7,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="joue le role" eType="#//Client"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Commis"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="EReference1" eType="#//Gestionnaire"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="prénom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Client">
     <eOperations name="réserveVéhicule"/>
@@ -16,7 +18,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Dossier%20Client"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Réservation">
-    <eOperations name="getPériode"/>
+    <eOperations name="getPériodeLocation"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Réfère" lowerBound="1"
         eType="#//Véhicule"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateDébut"/>
@@ -26,14 +28,17 @@
   <eClassifiers xsi:type="ecore:EClass" name="Véhicule">
     <eStructuralFeatures xsi:type="ecore:EReference" name="est" eType="#//Catégorie"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="est Assigné" eType="#//Réservation"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Agence">
     <eOperations name="aVéhiculeDisponible" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="demandeVéhicule à autre agence"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Possède" eType="#//Véhicule"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="a" lowerBound="1" upperBound="-1"
         eType="#//Commis"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="a" lowerBound="1" eType="#//Gestionnaire"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nombreVéhicule" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Commis"/>
   <eClassifiers xsi:type="ecore:EClass" name="Gestionnaire">
@@ -45,7 +50,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateDébut" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateFin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Catégorie"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Catégorie">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Dossier Client">
     <eStructuralFeatures xsi:type="ecore:EReference" name="refère" lowerBound="1"
         eType="#//Client"/>
@@ -54,6 +61,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="possède Agence" upperBound="-1"
         eType="#//Agence"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="EReference1" eType="#//Dossier%20Client"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="EAttribute0"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Nom"/>
   </eClassifiers>
 </ecore:EPackage>
