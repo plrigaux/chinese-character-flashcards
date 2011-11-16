@@ -1,7 +1,9 @@
 package com.plr.flashcard.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.plr.flashcard.client.i18n.HanziMessages;
 import com.plr.flashcard.client.view.welcome.Welcome;
 
 /**
@@ -18,7 +20,8 @@ public class Application implements EntryPoint {
 		PinyinConverter.getPinyinConverter();
 		
 		AppResources.INSTANCE.style().ensureInjected();
-
+		GWT.create(HanziMessages.class);
+		
 		RootLayoutPanel rootPanel = RootLayoutPanel.get();
 		
 		rootPanel.clear();
@@ -26,6 +29,7 @@ public class Application implements EntryPoint {
 		rootPanel.add(welcome);
 		
 		historyManager = new HistoryManager();
+				
 	}
 
 }
