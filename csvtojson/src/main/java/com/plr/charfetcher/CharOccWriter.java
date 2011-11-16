@@ -22,7 +22,7 @@ public class CharOccWriter {
 
 	private Map<String, String> num2pinyin = new TreeMap<String, String>();
 
-	private final String OUTDIR = "cedict";
+	private final String OUTDIR = "cedict/data";
 
 	void write(Collection<Data> csvRows) throws Exception {
 
@@ -32,7 +32,7 @@ public class CharOccWriter {
 			file.delete();
 		}
 
-		file.mkdir();
+		file.mkdirs();
 
 		int nbBatch = csvRows.size() / BATCH;
 
@@ -114,6 +114,10 @@ public class CharOccWriter {
 			return;
 		}
 
+		if (d.getId() == 232) {
+			System.out.println(d);
+		}
+		
 		jw.object();
 		jw.key("i");
 		jw.value(d.getId());
@@ -134,7 +138,7 @@ public class CharOccWriter {
 
 		jw.array();
 
-		for (Data.Definision def : d.getDefs()) {
+		for (Data.Definition def : d.getDefs()) {
 			jw.object();
 			// jw.key("p");
 			// jw.value(def.getPy());
@@ -146,6 +150,10 @@ public class CharOccWriter {
 			jw.array();
 			for (String defin : def.getDefs()) {
 				jw.value(defin);
+				
+				if (defin.startsWith("CL:")) {
+					System.out.println(defin);
+				}
 			}
 			jw.endArray();
 			jw.endObject();

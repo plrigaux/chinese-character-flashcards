@@ -100,26 +100,26 @@ public class CharOcc {
 					continue;
 				}
 
-				Matcher m = p.matcher(line);
+				Matcher matcher = p.matcher(line);
 
-				if (m.find()) {
+				if (matcher.find()) {
 					// String trad = m.group(1);
-					String simple = m.group(2);
+					String simple = matcher.group(2);
 
 					if (simple.length() != 1) {
 						continue;
 					}
 
-					String pinyin = m.group(3);
-					String description = m.group(4);
+					String pinyin = matcher.group(3);
+					String description = matcher.group(4);
 
 					Character c = simple.charAt(0);
 
-					Data d = charMap.get(c);
+					Data data = charMap.get(c);
 
-					if (d != null) {
+					if (data != null) {
 						Iterable<String> ite = splitterSlash.split(description);
-						d.addDefinitionNum(pinyin, ite);
+						data.addDefinitionNum(pinyin, ite);
 					}
 				}
 
@@ -132,7 +132,7 @@ public class CharOcc {
 
 		CharOccWriter writer = new CharOccWriter();
 
-		Set<Data> set = new TreeSet<>(new Comparator<Data>() {
+		Set<Data> dataSet = new TreeSet<>(new Comparator<Data>() {
 
 			@Override
 			public int compare(Data o1, Data o2) {
@@ -140,9 +140,9 @@ public class CharOcc {
 			}
 		});
 
-		set.addAll(charMap.values());
+		dataSet.addAll(charMap.values());
 
-		writer.write(set);
+		writer.write(dataSet);
 
 	}
 }
