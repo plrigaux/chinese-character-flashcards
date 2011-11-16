@@ -16,6 +16,8 @@
 package com.plr.flashcard.client.view.definition;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -25,6 +27,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.flashcard.client.AppResources;
 import com.plr.flashcard.client.CardData.CharDefinition;
+import com.plr.flashcard.client.PinyinConverter;
 import com.plr.flashcard.client.Tone;
 import com.plr.flashcard.client.ZhongWenCharacter;
 
@@ -41,7 +44,7 @@ public class DefinitionPanel extends Composite {
 	@UiField
 	SimplePanel simplePanel;
 
-//	private ZhongWenCharacter contactInfo;
+	// private ZhongWenCharacter contactInfo;
 
 	public DefinitionPanel() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -53,11 +56,12 @@ public class DefinitionPanel extends Composite {
 
 	}
 
+	static RegExp r = RegExp.compile("(.+?)\\[(\\w+)\\],*", "g");
+
 	public void setCharater(ZhongWenCharacter zwChar) {
-//		this.contactInfo = contact;
-		// updateButton.setEnabled(contact != null);
+
 		if (zwChar != null) {
-					
+
 			FlexTable definitionTable = new FlexTable();
 			int row = 0;
 			for (int j = 0; j < zwChar.definitionCount(); j++) {
@@ -67,17 +71,51 @@ public class DefinitionPanel extends Composite {
 				lp.addStyleName(AppResources.INSTANCE.style().pinyin());
 
 				int tone = charDefinition.getTone();
-				
+
 				String toneStyle = Tone.getTone(tone).getCssClass();
-				
+
 				lp.addStyleName(toneStyle);
 
 				definitionTable.setWidget(row, 0, lp);
 
 				for (int k = 0; k < charDefinition.getDefinition().length(); k++) {
-					definitionTable.setText(row++, 1, charDefinition.getDefinition().get(k));
+					String definition = charDefinition.getDefinition().get(k);
+
+					if (definition.startsWith("CL:")) {
+
+						// MatchResult m = r.exec(definition);
+
+						String out = "<i>Mesure word: </i>";
+
+						boolean first = true;
+						for (MatchResult result = r.exec(definition); result != null; result = r.exec(definition)) {
+
+							String character = result.getGroup(1);
+							character = character.substring(character.length() - 1);
+
+							if (first) {
+								first = false;
+							} else {
+								out += ", ";
+							}
+
+							String pinyinNum = result.getGroup(2);
+
+							int tone1 = CharDefinition.getTone(pinyinNum);
+
+							String toneStyle1 = Tone.getTone(tone1).getCssClass();
+
+							out += character + " <span class='" + toneStyle1 + "'>" + PinyinConverter.getConvert(pinyinNum)
+									+ "</span>";
+						}
+
+						definition = out;
+
+					}
+
+					definitionTable.setHTML(row++, 1, definition);
 				}
-				
+
 				simplePanel.clear();
 				simplePanel.add(definitionTable);
 			}
@@ -86,10 +124,10 @@ public class DefinitionPanel extends Composite {
 
 	public void clear() {
 		simplePanel.clear();
-		
+
 	}
-	
-//	public void setVisible(boolean visible) {
-//		simplePanel.setVisible(visible);		
-//	}
+
+	// public void setVisible(boolean visible) {
+	// simplePanel.setVisible(visible);
+	// }
 }
