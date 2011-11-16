@@ -62,6 +62,11 @@ public class PinyinConverter {
 	public static String getConvert(String pinyinNum) {
 		
 		String result = pinyinNum;
+		
+		boolean isUpperCase = Character.isUpperCase(pinyinNum.charAt(0));
+		
+		pinyinNum = pinyinNum.toLowerCase();
+		
 		try {
 			
 			JSONObject map = getPinyinConverter().pinyinMap;
@@ -69,6 +74,12 @@ public class PinyinConverter {
 			JSONValue jValue = map.get(pinyinNum);
 			
 			JSONString jString = jValue.isString();
+			
+			if (isUpperCase) {
+				result = jString.stringValue();
+								
+				return Character.toUpperCase(result.charAt(0)) + result.substring(1);
+			}
 			
 			return jString.stringValue();
 		} catch (Exception e) {

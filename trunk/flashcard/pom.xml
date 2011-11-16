@@ -72,6 +72,7 @@
 					<webResources>
 						<resource>
 							<directory>chrome</directory>
+							<directory>../csvtojson/cedict</directory>
 						</resource>
 					</webResources>
 				</configuration>

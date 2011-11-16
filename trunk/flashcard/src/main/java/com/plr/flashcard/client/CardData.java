@@ -20,40 +20,44 @@ public final class CardData extends JavaScriptObject implements ZhongWenCharacte
 			return item == null ? null : item.getId();
 		}
 	};
-	
+
 	@Override
 	public final native int getId() /*-{
-	return this.i;
-}-*/;
-	
+									return this.i;
+									}-*/;
+
 	@Override
 	public final native String getSimplifiedCharacter() /*-{
-		return this.s;
-	}-*/;
+														return this.s;
+														}-*/;
 
 	public final native JsArray<CharDefinition> getDefinitions() /*-{
-		return this.d;
-	}-*/;
+																	return this.d;
+																	}-*/;
 
-	static public class  CharDefinition extends JavaScriptObject {
+	static public class CharDefinition extends JavaScriptObject {
 		protected CharDefinition() {
 
 		}
 
-		public final  String getPinyin() {
+		public final String getPinyin() {
 			return PinyinConverter.getConvert(getPinyinNum());
 		}
 
 		public final native JsArrayString getDefinition() /*-{
-			return this.d;
-		}-*/;
+															return this.d;
+															}-*/;
 
 		public final native String getPinyinNum() /*-{
-			return this.n;
-		}-*/;
+													return this.n;
+													}-*/;
 
 		public final int getTone() {
-			String pinyinNum = getPinyinNum();
+			return getTone(getPinyinNum());
+
+		}
+
+		public static final int getTone(String pinyinNum) {
 
 			char c = pinyinNum.charAt(pinyinNum.length() - 1);
 

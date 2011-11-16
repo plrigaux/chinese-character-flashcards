@@ -14,10 +14,5 @@
 			padding-left: 20px;
 		}
 	</ui:style>
-
-	
-
-		<g:SimplePanel ui:field='simplePanel' />
-
-	
+	<g:SimplePanel ui:field='simplePanel' />
 </ui:UiBinder>
