@@ -69,6 +69,5 @@ public class HistoryManager implements ValueChangeHandler<String>, ApplicationCo
 			Welcome welcome = new Welcome();
 			rootPanel.add(welcome);
 		}
-
 	}
 }
