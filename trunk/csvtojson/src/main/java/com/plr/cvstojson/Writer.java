@@ -13,7 +13,7 @@ import java.util.TreeMap;
 import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.io.JSONWriter;
 
-import com.plr.cvstojson.Data.Definision;
+import com.plr.cvstojson.Data.Definition;
 
 public class Writer {
 
@@ -160,7 +160,7 @@ public class Writer {
 
 		jw.array();
 
-		for (Definision def : d.getDefs()) {
+		for (Definition def : d.getDefs()) {
 			jw.object();
 			jw.key("p");
 			jw.value(def.getPy());

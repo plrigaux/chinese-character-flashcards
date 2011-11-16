@@ -5,10 +5,9 @@ import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.PriorityQueue;
 
 import com.google.common.base.Splitter;
-import com.google.common.collect.Multiset;
-import com.google.common.collect.TreeMultiset;
 
 public class Data {
 	private int rankId;
@@ -16,20 +15,20 @@ public class Data {
 	private Character simpleCharacter;
 	private Character ac;
 
-	private Multiset<Definision> pron = TreeMultiset.create(new Comparator<Definision>() {
+	private PriorityQueue<Definition> pron = new PriorityQueue<>(5, new Comparator<Definition>() {
 
 		@Override
-		public int compare(Definision o1, Definision o2) {
-			return o1.getPyNum().compareToIgnoreCase(o2.getPyNum());
+		public int compare(Definition o1, Definition o2) {
+			return o1.getPyNum().compareTo(o2.getPyNum());
 		}
 	});
 
-	static public class Definision {
+	static public class Definition {
 		private String pinyin;
 		private String pinyinNum;
 		private ArrayList<String> def = new ArrayList<String>();
 
-		Definision(String pinyin, Iterable<String> it) {
+		Definition(String pinyin, Iterable<String> it) {
 
 			pinyin = Normalizer.normalize(pinyin, Form.NFC);
 
@@ -53,7 +52,7 @@ public class Data {
 			this.pinyinNum = pinyinNum;
 		}
 
-		public Definision() {
+		public Definition() {
 			// TODO Auto-generated constructor stub
 		}
 
@@ -103,13 +102,13 @@ public class Data {
 	}
 
 	public void addDefinition(String pinying, Iterable<String> it) {
-		Definision d = new Definision(pinying, it);
+		Definition d = new Definition(pinying, it);
 
 		pron.add(d);
 	}
 
 	public void addDefinitionNum(String pinyinNum, Iterable<String> it) {
-		Definision d = new Definision();
+		Definition d = new Definition();
 
 		d.setNum(pinyinNum, it);
 
@@ -136,7 +135,7 @@ public class Data {
 		return ac;
 	}
 
-	public Collection<Definision> getDefs() {
+	public Collection<Definition> getDefs() {
 		return pron;
 	}
 
