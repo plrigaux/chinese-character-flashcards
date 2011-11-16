@@ -56,7 +56,7 @@ public class DefinitionPanel extends Composite {
 
 	}
 
-	static RegExp r = RegExp.compile("(.+?)\\[(\\w+)\\],*", "g");
+	static private RegExp r = RegExp.compile("(.+?)\\[(\\w+)\\],*", "g");
 
 	public void setCharater(ZhongWenCharacter zwChar) {
 
@@ -81,37 +81,7 @@ public class DefinitionPanel extends Composite {
 				for (int k = 0; k < charDefinition.getDefinition().length(); k++) {
 					String definition = charDefinition.getDefinition().get(k);
 
-					if (definition.startsWith("CL:")) {
-
-						// MatchResult m = r.exec(definition);
-
-						String out = "<i>Mesure word: </i>";
-
-						boolean first = true;
-						for (MatchResult result = r.exec(definition); result != null; result = r.exec(definition)) {
-
-							String character = result.getGroup(1);
-							character = character.substring(character.length() - 1);
-
-							if (first) {
-								first = false;
-							} else {
-								out += ", ";
-							}
-
-							String pinyinNum = result.getGroup(2);
-
-							int tone1 = CharDefinition.getTone(pinyinNum);
-
-							String toneStyle1 = Tone.getTone(tone1).getCssClass();
-
-							out += character + " <span class='" + toneStyle1 + "'>" + PinyinConverter.getConvert(pinyinNum)
-									+ "</span>";
-						}
-
-						definition = out;
-
-					}
+					definition = printDefinition(definition);
 
 					definitionTable.setHTML(row++, 1, definition);
 				}
@@ -120,6 +90,41 @@ public class DefinitionPanel extends Composite {
 				simplePanel.add(definitionTable);
 			}
 		}
+	}
+
+	private String printDefinition(String definition) {
+		if (definition.startsWith("CL:")) {
+
+
+
+			String out = "<i>Mesure word: </i>";
+
+			boolean first = true;
+			for (MatchResult result = r.exec(definition); result != null; result = r.exec(definition)) {
+
+				String character = result.getGroup(1);
+				character = character.substring(character.length() - 1);
+
+				if (first) {
+					first = false;
+				} else {
+					out += ", ";
+				}
+
+				String pinyinNum = result.getGroup(2);
+
+				int tone1 = CharDefinition.getTone(pinyinNum);
+
+				String toneStyle1 = Tone.getTone(tone1).getCssClass();
+
+				out += character + " <span class='" + toneStyle1 + "'>" + PinyinConverter.getConvert(pinyinNum)
+						+ "</span>";
+			}
+
+			definition = out;
+
+		}
+		return definition;
 	}
 
 	public void clear() {
