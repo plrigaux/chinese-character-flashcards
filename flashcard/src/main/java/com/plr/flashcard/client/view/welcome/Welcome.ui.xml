@@ -10,16 +10,13 @@
 			margin: 0px auto;
 		}
 	</ui:style>
+	<ui:with field='hz' type='com.plr.flashcard.client.i18n.HanziMessages'/>
 	<g:HTMLPanel>
-	 <div><ui:msg description="Greeting">Hello, world.</ui:msg></div>
 		<g:VerticalPanel styleName="{style.panel}" spacing="10" horizontalAlignment="ALIGN_CENTER">
-			<w:SVGButton text="Flashcards" ui:field="flashcards" width="160px" />
-			<w:SVGButton text="Guess" ui:field="guesser" width="160px"/>
-			<w:SVGButton text="Char Browser" ui:field="browser" width="160px"/>
-
-			<w:SVGButton text="Help" ui:field="help" width="160px"/>
-			<w:SVGButton text="About" ui:field="about" width="160px"/>
-
+			<w:CustomButton text="{hz.welcome_button_flashcards}" ui:field="flashcards" width="160px" />
+			<w:CustomButton text="{hz.welcome_button_shishenme}" ui:field="guesser" width="160px"/>
+			<w:CustomButton text="{hz.welcome_button_charBrowser}" ui:field="browser" width="160px"/>
+			<w:CustomButton text="{hz.welcome_button_about}" ui:field="about" width="160px"/>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

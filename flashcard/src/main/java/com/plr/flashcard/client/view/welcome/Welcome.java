@@ -24,30 +24,25 @@ public class Welcome extends Composite implements ApplicationConst {
 	}
 
 	@UiField
-	SVGButton about;
-	@UiField
-	SVGButton help;
+	CustomButton about;
 
 	@UiField
-	SVGButton flashcards;
+	CustomButton flashcards;
 	@UiField
-	SVGButton guesser;
+	CustomButton guesser;
 	@UiField
-	SVGButton browser;
+	CustomButton browser;
 
 	public Welcome() {
 		initWidget(uiBinder.createAndBindUi(this));
-
+		
+		
+//		browser.setText(HanziConstants.INSTANCE.charBrowser());
 	}
 
 	@UiHandler("about")
 	void onAboutClick(ClickEvent event) {
-		alertWidget("About", "About").center();
-	}
-
-	@UiHandler("help")
-	void onHelpClick(ClickEvent event) {
-		alertWidget("Help", "Help").center();
+		alertWidget("About", "Developed by Pier Rigaux plrigaux@gmail.com based on the CEDICT").center();
 	}
 
 	@UiHandler("flashcards")
@@ -65,8 +60,7 @@ public class Welcome extends Composite implements ApplicationConst {
 		History.newItem(SHI_SHENME);
 	}
 
-	public static DialogBox alertWidget(final String header,
-			final String content) {
+	public static DialogBox alertWidget(final String header, final String content) {
 		final DialogBox box = new DialogBox();
 		final VerticalPanel panel = new VerticalPanel();
 		box.setText(header);

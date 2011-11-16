@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.plr.flashcard.client.system.CharInfo;
 import com.plr.flashcard.client.system.LeitnerSystem;
 import com.plr.flashcard.client.system.LeitnerSystem.LEVEL;
-import com.plr.flashcard.client.view.welcome.SVGButton;
+import com.plr.flashcard.client.view.welcome.CustomButton;
 
 public abstract class ControlerSystem extends Composite {
 	private static final int DEFAULT_NEW = 5;
@@ -30,7 +30,7 @@ public abstract class ControlerSystem extends Composite {
 	@UiField
 	FlexTable results;
 	@UiField
-	SVGButton start;
+	CustomButton start;
 
 	interface Binder extends UiBinder<Widget, ControlerSystem> {
 	}

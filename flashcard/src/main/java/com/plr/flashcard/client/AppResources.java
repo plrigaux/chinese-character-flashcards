@@ -29,5 +29,6 @@ public interface AppResources extends ClientBundle {
 
 		String pinyin();
 
+		String customButton();
 	}
 }
