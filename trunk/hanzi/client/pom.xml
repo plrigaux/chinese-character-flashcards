@@ -137,7 +137,13 @@
 			<version>20090211</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>gwt.oauth2</groupId>
+			<artifactId>gwt-oauth2</artifactId>
+			<version>0.2-alpha</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/gwt-oauth2-0.2-alpha.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	

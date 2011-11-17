@@ -1,5 +1,8 @@
 package com.plr.hanzi.client.view.welcome;
 
+import com.google.api.gwt.oauth2.client.Auth;
+import com.google.api.gwt.oauth2.client.AuthRequest;
+import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -7,6 +10,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -35,9 +39,8 @@ public class Welcome extends Composite implements ApplicationConst {
 
 	public Welcome() {
 		initWidget(uiBinder.createAndBindUi(this));
-		
-		
-//		browser.setText(HanziConstants.INSTANCE.charBrowser());
+
+		// browser.setText(HanziConstants.INSTANCE.charBrowser());
 	}
 
 	@UiHandler("about")
@@ -58,6 +61,43 @@ public class Welcome extends Composite implements ApplicationConst {
 	@UiHandler("guesser")
 	void onGuesserClick(ClickEvent event) {
 		History.newItem(SHI_SHENME);
+	}
+
+	private static final String GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/auth";
+
+	// This app's personal client ID assigned by the Google APIs Console
+	// (http://code.google.com/apis/console).
+	private static final String GOOGLE_CLIENT_ID = "452237527106.apps.googleusercontent.com";
+
+	// The auth scope being requested. This scope will allow the application to
+	// read Buzz activities, comments, etc., as if it was the user.
+	private static final String BUZZ_READONLY_SCOPE = "https://www.googleapis.com/auth/buzz.readonly";
+
+	// Use the implementation of Auth intended to be used in the GWT client app.
+	;
+
+	@UiHandler("login")
+	void onLoginClick(ClickEvent event) {
+
+		final Auth AUTH = Auth.get();
+
+		final AuthRequest req = new AuthRequest(GOOGLE_AUTH_URL, GOOGLE_CLIENT_ID).withScopes(BUZZ_READONLY_SCOPE);
+
+		// Calling login() will display a popup to the user the first time it is
+		// called. Once the user has granted access to the application,
+		// subsequent calls to login() will not display the popup, and will
+		// immediately result in the callback being given the token to use.
+		AUTH.login(req, new Callback<String, Throwable>() {
+			@Override
+			public void onSuccess(String token) {
+				Window.alert("Got an OAuth token:\n" + token + "\n" + "Token expires in " + AUTH.expiresIn(req) + " ms\n");
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error:\n" + caught.getMessage());
+			}
+		});
 	}
 
 	public static DialogBox alertWidget(final String header, final String content) {
