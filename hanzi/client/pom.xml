@@ -54,13 +54,13 @@
 					<appEngineVersion>1.6.0</appEngineVersion>
 					<port>8088</port>
 					<warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
-					<module>com.plr.flashcard.Flashcard</module>
+					<module>com.plr.hanzi.Hanzi</module>
 					<debugSuspend>false</debugSuspend>
 					<debugPort>30303</debugPort>
 <!-- 					<style>DETAILED</style> -->
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
 					<extra>extras</extra>
-					<i18nMessagesBundle>com.plr.flashcard.client.i18n.HanziMessages</i18nMessagesBundle>
+					<i18nMessagesBundle>com.plr.hanzi.client.i18n.HanziMessages</i18nMessagesBundle>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -73,7 +73,7 @@
 					<webResources>
 						<resource>
 							<directory>chrome</directory>
-							<directory>../csvtojson/cedict</directory>
+							<directory>../data/cedict</directory>
 						</resource>
 					</webResources>
 				</configuration>
@@ -141,5 +141,5 @@
 	</dependencies>
 
 	
-	<artifactId>hanzi.cllient</artifactId>
+	<artifactId>hanzi.client</artifactId>
 </project>

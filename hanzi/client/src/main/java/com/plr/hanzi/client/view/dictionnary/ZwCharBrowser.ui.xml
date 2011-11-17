@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:c='urn:import:com.google.gwt.user.cellview.client'
-	xmlns:s='urn:import:com.plr.flashcard.client.view.dictionnary'>
+	xmlns:s='urn:import:com.plr.hanzi.client.view.dictionnary'>
 
 	<ui:style>
 		.scrollable {

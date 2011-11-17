@@ -2,6 +2,7 @@ package com.plr.hanzi.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.plr.hanzi.client.i18n.HanziMessages;
 import com.plr.hanzi.client.view.welcome.Welcome;
@@ -29,7 +30,8 @@ public class Application implements EntryPoint {
 		rootPanel.add(welcome);
 		
 		historyManager = new HistoryManager();
-				
+			
+		Cookies.setCookie("local", "fr");
 	}
 
 }
