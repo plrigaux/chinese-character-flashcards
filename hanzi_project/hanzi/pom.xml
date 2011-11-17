@@ -3,9 +3,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.plr</groupId>
-	<artifactId>flashcard</artifactId>
+	<artifactId>hanzi</artifactId>
 	<packaging>war</packaging>
-	<name>Simple Client</name>
+	<name>Hanzi</name>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
