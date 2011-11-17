@@ -2,10 +2,8 @@
 
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.plr</groupId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>PLR :: CVS to JSON</name>
-	<artifactId>hanzi.databuilder</artifactId>
+	<name>Hanzi :: Data</name>
+	<artifactId>hanzi.data</artifactId>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -13,21 +11,6 @@
 	</properties>
 	<build>
 
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
-					</configuration>
-				</plugin>
-
-			</plugins>
-
-
-		</pluginManagement>
 	</build>
 	<dependencies>
 		<dependency>
@@ -56,4 +39,9 @@
 
 
 
+	<parent>
+		<version>0.0.1-SNAPSHOT</version>
+		<groupId>com.plr.hanzi</groupId>
+		<artifactId>hanzi</artifactId>
+	</parent>
 </project>
