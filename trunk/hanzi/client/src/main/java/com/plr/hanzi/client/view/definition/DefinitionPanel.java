@@ -56,7 +56,9 @@ public class DefinitionPanel extends Composite {
 
 	}
 
-	static private RegExp r = RegExp.compile("(.+?)\\[(\\w+)\\],*", "g");
+	static private RegExp mesureWordRegExp = RegExp.compile("(.+?)\\[(\\w+)\\],*", "g");
+
+	static private RegExp pinyinRegExp = RegExp.compile("\\[(.+?)\\]", "g");
 
 	public void setCharater(ZhongWenCharacter zwChar) {
 
@@ -95,12 +97,10 @@ public class DefinitionPanel extends Composite {
 	private String printDefinition(String definition) {
 		if (definition.startsWith("CL:")) {
 
-
-
 			String out = "<i>Mesure word: </i>";
 
 			boolean first = true;
-			for (MatchResult result = r.exec(definition); result != null; result = r.exec(definition)) {
+			for (MatchResult result = mesureWordRegExp.exec(definition); result != null; result = mesureWordRegExp.exec(definition)) {
 
 				String character = result.getGroup(1);
 				character = character.substring(character.length() - 1);
@@ -117,12 +117,42 @@ public class DefinitionPanel extends Composite {
 
 				String toneStyle1 = Tone.getTone(tone1).getCssClass();
 
-				out += character + " <span class='" + toneStyle1 + "'>" + PinyinConverter.getConvert(pinyinNum)
-						+ "</span>";
+				out += character + " <span class='" + toneStyle1 + "'>" + PinyinConverter.getConvert(pinyinNum) + "</span>";
 			}
 
 			definition = out;
 
+		} else {
+			boolean first = true;
+			String out = "";
+
+			int begin = 0;
+			int end = 0;
+			for (MatchResult result = pinyinRegExp.exec(definition); result != null; result = pinyinRegExp.exec(definition)) {
+
+				if (first) {
+					first = false;
+				}
+
+				String pinyinNum = result.getGroup(1);
+
+				int tone1 = CharDefinition.getTone(pinyinNum);
+
+				String toneStyle1 = Tone.getTone(tone1).getCssClass();
+
+				end = result.getIndex();
+
+				out += definition.substring(begin, end) + " <span class='" + toneStyle1 + "'>" + PinyinConverter.getConvert(pinyinNum) + "</span>";
+
+				begin = end + result.getGroup(0).length();
+			}
+			
+			if (!first) {
+				out += definition.substring(begin);
+				definition = out;
+			} else {
+
+			}
 		}
 		return definition;
 	}

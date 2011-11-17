@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:d='urn:import:com.plr.flashcard.client.view.definition'>
-	<ui:style type="com.plr.flashcard.client.view.shishenme.StyleAnswer">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:d='urn:import:com.plr.hanzi.client.view.definition'>
+	<ui:style type="com.plr.hanzi.client.view.shishenme.StyleAnswer">
 		.important {
 			font-weight: bold;
 		}
@@ -33,7 +33,7 @@
 		}
 	</ui:style>
 	
-	<ui:with field='res' type='com.plr.flashcard.client.AppResources'/>
+	<ui:with field='res' type='com.plr.hanzi.client.AppResources'/>
 	
 	<g:HTMLPanel>
 		<div style="text-align:center">
