@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.ComparisonFailure;
 import org.junit.Test;
 
-import com.plr.flashcard.client.tools.Pinyin;
+import com.plr.hanzi.client.tools.Pinyin;
 
 public class PinyinTest {
 

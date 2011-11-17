@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
+import com.plr.hanzi.client.tools.Pinyin;
 
 public class NormalizerTest {
 
