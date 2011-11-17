@@ -5,7 +5,7 @@
 	<groupId>com.plr</groupId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>PLR :: CVS to JSON</name>
-	<artifactId>cvstojson</artifactId>
+	<artifactId>hanzi.databuilder</artifactId>
 	<packaging>jar</packaging>
 
 	<properties>
