@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:d='urn:import:com.plr.hanzi.client.view.definition'
-	xmlns:generic="urn:import:org.apache.bcel.generic" xmlns:w="urn:import:com.plr.hanzi.client.view.welcome">
+	xmlns:generic="urn:import:org.apache.bcel.generic" xmlns:w="urn:import:com.plr.hanzi.client.view.welcome" xmlns:f="urn:import:com.plr.hanzi.client.view.flashcard">
 	<ui:style type="com.plr.hanzi.client.view.flashcard.FlashCardStyle">
 		.important {
 			font-weight: bold;
@@ -42,7 +42,7 @@
 	<g:DockLayoutPanel unit='EM'>
 
 		<g:north size='2'>
-			<g:HTML></g:HTML>
+			<f:FlashCardCounter ui:field="counter" />
 		</g:north>
 
 		<g:center>
