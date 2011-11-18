@@ -36,3 +36,8 @@
 .definitionPinyin {
 	font-weight: bold;
 }
+
+.actionButton {
+			width: 100%;
+			height: 100%;
+}

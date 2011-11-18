@@ -36,14 +36,14 @@ public class FlashCard extends ControlerSystemWidget {
 
 	@UiField
 	CustomButton show;
-	@UiField
-	CustomButton again;
-	@UiField
-	CustomButton hard;
-	@UiField
-	CustomButton good;
-	@UiField
-	CustomButton easy;
+//	@UiField
+//	CustomButton again;
+//	@UiField
+//	CustomButton hard;
+//	@UiField
+//	CustomButton good;
+//	@UiField
+//	CustomButton easy;
 	@UiField
 	Label character;
 	@UiField
@@ -114,10 +114,10 @@ public class FlashCard extends ControlerSystemWidget {
 			}
 		});
 
-		again.addStyleName(style.button());
-		hard.addStyleName(style.button());
-		good.addStyleName(style.button());
-		easy.addStyleName(style.button());
+//		again.addStyleName(style.button());
+//		hard.addStyleName(style.button());
+//		good.addStyleName(style.button());
+//		easy.addStyleName(style.button());
 
 		//show.addStyleName(style.showButton());
 
@@ -175,20 +175,20 @@ public class FlashCard extends ControlerSystemWidget {
 		nextZwChar();
 	}
 	
-	@UiHandler("trivial")
-	void onTrivialClick(ClickEvent event) {
-		getLeitnerSystem().answerCard(LEVEL.LEVEL_4, charInfo);
-		nextZwChar();
-	}
+//	@UiHandler("trivial")
+//	void onTrivialClick(ClickEvent event) {
+//		getLeitnerSystem().answerCard(LEVEL.LEVEL_4, charInfo);
+//		nextZwChar();
+//	}
 
 	private void nextZwChar() {
 		show.removeStyleName(style.disabled());
 		buttonsDiv.setClassName(style.disabled());
 		definitionPanel.setVisible(false);
-
-		super.nextChar();
-
+		
 		counter.setTodoNum(trainingList.size());
+		
+		super.nextChar();
 		
 		if (charInfo != null) {
 			// cause the rank start at 1 and index start at 0
@@ -201,7 +201,6 @@ public class FlashCard extends ControlerSystemWidget {
 			return;
 		}
 
-		counter.setTodoNum(values.size());
 		zwChar = values.get(0);
 		character.setText(zwChar.getSimplifiedCharacter());
 		AppResources.logger.log(Level.INFO, "Rank " + zwChar.getId() + " char: " + zwChar.getSimplifiedCharacter());

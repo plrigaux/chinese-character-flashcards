@@ -38,6 +38,7 @@
 			width: 80%
 		}
 	</ui:style>
+	<ui:with field='resource' type='com.plr.hanzi.client.style.AppResources'/>
 	<g:DockLayoutPanel unit='EM'>
 		<g:center>
 			<g:HTMLPanel styleName="{style.mainPanel}">
@@ -65,7 +66,7 @@
 			</g:HTMLPanel>
 		</g:center>
 		<g:south size="3">
-			<w:CustomButton ui:field="start" text="Start" />
+			<w:CustomButton ui:field="start" text="Start" addStyleNames="{resource.style.actionButton}" />
 		</g:south>
 	</g:DockLayoutPanel>
 </ui:UiBinder> 
