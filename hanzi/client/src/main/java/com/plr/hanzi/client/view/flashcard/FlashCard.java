@@ -48,9 +48,9 @@ public class FlashCard extends ControlerSystemWidget {
 	Label character;
 	@UiField
 	DefinitionPanel definitionPanel;
-
-//	@UiField
-//	DivElement showDiv;
+	
+	@UiField
+	FlashCardCounter counter;
 
 	@UiField
 	DivElement buttonsDiv;
@@ -65,8 +65,6 @@ public class FlashCard extends ControlerSystemWidget {
 	}
 
 	private CellList<ZhongWenCharacter> cellList;
-
-	// List<ZhongWenCharacter> theList = new ArrayList<ZhongWenCharacter>();
 
 	public FlashCard(FlashCardSystem flashCardSystem) {
 		super(flashCardSystem);
@@ -140,12 +138,8 @@ public class FlashCard extends ControlerSystemWidget {
 		definitionPanel.setVisible(true);
 		definitionPanel.setCharater(zwChar);
 		buttonsDiv.setClassName(style.enabled());
-//		showDiv.setClassName(style.disabled());
 		show.addStyleName(style.disabled());
 	}
-
-	// private int idx = 0;
-	// private int pageIdx = 1;
 
 	private void onRangeOrRowCountChanged() {
 
@@ -159,6 +153,7 @@ public class FlashCard extends ControlerSystemWidget {
 	void onAgainClick(ClickEvent event) {
 
 		getLeitnerSystem().answerCard(LEVEL.NEW, charInfo);
+		counter.incAgainNum();
 		nextZwChar();
 	}
 
@@ -194,6 +189,9 @@ public class FlashCard extends ControlerSystemWidget {
 
 		super.nextChar();
 
+		System.out.println(trainingList);
+		counter.setTodoNum(trainingList.size());
+		
 		if (charInfo != null) {
 			// cause the rank start at 1 and index start at 0
 			cellList.setVisibleRange(charInfo.getCharId() - 1, 1);
@@ -205,6 +203,7 @@ public class FlashCard extends ControlerSystemWidget {
 			return;
 		}
 
+		counter.setTodoNum(values.size());
 		zwChar = values.get(0);
 		character.setText(zwChar.getSimplifiedCharacter());
 		AppResources.logger.log(Level.INFO, "Rank " + zwChar.getId() + " char: " + zwChar.getSimplifiedCharacter());
