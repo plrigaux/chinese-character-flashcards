@@ -21,10 +21,10 @@ import com.google.gwt.view.client.RangeChangeEvent;
 import com.google.gwt.view.client.RowCountChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionModel;
-import com.plr.hanzi.client.AppResources;
 import com.plr.hanzi.client.CardData;
 import com.plr.hanzi.client.DataControler;
 import com.plr.hanzi.client.ZhongWenCharacter;
+import com.plr.hanzi.client.style.AppResources;
 import com.plr.hanzi.client.system.LeitnerSystem.LEVEL;
 import com.plr.hanzi.client.system.controler.ControlerSystemWidget;
 import com.plr.hanzi.client.view.definition.DefinitionPanel;
@@ -182,14 +182,12 @@ public class FlashCard extends ControlerSystemWidget {
 	}
 
 	private void nextZwChar() {
-//		showDiv.setClassName(style.enabled());
 		show.removeStyleName(style.disabled());
 		buttonsDiv.setClassName(style.disabled());
 		definitionPanel.setVisible(false);
 
 		super.nextChar();
 
-		System.out.println(trainingList);
 		counter.setTodoNum(trainingList.size());
 		
 		if (charInfo != null) {

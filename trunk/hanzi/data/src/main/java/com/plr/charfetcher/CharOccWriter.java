@@ -10,11 +10,15 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.io.JSONWriter;
 
+import com.google.common.base.Splitter;
 import com.plr.cvstojson.Data;
+import com.plr.cvstojson.Pinyin;
 
 public class CharOccWriter {
 
@@ -23,6 +27,10 @@ public class CharOccWriter {
 	private Map<String, String> num2pinyin = new TreeMap<String, String>();
 
 	private final String OUTDIR = "cedict/data";
+
+	static Pattern pinyinPat = Pattern.compile("(?<=\\[).+?(?=\\])");
+	static Pattern tradPat = Pattern.compile("\\p{L}+\\|");
+	static Splitter spliter = Splitter.onPattern("\\s");
 
 	void write(Collection<Data> csvRows) throws Exception {
 
@@ -64,8 +72,8 @@ public class CharOccWriter {
 
 				jw.key(k);
 				jw.value(v);
-				
-//				System.out.println(k + " " + v);
+
+				// System.out.println(k + " " + v);
 			}
 			jw.endObject();
 		} finally {
@@ -117,7 +125,7 @@ public class CharOccWriter {
 		if (d.getId() == 232) {
 			System.out.println(d);
 		}
-		
+
 		jw.object();
 		jw.key("i");
 		jw.value(d.getId());
@@ -149,21 +157,39 @@ public class CharOccWriter {
 			jw.key("d");
 			jw.array();
 			for (String defin : def.getDefs()) {
-				jw.value(defin);
-				
-				if (defin.startsWith("CL:")) {
-					System.out.println(defin);
+				//Remove the traditional chars
+				defin = tradPat.matcher(defin).replaceAll("");
+
+				//Grab the pinyin
+				Matcher m = pinyinPat.matcher(defin);
+
+				while (m.find()) {
+					String pinyinNums = m.group();
+
+					for (String pinyinNum : spliter.split(pinyinNums)) {
+						String pinyin = Pinyin.convertToAccent(pinyinNum);
+						// System.out.println(pinyin);
+						fillPinyin(pinyinNum, pinyin);
+					}
 				}
+				jw.value(defin);
 			}
 			jw.endArray();
 			jw.endObject();
 
-			num2pinyin.put(def.getPyNum().toLowerCase(), def.getPy().toLowerCase());
+			String pyNum = def.getPyNum();
+			String py = def.getPy();
+
+			fillPinyin(pyNum, py);
 		}
 
 		jw.endArray();
 
 		jw.endObject();
 
+	}
+
+	private void fillPinyin(String pyNum, String py) {
+		num2pinyin.put(pyNum.toLowerCase(), py.toLowerCase());
 	}
 }

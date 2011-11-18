@@ -15,6 +15,7 @@
  */
 package com.plr.hanzi.client.view.definition;
 
+import com.google.common.base.Splitter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
@@ -25,11 +26,11 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.plr.hanzi.client.AppResources;
 import com.plr.hanzi.client.PinyinConverter;
 import com.plr.hanzi.client.Tone;
 import com.plr.hanzi.client.ZhongWenCharacter;
 import com.plr.hanzi.client.CardData.CharDefinition;
+import com.plr.hanzi.client.style.AppResources;
 
 /**
  * A form used for editing contacts.
@@ -40,6 +41,8 @@ public class DefinitionPanel extends Composite {
 
 	interface Binder extends UiBinder<Widget, DefinitionPanel> {
 	}
+
+	final private static Splitter wsSplitter = Splitter.on(' ');
 
 	@UiField
 	SimplePanel simplePanel;
@@ -117,7 +120,8 @@ public class DefinitionPanel extends Composite {
 
 				String toneStyle1 = Tone.getTone(tone1).getCssClass();
 
-				out += character + " <span class='" + toneStyle1 + "'>" + PinyinConverter.getConvert(pinyinNum) + "</span>";
+				out += character + " <span class='" + toneStyle1 + " " + AppResources.INSTANCE.style().definitionPinyin() + "'>" + PinyinConverter.getConvert(pinyinNum)
+						+ "</span>";
 			}
 
 			definition = out;
@@ -134,19 +138,22 @@ public class DefinitionPanel extends Composite {
 					first = false;
 				}
 
-				String pinyinNum = result.getGroup(1);
-
-				int tone1 = CharDefinition.getTone(pinyinNum);
-
-				String toneStyle1 = Tone.getTone(tone1).getCssClass();
+				String pinyinNums = result.getGroup(1);
 
 				end = result.getIndex();
 
-				out += definition.substring(begin, end) + " <span class='" + toneStyle1 + "'>" + PinyinConverter.getConvert(pinyinNum) + "</span>";
+				out += definition.substring(begin, end);
+
+				for (String pinyinNum : wsSplitter.split(pinyinNums)) {
+					int tone1 = CharDefinition.getTone(pinyinNum);
+					String toneStyle = Tone.getTone(tone1).getCssClass();
+					out += " <span class='" + toneStyle + " " + AppResources.INSTANCE.style().definitionPinyin() + 
+					"'>" + PinyinConverter.getConvert(pinyinNum) + "</span>";
+				}
 
 				begin = end + result.getGroup(0).length();
 			}
-			
+
 			if (!first) {
 				out += definition.substring(begin);
 				definition = out;

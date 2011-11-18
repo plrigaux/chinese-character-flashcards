@@ -38,7 +38,6 @@
 			width: 80%
 		}
 	</ui:style>
-	<ui:with field='res' type='com.plr.hanzi.client.AppResources' />
 	<g:DockLayoutPanel unit='EM'>
 		<g:center>
 			<g:HTMLPanel styleName="{style.mainPanel}">
