@@ -29,10 +29,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionModel;
-import com.plr.hanzi.client.AppResources;
 import com.plr.hanzi.client.CardData;
 import com.plr.hanzi.client.DataControler;
 import com.plr.hanzi.client.ZhongWenCharacter;
+import com.plr.hanzi.client.style.AppResources;
 import com.plr.hanzi.client.view.definition.DefinitionPanel;
 
 /**

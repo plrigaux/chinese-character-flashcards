@@ -32,5 +32,7 @@ public interface AppResources extends ClientBundle {
 		String customButton();
 		
 		String definitionPinyin();
+		
+		String actionButton();
 	}
 }

@@ -78,7 +78,7 @@ public class FlashCardCounter extends Composite {
 				this.index = 0;
 			}
 
-			label.setText("" + index);
+			label.setText("" + this.index);
 		}
 
 		int decNum() {

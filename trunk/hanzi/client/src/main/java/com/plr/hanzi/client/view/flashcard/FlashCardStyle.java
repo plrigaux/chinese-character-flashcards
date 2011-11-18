@@ -10,5 +10,4 @@ public interface FlashCardStyle extends CssResource {
 	
 	String button();
 	
-	String showButton();
 }
