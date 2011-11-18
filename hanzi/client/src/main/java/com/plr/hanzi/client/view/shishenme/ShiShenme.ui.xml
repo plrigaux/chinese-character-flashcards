@@ -33,8 +33,6 @@
 		}
 	</ui:style>
 	
-	<ui:with field='res' type='com.plr.hanzi.client.AppResources'/>
-	
 	<g:HTMLPanel>
 		<div style="text-align:center">
 			<g:Label ui:field="character"  />
