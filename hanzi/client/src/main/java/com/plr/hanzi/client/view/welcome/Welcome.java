@@ -67,8 +67,11 @@ public class Welcome extends Composite implements ApplicationConst {
 
 	// This app's personal client ID assigned by the Google APIs Console
 	// (http://code.google.com/apis/console).
-	private static final String GOOGLE_CLIENT_ID = "452237527106.apps.googleusercontent.com";
+	//private static final String GOOGLE_CLIENT_ID = "940062849852.apps.googleusercontent.com";
 
+	private static final String GOOGLE_CLIENT_ID = "940062849852-8s3kbq4eli2ovh71mikh9rlniuh98hlv.apps.googleusercontent.com";
+	
+	
 	// The auth scope being requested. This scope will allow the application to
 	// read Buzz activities, comments, etc., as if it was the user.
 	private static final String BUZZ_READONLY_SCOPE = "https://www.googleapis.com/auth/buzz.readonly";
@@ -87,6 +90,53 @@ public class Welcome extends Composite implements ApplicationConst {
 		// called. Once the user has granted access to the application,
 		// subsequent calls to login() will not display the popup, and will
 		// immediately result in the callback being given the token to use.
+		AUTH.login(req, new Callback<String, Throwable>() {
+			@Override
+			public void onSuccess(String token) {
+				Window.alert("Got an OAuth token:\n" + token + "\n" + "Token expires in " + AUTH.expiresIn(req) + " ms\n");
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error:\n" + caught.getMessage());
+			}
+		});
+	}
+
+	// //////////////////////////////////////////////////////////////////////////
+	// AUTHENTICATING WITH FACEBOOK
+	// /////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////////////
+
+	private static final String FACEBOOK_AUTH_URL = "https://www.facebook.com/dialog/oauth";
+
+	// This app's personal client ID assigned by the Facebook Developer App
+	// (http://www.facebook.com/developers).
+	private static final String FACEBOOK_CLIENT_ID = "129996937108913";
+
+	// All available scopes are listed here:
+	// http://developers.facebook.com/docs/authentication/permissions/
+	// This scope allows the app to access the user's email address.
+	private static final String FACEBOOK_EMAIL_SCOPE = "email";
+
+	// This scope allows the app to access the user's birthday.
+	private static final String FACEBOOK_BIRTHDAY_SCOPE = "user_birthday";
+
+	// Adds a button to the page that asks for authentication from Facebook.
+	// Note that Facebook does not allow localhost as a redirect URL, so while
+	// this code will work when hosted, it will not work when testing locally.
+
+	// Since the auth flow requires opening a popup window, it must be started
+	// as a direct result of a user action, such as clicking a button or link.
+	// Otherwise, a browser's popup blocker may block the popup.
+
+	@UiHandler("facebook")
+	public void onFacebookClick(ClickEvent event) {
+		final Auth AUTH = Auth.get();
+		final AuthRequest req = new AuthRequest(FACEBOOK_AUTH_URL, FACEBOOK_CLIENT_ID).withScopes(FACEBOOK_EMAIL_SCOPE,
+				FACEBOOK_BIRTHDAY_SCOPE)
+		// Facebook expects a comma-delimited list of scopes
+				.withScopeDelimiter(",");
 		AUTH.login(req, new Callback<String, Throwable>() {
 			@Override
 			public void onSuccess(String token) {
