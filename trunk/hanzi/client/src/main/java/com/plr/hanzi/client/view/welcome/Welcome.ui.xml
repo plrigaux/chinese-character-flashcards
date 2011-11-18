@@ -18,6 +18,7 @@
 			<w:CustomButton text="{hz.welcome_button_charBrowser}" ui:field="browser" width="160px"/>
 			<w:CustomButton text="{hz.welcome_button_about}" ui:field="about" width="160px"/>
 			<w:CustomButton text="Login" ui:field="login" width="160px"/>
+			<w:CustomButton text="Facebook" ui:field="facebook" width="160px"/>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
