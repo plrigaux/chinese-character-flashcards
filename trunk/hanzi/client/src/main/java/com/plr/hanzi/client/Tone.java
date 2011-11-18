@@ -1,5 +1,7 @@
 package com.plr.hanzi.client;
 
+import com.plr.hanzi.client.style.AppResources;
+
 public enum Tone {
 
 	TONE1('\u0304', AppResources.INSTANCE.style().tone1()), TONE2('\u0301', AppResources.INSTANCE.style().tone2()), TONE3(

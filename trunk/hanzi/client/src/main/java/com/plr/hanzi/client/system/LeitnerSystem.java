@@ -12,7 +12,7 @@ import java.util.logging.Level;
 
 import com.google.gwt.event.shared.UmbrellaException;
 import com.google.gwt.storage.client.Storage;
-import com.plr.hanzi.client.AppResources;
+import com.plr.hanzi.client.style.AppResources;
 
 public class LeitnerSystem {
 
