@@ -5,6 +5,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.plr.hanzi.client.i18n.HanziMessages;
+import com.plr.hanzi.client.style.AppResources;
 import com.plr.hanzi.client.view.welcome.Welcome;
 
 /**
