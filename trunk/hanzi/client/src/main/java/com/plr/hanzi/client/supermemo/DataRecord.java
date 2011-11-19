@@ -1,6 +1,6 @@
 package com.plr.hanzi.client.supermemo;
 
-public class DataRecord implements DataRcordInterface {
+public class DataRecord implements Record {
 	private int repetition;
 	private int interval;
 	private double ef;
@@ -24,6 +24,11 @@ public class DataRecord implements DataRcordInterface {
 	@Override
 	public double getEf() {
 		return ef;
+	}
+
+	@Override
+	public int getId() {		
+		return 0;
 	}
 
 }
