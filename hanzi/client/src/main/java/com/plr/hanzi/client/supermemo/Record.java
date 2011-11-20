@@ -8,4 +8,10 @@ public interface Record {
 	public double getEf();
 
 	public int getId();
+
+	public void setEf(double ef);
+
+	public void setInterval(int interval);
+
+	public void setRepetition(int repetition);
 }
