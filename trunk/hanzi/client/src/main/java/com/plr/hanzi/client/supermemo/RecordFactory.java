@@ -6,5 +6,5 @@ import com.google.web.bindery.autobean.shared.AutoBeanFactory;
 public interface RecordFactory extends AutoBeanFactory {
 	AutoBean<Record> record();
 
-	AutoBean<RecordMap> recordMap();
+	AutoBean<Record> recordMap();
 }

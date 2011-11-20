@@ -1,5 +1,9 @@
 package com.plr.hanzi.client.supermemo;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 /**
  * 
  * Based on SM2 http://www.supermemo.com/english/ol/sm2.htm
@@ -9,14 +13,19 @@ package com.plr.hanzi.client.supermemo;
  */
 public class SuperMemo {
 
+	public static final Logger logger = Logger.getLogger("SuperMemo");
+
 	private final int GRADE_RANK;
 	private final double EF_LIMIT;
 	private final int INTERVAL1;
 	private final int INTERVAL2;
 	private final int MIN_GRADE;
 
+	private Revision revision = new Revision();
+
 	public SuperMemo() {
-		this(5, 1.3, 1, 6, 3);
+		// this(5, 1.3, 1, 6, 3);
+		this(4, 1.3, 1, 6, 3);
 	}
 
 	public SuperMemo(int gradeRank, double efLimit, int interval1, int interval2, int minGrade) {
@@ -27,12 +36,7 @@ public class SuperMemo {
 		MIN_GRADE = minGrade;
 	}
 
-	public void repetition(int id, int grade) {
-		DataRecord dataRecord = getDataRecord(id);
-		repetition(dataRecord, grade);
-	}
-
-	public void repetition(DataRecord dataRecord, int grade) {
+	public void repetition(Record dataRecord, int grade) {
 
 		int repetition = dataRecord.getRepetition();
 		int interval = dataRecord.getInterval();
@@ -63,6 +67,9 @@ public class SuperMemo {
 			ef = EF_LIMIT;
 		}
 
+		dataRecord.setEf(ef);
+		dataRecord.setRepetition(repetition);
+		dataRecord.setInterval(interval);
 	}
 
 	double newEf(int grade, double ef) {
@@ -81,11 +88,13 @@ public class SuperMemo {
 		return tmp / p;
 	}
 
-	private DataRecord getDataRecord(int id) {
+	public List<Record> getSerie(int num) {
+		ArrayList<Record> list = new ArrayList<>(num);
 
-		DataRecord dataRecord = new DataRecord(0, 0, 2.5);
+		// ask from revision
+		revision.getRecords(list, num);
 
-		return dataRecord;
+		return list;
 	}
 
 }

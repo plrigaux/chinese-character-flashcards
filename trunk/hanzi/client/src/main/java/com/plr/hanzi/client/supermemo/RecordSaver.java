@@ -9,17 +9,17 @@ public class RecordSaver {
 	// Instantiate the factory
 	RecordFactory factory = GWT.create(RecordFactory.class);
 
-	String serializeToJson(RecordMap recordMap) {
+	String serializeToJson(Records recordMap) {
 		// Retrieve the AutoBean controller
-		AutoBean<RecordMap> bean = AutoBeanUtils.getAutoBean(recordMap);
+		AutoBean<Records> bean = AutoBeanUtils.getAutoBean(recordMap);
 		
 		String json = AutoBeanCodex.encode(bean).getPayload();
 		
 		return json;
 	}
 
-	RecordMap deserializeFromJson(String json) {
-		AutoBean<RecordMap> bean = AutoBeanCodex.decode(factory, RecordMap.class, json);
+	Records deserializeFromJson(String json) {
+		AutoBean<Records> bean = AutoBeanCodex.decode(factory, Records.class, json);
 		return bean.as();
 	}
 
