@@ -14,39 +14,52 @@
     <eOperations name="réserveVéhicule"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Possède" upperBound="-1"
         eType="#//Réservation"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="a" eType="#//Location"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="loue" eType="#//Location"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Dossier%20Client"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Réservation">
     <eOperations name="getPériodeLocation"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Réfère" lowerBound="1"
-        eType="#//Véhicule"/>
+        eType="#//Voiture"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateDébut"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="catégorie" eType="#//Catégorie"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateFin"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="préalable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Véhicule">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="est" eType="#//Catégorie"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Voiture">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="est classé" eType="#//Catégorie"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="est Assigné" eType="#//Réservation"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Agence">
-    <eOperations name="aVéhiculeDisponible" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="aVoitureDisponible" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eOperations name="demandeVéhicule à autre agence"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="Possède" eType="#//Véhicule"/>
+    <eOperations name="nbVoituresDemandés" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eParameters name="catégorie" eType="#//Catégorie"/>
+    </eOperations>
+    <eOperations name="nbVoituresDisponible" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eParameters name="catégorie" eType="#//Catégorie"/>
+    </eOperations>
+    <eOperations name="transfèreVoiture"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="possède" eType="#//Voiture"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="a" lowerBound="1" upperBound="-1"
         eType="#//Commis"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="a" lowerBound="1" eType="#//Gestionnaire"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="est dirigé par" lowerBound="1"
+        eType="#//Gestionnaire"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nombreVéhicule" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="se trouve" lowerBound="1"
+        eType="#//Localisation"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Commis"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Gestionnaire">
+  <eClassifiers xsi:type="ecore:EClass" name="Commis" eSuperTypes="#//Employé%20Agence">
+    <eOperations name="traiteLocation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Gestionnaire" eSuperTypes="#//Employé%20Agence">
     <eOperations name="assigneVéhicule"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Location">
     <eOperations name="getPériode"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="a" lowerBound="1" eType="#//Véhicule"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="a" lowerBound="1" eType="#//Voiture"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateDébut" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateFin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
   </eClassifiers>
@@ -56,11 +69,22 @@
   <eClassifiers xsi:type="ecore:EClass" name="Dossier Client">
     <eStructuralFeatures xsi:type="ecore:EReference" name="refère" lowerBound="1"
         eType="#//Client"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contient" upperBound="-1"
+        eType="#//Mauvaise_expérience"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contient" upperBound="-1"
+        eType="#//Location"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Société">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="possède Agence" upperBound="-1"
-        eType="#//Agence"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Société UE-Rent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="possède Agence" lowerBound="1000"
+        upperBound="1000" eType="#//Agence"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="EReference1" eType="#//Dossier%20Client"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Nom"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Mauvaise_expérience"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Localisation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ville" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pays" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Employé Agence">
+    <eOperations name="assigneVoitureARéservation"/>
   </eClassifiers>
 </ecore:EPackage>
