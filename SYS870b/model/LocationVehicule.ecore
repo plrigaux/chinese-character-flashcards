@@ -21,13 +21,14 @@
     <eOperations name="getPériodeLocation"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Réfère" lowerBound="1"
         eType="#//Voiture"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateDébut"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateDébut" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="catégorie" eType="#//Catégorie"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateFin"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateFin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="préalable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Voiture">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="est classé" eType="#//Catégorie"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="est classé" lowerBound="1"
+        eType="#//Catégorie"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="est Assigné" eType="#//Réservation"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
