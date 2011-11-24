@@ -117,7 +117,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_mGrI0Q-eEeG52exE_Oqrfw"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_FL3V0A-4EeGLG-vlU9W3HA" type="2002">
-        <element xmi:type="ecore:EOperation" href="LocationVehicule.ecore#//Agence/demandeVéhicule%20à%20autre%20agence"/>
+        <element xmi:type="ecore:EOperation" href="LocationVehicule.ecore#//Agence/demandeVéhiculeÀAutreAgence"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_FL3V0Q-4EeGLG-vlU9W3HA"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_ufSxsBRhEeG0-OzqR0li_Q" type="2002">
@@ -241,7 +241,7 @@
       <styles xmi:type="notation:FilteringStyle" xmi:id="_fvGYOA-dEeG52exE_Oqrfw"/>
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_fu8nMg-dEeG52exE_Oqrfw" fontColor="4210752" fontHeight="10" fillColor="10011046" lineColor="8421504"/>
-    <element xmi:type="ecore:EClass" href="LocationVehicule.ecore#//Dossier%20Client"/>
+    <element xmi:type="ecore:EClass" href="LocationVehicule.ecore#//DossierClient"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fu8nMw-dEeG52exE_Oqrfw" x="10" y="605" width="151" height="173"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_lRTcgA-dEeG52exE_Oqrfw" type="1001">
@@ -514,7 +514,7 @@
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_V42F8g-3EeGLG-vlU9W3HA" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_V42F8w-3EeGLG-vlU9W3HA" fontColor="4210752" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="LocationVehicule.ecore#//Dossier%20Client/refère"/>
+    <element xmi:type="ecore:EReference" href="LocationVehicule.ecore#//DossierClient/refère"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_V42F9A-3EeGLG-vlU9W3HA" points="[75, 63, -829, 418]$[184, 155, -720, 510]$[716, 155, -188, 510]$[823, 65, -81, 420]$[900, -333, -4, 22]"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_V5JA4A-3EeGLG-vlU9W3HA" id="(0.8503401360544217,0.8616352201257862)"/>
   </edges>
@@ -527,7 +527,7 @@
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_BeiKQRRfEeG0-OzqR0li_Q" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_BeiKQhRfEeG0-OzqR0li_Q" fontColor="4210752" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="LocationVehicule.ecore#//Dossier%20Client/contient"/>
+    <element xmi:type="ecore:EReference" href="LocationVehicule.ecore#//DossierClient/contient"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_BeiKQxRfEeG0-OzqR0li_Q" points="[75, 0, -130, 26]$[204, 59, -1, 85]"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_QvAqsBRfEeG0-OzqR0li_Q" type="3002" source="_fu8nMQ-dEeG52exE_Oqrfw" target="_bP7ZcA81EeGPsb9apRAsng">
@@ -539,7 +539,7 @@
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_QvAqsRRfEeG0-OzqR0li_Q" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_QvAqshRfEeG0-OzqR0li_Q" fontColor="4210752" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="LocationVehicule.ecore#//Dossier%20Client/contient.1"/>
+    <element xmi:type="ecore:EReference" href="LocationVehicule.ecore#//DossierClient/relateHistorique"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QvAqsxRfEeG0-OzqR0li_Q" points="[32, -16, -487, 241]$[520, -230, 1, 27]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QvJ0oBRfEeG0-OzqR0li_Q" id="(0.7880794701986755,0.3930635838150289)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QvJ0oRRfEeG0-OzqR0li_Q" id="(0.30578512396694213,0.7522935779816514)"/>

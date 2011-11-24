@@ -17,7 +17,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="possède" upperBound="-1"
         eType="#//Réservation"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="loue" eType="#//Location"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Dossier%20Client"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Réservation">
     <eOperations name="getPériodeLocation"/>
@@ -36,7 +35,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Agence">
     <eOperations name="aVoitureDisponible" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eOperations name="demandeVéhicule à autre agence"/>
+    <eOperations name="demandeVéhiculeÀAutreAgence"/>
     <eOperations name="nbVoituresDemandés" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
       <eParameters name="catégorie" eType="#//Catégorie"/>
     </eOperations>
@@ -69,18 +68,18 @@
   <eClassifiers xsi:type="ecore:EClass" name="Catégorie">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Dossier Client">
+  <eClassifiers xsi:type="ecore:EClass" name="DossierClient">
     <eStructuralFeatures xsi:type="ecore:EReference" name="refère" lowerBound="1"
         eType="#//Client"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="contient" upperBound="-1"
         eType="#//MauvaiseExpérience"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="contient" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="relateHistorique" upperBound="-1"
         eType="#//Location"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SociétéUERent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="possède" lowerBound="1000"
         upperBound="1000" eType="#//Agence"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="EReference1" eType="#//Dossier%20Client"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="EReference1" eType="#//DossierClient"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MauvaiseExpérience">
     <eStructuralFeatures xsi:type="ecore:EReference" name="relate" lowerBound="1"
