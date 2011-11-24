@@ -12,6 +12,7 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TMTimer extends Composite {
@@ -23,6 +24,13 @@ public class TMTimer extends Composite {
 
 	@UiField
 	Label timeClock;
+	
+	@UiField
+	Button actionButton;
+	
+	@UiField
+	TMTimerStyle style;
+
 
 	public TMTimer() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -35,12 +43,18 @@ public class TMTimer extends Composite {
 
 	DateTimeFormat df =  DateTimeFormat.getFormat("m:ss"); 
 	
+	
+	Date g = df.parse("0:30");
+	Date y = df.parse("1:00");
+	Date r = df.parse("1:30");
+	
 	@UiHandler("actionButton")
 	void onStartClick(ClickEvent event) {
 
 		startDate = new Date().getTime();
 
 		if (t == null) {
+			RootLayoutPanel.get().addStyleName(style.inTime());	
 			t = new Timer() {
 
 				@Override
@@ -49,6 +63,11 @@ public class TMTimer extends Composite {
 					Date curDate = new Date();
 					curDate.setTime(curDate.getTime() - startDate);
 
+					if (curDate.compareTo(g)>=0) {
+					
+					}
+						
+					
 //					long laps = curDate.getTime();
 //
 //					long sec = laps / 1000;
@@ -62,10 +81,15 @@ public class TMTimer extends Composite {
 			};
 
 			t.scheduleRepeating(100);
+			actionButton.setText("Stop");
 		} else {
 			t.cancel();
 			t = null;
+			actionButton.setText("Start");
+			
 		}
 	}
 
+	
+	
 }
