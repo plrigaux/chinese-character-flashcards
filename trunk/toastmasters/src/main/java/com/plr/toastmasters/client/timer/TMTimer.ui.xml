@@ -1,0 +1,43 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style type="com.plr.toastmasters.client.timer.TMTimerStyle">
+		.inTime {
+			background-color: green;
+		}
+		
+		.warnTime {
+			background-color: yellow;
+		}
+		
+		.overTime {
+			background-color: red;
+		}
+		
+		.button {
+			width: 100%;
+			font-weight: bold;
+		}
+		
+		.chronometer {
+			font-size: 24px;
+			font-weight: bold;
+		}
+		
+		.panel {
+			margin: 0px auto;
+		}
+	</ui:style>
+
+	<g:DockLayoutPanel unit='EM'>
+		<g:center>
+			<g:HTMLPanel>
+				<g:VerticalPanel styleName="{style.panel}" spacing="10" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="timeClock" styleName="{style.chronometer}" />
+				</g:VerticalPanel>
+			</g:HTMLPanel>
+		</g:center>
+		<g:south size="3">
+			<g:Button ui:field="actionButton" text="Start" addStyleNames="{style.button}" />
+		</g:south>
+	</g:DockLayoutPanel>
+</ui:UiBinder> 
