@@ -1,6 +1,7 @@
 package com.plr.toastmasters.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.plr.toastmasters.client.timer.TMTimer;
 
@@ -19,8 +20,8 @@ public class Application implements EntryPoint {
 		
 		historyManager = new HistoryManager();
 		
+		History.newItem(ApplicationConst.TIMER_CHOOSER);
 		
-		RootLayoutPanel.get().add(new TMTimer());	
 	}
 
 }
