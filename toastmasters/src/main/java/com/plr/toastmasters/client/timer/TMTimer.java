@@ -5,6 +5,8 @@ import java.util.Date;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -24,21 +26,26 @@ public class TMTimer extends Composite {
 
 	@UiField
 	Label timeClock;
-	
+
 	@UiField
 	Button actionButton;
-	
+
 	@UiField
 	TMTimerStyle style;
+
+	final Trigger RED;
+	final Trigger YELLOW;
+	final Trigger GREEN;
 
 	private Trigger current = null;
 
 	public TMTimer() {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		Trigger tr = new Trigger(style.overTime(), "0:05", null);
-		Trigger ty = new Trigger(style.overTime(), "0:10", tr);
-		current = new Trigger(style.overTime(), "0:15", ty);
+		RED = new Trigger(style.overTime(), "0:15", null);
+		YELLOW = new Trigger(style.warnTime(), "0:10", RED);
+		GREEN = new Trigger(style.inTime(), "0:05", YELLOW);
+
 		
 	}
 
@@ -46,20 +53,17 @@ public class TMTimer extends Composite {
 
 	private Timer t = null;
 
-	private DateTimeFormat df =  DateTimeFormat.getFormat("m:ss"); 
-	
-	
-	Date g = df.parse("0:30");
-	Date y = df.parse("1:00");
-	Date r = df.parse("1:30");
-	
+	private DateTimeFormat df = DateTimeFormat.getFormat("m:ss");
+
 	@UiHandler("actionButton")
 	void onStartClick(ClickEvent event) {
 
 		startDate = new Date().getTime();
 
 		if (t == null) {
-//			RootLayoutPanel.get().addStyleName(style.inTime());	
+			
+			removeAllStyle();
+			current = GREEN;
 			t = new Timer() {
 
 				@Override
@@ -71,15 +75,6 @@ public class TMTimer extends Composite {
 					if (current != null) {
 						current.checkTrigger(curDate);
 					}
-						
-					
-//					long laps = curDate.getTime();
-//
-//					long sec = laps / 1000;
-//
-//					long min = sec / 60;
-//
-//					long realSec = sec % 60;
 
 					timeClock.setText(df.format(curDate));
 				}
@@ -91,33 +86,71 @@ public class TMTimer extends Composite {
 			t.cancel();
 			t = null;
 			actionButton.setText("Start");
+
 			
 		}
 	}
 
-	class Trigger {
-	
-		String style;
-		Date trigger;
-		Trigger next;
+	private void removeAllStyle() {
+		Trigger t = GREEN;
 		
+		
+		do {
+			RootLayoutPanel.get().removeStyleName(t.style);
+			t = t.next;
+		} while(t != null);
+		
+	}
+
+	static private RegExp mesureWordRegExp = RegExp.compile("(\\d+):(\\d+)");
+
+	private static long getTimeFromStroing(String minsec) {
+		long time = -1;
+
+		MatchResult mr = mesureWordRegExp.exec(minsec);
+
+		if (mr != null) {
+
+			int min = Integer.parseInt(mr.getGroup(1));
+			int sec = Integer.parseInt(mr.getGroup(2));
+
+			time = (min * 60 + sec) * 1000;
+		}
+
+		return time;
+	}
+
+	private class Trigger {
+
+		String style;
+		long trigger;
+		Trigger next;
+		Trigger previous;
+
 		public Trigger(String style, String trigger, Trigger next) {
 			super();
 			this.style = style;
-			this.trigger = df.parseStrict(trigger);
+			this.trigger = getTimeFromStroing(trigger);
 			this.next = next;
-			
-			System.out.println(this.trigger);
+			if (next != null) {
+				next.previous = this;
+			}
+
+			System.out.println(this.trigger + " " + trigger);
 		}
 
 		public void checkTrigger(Date curDate) {
-			if (curDate.compareTo(trigger) >= 0) {
-				
+			if (curDate.getTime() - trigger >= 0) {
+
 				RootLayoutPanel.get().addStyleName(style);
 				current = next;
+
+				if (previous != null) {
+					RootLayoutPanel.get().removeStyleName(previous.style);
+				}
 			}
-			
+
 		}
 	}
-	
+
 }
