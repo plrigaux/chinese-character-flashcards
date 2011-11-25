@@ -16,18 +16,42 @@
 		.button {
 			width: 100%;
 			font-weight: bold;
+			font-size: 18px;
 		}
 		
 		.chronometer {
-			font-size: 24px;
+			font-size: 48px;
 			font-weight: bold;
 		}
 		
 		.panel {
 			margin: 0px auto;
 		}
+		
+		.enabled {
+			display: block;
+		}
+		
+		.disabled {
+			display: none;
+		}
 	</ui:style>
-	<g:DockLayoutPanel unit='EM'><g:center><g:HTMLPanel><g:VerticalPanel styleName="{style.panel}" spacing="10" horizontalAlignment="ALIGN_CENTER">
-					<g:Label ui:field="timeClock" styleName="{style.chronometer}" /></g:VerticalPanel></g:HTMLPanel></g:center>
-		<g:south size="3"><g:Button ui:field="actionButton" text="Start" addStyleNames="{style.button}" /></g:south></g:DockLayoutPanel>
+	<g:DockLayoutPanel unit='EM' ui:field="timerPanel">
+		<g:center>
+			<g:HTMLPanel>
+				<g:VerticalPanel styleName="{style.panel}" spacing="10" horizontalAlignment="ALIGN_CENTER">
+					<g:Label ui:field="timeClock" styleName="{style.chronometer}" />
+				</g:VerticalPanel>
+			</g:HTMLPanel>
+		</g:center>
+		<g:south size="3">
+			<g:HTMLPanel>
+				<g:Button ui:field="actionButton" text="Start" addStyleNames="{style.button}" />
+				<g:HorizontalPanel ui:field="twoButtonPanel"  addStyleNames="{style.disabled}" horizontalAlignment="ALIGN_CENTER">
+					<g:Button ui:field="resetButton" text="Reset" addStyleNames="{style.button}" />
+					<g:Button ui:field="continueButton" text="Continue" addStyleNames="{style.button}" />
+				</g:HorizontalPanel>
+			</g:HTMLPanel>
+		</g:south>
+	</g:DockLayoutPanel>
 </ui:UiBinder> 

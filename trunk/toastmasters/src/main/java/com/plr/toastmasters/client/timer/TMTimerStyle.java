@@ -11,4 +11,8 @@ public interface TMTimerStyle extends CssResource {
 	public String overTime();
 
 	public String button();
+	
+	public String enabled();
+
+	public String disabled();
 }
