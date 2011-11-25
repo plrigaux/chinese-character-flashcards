@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.google.common.base.Splitter;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.regexp.shared.MatchResult;
@@ -44,9 +43,12 @@ public class TMTimer extends Composite {
 
 	@UiField
 	DockLayoutPanel timerPanel;
-	
+
 	@UiField
 	HorizontalPanel twoButtonPanel;
+	
+	@UiField
+	HorizontalPanel actionPanel;
 
 	final Trigger RED;
 	final Trigger YELLOW;
@@ -66,9 +68,13 @@ public class TMTimer extends Composite {
 		triggers.add(GREEN);
 		triggers.add(YELLOW);
 		triggers.add(RED);
+		
+		init();
 	}
 
 	private long startDate = 0;
+	
+	private long laps = 0;
 
 	private Timer timer = null;
 
@@ -105,47 +111,76 @@ public class TMTimer extends Composite {
 
 		if (timer == null) {
 
-			removeAllStyle();
-			current = GREEN;
-			timer = new Timer() {
-
-				@Override
-				public void run() {
-
-					Date curDate = new Date();
-					curDate.setTime(curDate.getTime() - startDate);
-
-					if (current != null) {
-						current.checkTrigger(curDate);
-					}
-
-					timeClock.setText(df.format(curDate));
-				}
-			};
-
-			timer.scheduleRepeating(100);
-			actionButton.setText("Stop");
+			run();
 		} else {
 			timer.cancel();
 			timer = null;
 			actionButton.setText("Start");
-			hide(actionButton);
+			hide(actionPanel);
 			show(twoButtonPanel);
 		}
 	}
 
-	private void hide(UIObject uiObject) {
+	private void run() {
 
-		uiObject.addStyleName(style.disabled());
-		uiObject.removeStyleName(style.enabled());
+		timer = new Timer() {
+
+			@Override
+			public void run() {
+
+				Date curDate = new Date();
+				
+				
+				laps = curDate.getTime() - startDate;
+				curDate.setTime(laps);
+
+				if (current != null) {
+					current.checkTrigger(curDate);
+				}
+
+				timeClock.setText(df.format(curDate));
+			}
+		};
+
+		timer.scheduleRepeating(100);
+		actionButton.setText("Stop");
+	}
+
+	@UiHandler("resetButton")
+	void onResetButtonClick(ClickEvent event) {
+		show(actionPanel);
+		hide(twoButtonPanel);
+		init();
+	}
+
+	@UiHandler("continueButton")
+	void onContinueButtonClick(ClickEvent event) {
+		show(actionPanel);
+		hide(twoButtonPanel);
+		startDate = new Date().getTime() - laps;
+		run();
 
 	}
-	
+
+	private void init() {
+		actionButton.setText("Start");
+		timer = null;
+
+		removeAllStyle();
+		current = GREEN;
+
+		Date curDate = new Date();
+		curDate.setTime(0);
+		timeClock.setText(df.format(curDate));
+		laps = 0;
+	}
+
+	private void hide(UIObject uiObject) {
+		uiObject.setVisible(false);
+	}
+
 	private void show(UIObject uiObject) {
-
-		uiObject.addStyleName(style.enabled());
-		uiObject.removeStyleName(style.disabled());
-
+		uiObject.setVisible(true);
 	}
 
 	private void removeAllStyle() {

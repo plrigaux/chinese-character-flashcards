@@ -4,7 +4,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Button;
@@ -16,16 +15,14 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.toastmasters.client.ApplicationConst;
 
-public class Welcome extends Composite implements ApplicationConst {
+public class TMWelcome extends Composite implements ApplicationConst {
 
 	private static WelcomeUiBinder uiBinder = GWT.create(WelcomeUiBinder.class);
 
-	interface WelcomeUiBinder extends UiBinder<Widget, Welcome> {
+	interface WelcomeUiBinder extends UiBinder<Widget, TMWelcome> {
 	}
 
-	
-
-	public Welcome() {
+	public TMWelcome() {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		// browser.setText(HanziConstants.INSTANCE.charBrowser());
@@ -40,7 +37,17 @@ public class Welcome extends Composite implements ApplicationConst {
 	void onPreparedSpeachClick(ClickEvent event) {
 		History.newItem(TIMER + "/5:00_6:00_7:00");
 	}
-	
+
+	@UiHandler("evaluation")
+	void onEvaluationClick(ClickEvent event) {
+		History.newItem(TIMER + "/2:00_2:30_3:00");
+	}
+
+	@UiHandler("custom")
+	void onCustomSpeachClick(ClickEvent event) {
+//		History.newItem(TIMER + "/5:00_6:00_7:00");
+	}
+
 	public static DialogBox alertWidget(final String header, final String content) {
 		final DialogBox box = new DialogBox();
 		final VerticalPanel panel = new VerticalPanel();

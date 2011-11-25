@@ -12,7 +12,5 @@ public interface TMTimerStyle extends CssResource {
 
 	public String button();
 	
-	public String enabled();
 
-	public String disabled();
 }

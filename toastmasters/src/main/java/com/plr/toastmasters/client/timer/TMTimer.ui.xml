@@ -20,36 +20,39 @@
 		}
 		
 		.chronometer {
-			font-size: 48px;
+			font-size: 72px;
 			font-weight: bold;
 		}
 		
 		.panel {
 			margin: 0px auto;
 		}
-		
-		.enabled {
-			display: block;
-		}
-		
-		.disabled {
-			display: none;
-		}
 	</ui:style>
 	<g:DockLayoutPanel unit='EM' ui:field="timerPanel">
 		<g:center>
 			<g:HTMLPanel>
-				<g:VerticalPanel styleName="{style.panel}" spacing="10" horizontalAlignment="ALIGN_CENTER">
+				<g:VerticalPanel styleName="{style.panel}" spacing="10" horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE"
+					height="100%">
 					<g:Label ui:field="timeClock" styleName="{style.chronometer}" />
 				</g:VerticalPanel>
 			</g:HTMLPanel>
 		</g:center>
 		<g:south size="3">
 			<g:HTMLPanel>
-				<g:Button ui:field="actionButton" text="Start" addStyleNames="{style.button}" />
-				<g:HorizontalPanel ui:field="twoButtonPanel"  addStyleNames="{style.disabled}" horizontalAlignment="ALIGN_CENTER">
-					<g:Button ui:field="resetButton" text="Reset" addStyleNames="{style.button}" />
-					<g:Button ui:field="continueButton" text="Continue" addStyleNames="{style.button}" />
+				<g:HorizontalPanel ui:field="actionPanel" horizontalAlignment="ALIGN_CENTER" width="100%" spacing="5" visible="true">
+
+					<g:Button ui:field="actionButton" text="Start" addStyleNames="{style.button}" />
+				</g:HorizontalPanel>
+				<g:HorizontalPanel ui:field="twoButtonPanel" horizontalAlignment="ALIGN_CENTER" width="100%" spacing="5" visible="false">
+
+					<g:cell width='50%'>
+						<g:Button ui:field="resetButton" text="Reset" addStyleNames="{style.button}" />
+
+					</g:cell>
+					<g:cell width='50%'>
+						<g:Button ui:field="continueButton" text="Continue" addStyleNames="{style.button}" />
+
+					</g:cell>
 				</g:HorizontalPanel>
 			</g:HTMLPanel>
 		</g:south>
