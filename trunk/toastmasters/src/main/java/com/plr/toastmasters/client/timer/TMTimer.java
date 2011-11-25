@@ -31,17 +31,22 @@ public class TMTimer extends Composite {
 	@UiField
 	TMTimerStyle style;
 
+	private Trigger current = null;
 
 	public TMTimer() {
 		initWidget(uiBinder.createAndBindUi(this));
 
+		Trigger tr = new Trigger(style.overTime(), "0:05", null);
+		Trigger ty = new Trigger(style.overTime(), "0:10", tr);
+		current = new Trigger(style.overTime(), "0:15", ty);
+		
 	}
 
 	private long startDate = 0;
 
 	private Timer t = null;
 
-	DateTimeFormat df =  DateTimeFormat.getFormat("m:ss"); 
+	private DateTimeFormat df =  DateTimeFormat.getFormat("m:ss"); 
 	
 	
 	Date g = df.parse("0:30");
@@ -54,7 +59,7 @@ public class TMTimer extends Composite {
 		startDate = new Date().getTime();
 
 		if (t == null) {
-			RootLayoutPanel.get().addStyleName(style.inTime());	
+//			RootLayoutPanel.get().addStyleName(style.inTime());	
 			t = new Timer() {
 
 				@Override
@@ -63,8 +68,8 @@ public class TMTimer extends Composite {
 					Date curDate = new Date();
 					curDate.setTime(curDate.getTime() - startDate);
 
-					if (curDate.compareTo(g)>=0) {
-					
+					if (current != null) {
+						current.checkTrigger(curDate);
 					}
 						
 					
@@ -90,6 +95,29 @@ public class TMTimer extends Composite {
 		}
 	}
 
+	class Trigger {
 	
+		String style;
+		Date trigger;
+		Trigger next;
+		
+		public Trigger(String style, String trigger, Trigger next) {
+			super();
+			this.style = style;
+			this.trigger = df.parseStrict(trigger);
+			this.next = next;
+			
+			System.out.println(this.trigger);
+		}
+
+		public void checkTrigger(Date curDate) {
+			if (curDate.compareTo(trigger) >= 0) {
+				
+				RootLayoutPanel.get().addStyleName(style);
+				current = next;
+			}
+			
+		}
+	}
 	
 }

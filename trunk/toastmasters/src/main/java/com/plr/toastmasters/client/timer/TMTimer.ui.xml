@@ -27,7 +27,6 @@
 			margin: 0px auto;
 		}
 	</ui:style>
-
 	<g:DockLayoutPanel unit='EM'>
 		<g:center>
 			<g:HTMLPanel>
