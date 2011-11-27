@@ -8,7 +8,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="agitCommeCommis" eType="#//Commis"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="agitCommeGestionnaire"
         eType="#//Gestionnaire"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="identifiant"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="identifiant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="prénom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domicile" lowerBound="1"
@@ -69,10 +69,9 @@
         eOpposite="#//AgenceRetour/récepteurEstJouéPar"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="effectue" eType="#//AgenceTransfert"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estSupportéePar" upperBound="-1"
-        eType="#//Commis" eOpposite="#//Commis/travaillePour.1"/>
+        eType="#//Commis" eOpposite="#//Commis/travaillePour"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Commis" eSuperTypes="#//EmployéAgence">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="travaillePour" eType="#//Agence"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="travaillePour" lowerBound="1"
         eType="#//Agence" eOpposite="#//Agence/estSupportéePar"/>
   </eClassifiers>
@@ -91,8 +90,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="immédiate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estLouéePar" lowerBound="1"
         eType="#//AgenceLocation" eOpposite="#//AgenceLocation/loue.1"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="montantPayé"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="formatPaiement"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="montantPayé" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Catégorie">
     <eStructuralFeatures xsi:type="ecore:EReference" name="catégorise" upperBound="-1"
@@ -164,7 +162,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="estTraitéePar" lowerBound="1"
         eType="#//EmployéAgence" eOpposite="#//EmployéAgence/traite"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTransaction"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTransaction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="assigne" eType="#//Voiture"
         eOpposite="#//Voiture/estAssignéeÀ"/>
   </eClassifiers>
