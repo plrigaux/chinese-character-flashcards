@@ -15,8 +15,8 @@
         eType="#//Localisation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Client">
-    <eOperations name="listeMauvaisesExpériences"/>
-    <eOperations name="listeTransactions"/>
+    <eOperations name="listeMauvaisesExpériences" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EResourceSet"/>
+    <eOperations name="listeTransactions" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EResourceSet"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="possède" upperBound="-1"
         eType="#//Réservation"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="loue" eType="#//Location"/>
