@@ -53,8 +53,6 @@
       <eParameters name="catégorie" eType="#//Catégorie"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="possède" eType="#//Voiture"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="estSupportéePar" lowerBound="1"
-        upperBound="-1" eType="#//Commis"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estDirigéPar" lowerBound="1"
         eType="#//Gestionnaire" eOpposite="#//Gestionnaire/dirige"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -67,10 +65,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="aRôleRécepteur" eType="#//AgenceRetour"
         eOpposite="#//AgenceRetour/récepteurEstJouéPar"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="effectue" eType="#//AgenceTransfert"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Commis"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Commis" eSuperTypes="#//EmployéAgence">
     <eOperations name="traiteLocation"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="travaillePour" eType="#//Agence"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Agence"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Gestionnaire" eSuperTypes="#//EmployéAgence">
     <eOperations name="assigneVéhicule"/>
