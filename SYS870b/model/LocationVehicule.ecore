@@ -69,11 +69,13 @@
         eOpposite="#//AgenceRetour/récepteurEstJouéPar"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="effectue" eType="#//AgenceTransfert"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estSupportéePar" upperBound="-1"
+        eType="#//Commis"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="estSupportéePar" upperBound="-1"
         eType="#//Commis" eOpposite="#//Commis/travaillePour"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Commis" eSuperTypes="#//EmployéAgence">
     <eStructuralFeatures xsi:type="ecore:EReference" name="travaillePour" lowerBound="1"
-        eType="#//Agence" eOpposite="#//Agence/estSupportéePar"/>
+        eType="#//Agence" eOpposite="#//Agence/estSupportéePar.1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Gestionnaire" eSuperTypes="#//EmployéAgence">
     <eStructuralFeatures xsi:type="ecore:EReference" name="dirige" lowerBound="1"
