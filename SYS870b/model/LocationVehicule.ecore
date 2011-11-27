@@ -35,19 +35,19 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="estFourniePar" lowerBound="1"
         eType="#//AgenceRéservation" eOpposite="#//AgenceRéservation/fournit"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="demandéePour" eType="#//Catégorie"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="aVoitureAssignée" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Voiture">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="estCatégorisé" lowerBound="1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="estDeCatégorie" lowerBound="1"
         eType="#//Catégorie" eOpposite="#//Catégorie/catégorise"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estAssigné" eType="#//Réservation"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="estConcernée" upperBound="-1"
-        eType="#//Location" eOpposite="#//Location/concerne"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="estAssignéeÀ" upperBound="-1"
+        eType="#//Transaction" eOpposite="#//Transaction/assigne"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Agence">
-    <eOperations name="demandeVéhicule">
-      <eParameters name="agence" eType="#//Agence"/>
-      <eParameters name="catégorie" eType="#//Catégorie"/>
+    <eOperations name="identifieBesoinsSupplémentaires">
+      <eParameters name="dateDuJour" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     </eOperations>
     <eOperations name="nbVoituresRéservées" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
       <eParameters name="catégorie" eType="#//Catégorie"/>
@@ -91,14 +91,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="immédiate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estLouéePar" lowerBound="1"
         eType="#//AgenceLocation" eOpposite="#//AgenceLocation/loue.1"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="concerne" lowerBound="1"
-        eType="#//Voiture" eOpposite="#//Voiture/estConcernée"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="montantPayé"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="formatPaiement"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Catégorie">
     <eStructuralFeatures xsi:type="ecore:EReference" name="catégorise" upperBound="-1"
-        eType="#//Voiture" eOpposite="#//Voiture/estCatégorisé"/>
+        eType="#//Voiture" eOpposite="#//Voiture/estDeCatégorie"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="demande" eType="#//Réservation"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -168,6 +166,8 @@
         eType="#//EmployéAgence" eOpposite="#//EmployéAgence/traite"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTransaction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assigne" eType="#//Voiture"
+        eOpposite="#//Voiture/estAssignéeÀ"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AgenceTransfert">
     <eOperations name="transfèreVoiture">
