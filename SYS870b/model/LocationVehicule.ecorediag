@@ -26,7 +26,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_cMn9IQ8zEeGCVpfI0mDftA" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="10011046" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="LocationVehicule.ecore#//Personne"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cMn9Ig8zEeGCVpfI0mDftA" x="1248" y="-24" width="130" height="140"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cMn9Ig8zEeGCVpfI0mDftA" x="1092" y="-72" width="183" height="159"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_i3mnYA8zEeGCVpfI0mDftA" type="1001">
     <children xmi:type="notation:Node" xmi:id="_i3n1gA8zEeGCVpfI0mDftA" type="4001"/>

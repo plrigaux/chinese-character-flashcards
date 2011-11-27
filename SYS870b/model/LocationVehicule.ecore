@@ -139,7 +139,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="véhiculeEnBonneCondition"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EClass0"/>
   <eClassifiers xsi:type="ecore:EClass" name="AgenceRéservation">
     <eOperations name="enregistre"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="fournit" upperBound="-1"
