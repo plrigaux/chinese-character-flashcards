@@ -16,15 +16,14 @@
       <details key="identifiantUnique" value="Personne.allInstances()->isUnique(personne : Personne | personne.identifiant)"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="agitCommeClient" ordered="false"
-        eType="#//Client" volatile="true" derived="true" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="agitCommeCommis" eType="#//Commis"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="agitCommeGestionnaire"
-        eType="#//Gestionnaire"/>
+        eType="#//Client" volatile="true" derived="true" containment="true" eOpposite="#//Client/est"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="identifiant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="prenom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domicile" ordered="false"
         lowerBound="1" eType="#//Localisation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="estEmploye" eType="#//EmployeAgence"
+        eOpposite="#//EmployeAgence/est"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Client">
     <eOperations name="listeMauvaisesExperiences" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EResourceSet"/>
@@ -34,6 +33,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="loue" eType="#//Location"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="execute" upperBound="-1"
         eType="#//Transaction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="est" lowerBound="1" eType="#//Personne"
+        eOpposite="#//Personne/agitCommeClient"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Reservation" eSuperTypes="#//Transaction">
     <eOperations name="getDuree" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
@@ -76,7 +77,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="possede" upperBound="-1"
         eType="#//Voiture"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estDirigePar" lowerBound="1"
-        eType="#//Gestionnaire" eOpposite="#//Gestionnaire/dirige"/>
+        eType="#//Gestionnaire" containment="true" eOpposite="#//Gestionnaire/dirige"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="seSitue" lowerBound="1"
         eType="#//Localisation"/>
@@ -88,7 +89,7 @@
         eOpposite="#//AgenceRetour/recepteurEstJouePar"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="effectue" eType="#//AgenceTransfert"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estSupporteePar" upperBound="-1"
-        eType="#//Commis" eOpposite="#//Commis/travailPour"/>
+        eType="#//Commis" containment="true" eOpposite="#//Commis/travailPour"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Commis" eSuperTypes="#//EmployeAgence">
     <eStructuralFeatures xsi:type="ecore:EReference" name="travailPour" lowerBound="1"
@@ -149,6 +150,8 @@
     <eOperations name="assigneVoitureAReservation"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="traite" upperBound="-1"
         eType="#//Transaction" eOpposite="#//Transaction/estTraiteePar"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="est" eType="#//Personne"
+        containment="true" eOpposite="#//Personne/estEmploye"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Retour" eSuperTypes="#//Transaction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="estLeProduitDe" eType="#//Location"

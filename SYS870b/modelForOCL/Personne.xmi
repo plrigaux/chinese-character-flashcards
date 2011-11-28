@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<locationVehicule:Personne xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:locationVehicule="http://locationVehicule/1.0" xsi:schemaLocation="http://locationVehicule/1.0 LocationVehicule.ecore"/>
+<locationVehicule:Personne xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:locationVehicule="http://locationVehicule/1.0" xsi:schemaLocation="http://locationVehicule/1.0 LocationVehicule.ecore" identifiant="daniel" nom="Daniel" prenom="Dutil">
+  <domicile adresseCivique="1234" ville="Brossard" pays="Canada" telephone="123-1234"/>
+</locationVehicule:Personne>
+
