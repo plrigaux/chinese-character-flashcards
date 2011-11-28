@@ -32,8 +32,8 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
       <details key="uneSeuleVoitureLouee" value="let loc : Bag(Location) = execute->select(t : Transaction | t.oclIsTypeOf(Location))->collect(oclAsType(Bag(Location))) in loc->iterate(locElem : Location ; locationUnique : Bag(Location) = Bag{} | locationUnique->includesAll(loc->select(l : Location | l.datePrevueDuRetour._'>='(locElem.datePrevueDuRetour) and l.datePrevueDuRetour._'&lt;='(locElem.dateTransaction))))->size() &lt;= 1"/>
     </eAnnotations>
-    <eOperations name="listeMauvaisesExperiences" upperBound="1" eType="#//MauvaiseExperience"/>
-    <eOperations name="listeTransactions" upperBound="1" eType="#//Transaction"/>
+    <eOperations name="listeMauvaisesExperiences" eType="#//MauvaiseExperience"/>
+    <eOperations name="listeTransactions" eType="#//Transaction"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="possede" upperBound="-1"
         eType="#//Reservation"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="loue" eType="#//Location"/>
@@ -71,7 +71,7 @@
       <details key="identifiantUnique" value="Voiture.allInstances()->isUnique(voiture : Voiture | voiture.identifiant)"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estDeCategorie" lowerBound="1"
-        eType="#//Categorie" containment="true" eOpposite="#//Categorie/categorise"/>
+        eType="#//Categorie" eOpposite="#//Categorie/categoriseVoiture"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estAssigne" eType="#//Reservation"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="identifiant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estAssigneeA" upperBound="-1"
@@ -141,11 +141,11 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
       <details key="identifiantUnique" value="Categorie.allInstances()->isUnique(categorie : Categorie | categorie.nom)"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="categorise" upperBound="-1"
-        eType="#//Voiture" eOpposite="#//Voiture/estDeCategorie"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="demande" upperBound="-1"
         eType="#//Reservation" eOpposite="#//Reservation/demandeePour"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categoriseVoiture" upperBound="-1"
+        eType="#//Voiture" eOpposite="#//Voiture/estDeCategorie"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DossierClient">
     <eStructuralFeatures xsi:type="ecore:EReference" name="refere" lowerBound="1"
