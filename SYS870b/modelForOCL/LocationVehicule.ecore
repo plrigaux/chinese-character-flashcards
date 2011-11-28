@@ -79,8 +79,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="estDirigePar" lowerBound="1"
         eType="#//Gestionnaire" containment="true" eOpposite="#//Gestionnaire/dirige"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="seSitue" lowerBound="1"
-        eType="#//Localisation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="seSitue" ordered="false"
+        lowerBound="1" eType="#//Localisation" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="aRoleFournisseur" eType="#//AgenceReservation"
         eOpposite="#//AgenceReservation/fournisseurEstJouePar"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="aRoleLocateur" eType="#//AgenceLocation"
@@ -101,11 +101,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//Transaction">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="date locationImmediate"/>
+      <details key="constraints" value="locationImmediate date"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-      <details key="date" value="datePrevueDuRetour._'&lt;'(self.dateTransaction)"/>
       <details key="locationImmediate" value="immediate = self.faiteApartirDe.oclAsSet()->isEmpty()"/>
+      <details key="date" value="datePrevueDuRetour._'&lt;'(self.dateTransaction)"/>
     </eAnnotations>
     <eOperations name="getDuree" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="a" lowerBound="1" eType="#//Voiture"/>
