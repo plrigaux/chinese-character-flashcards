@@ -47,7 +47,8 @@
         eOpposite="#//Location/faiteApartirDe"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estFourniePar" lowerBound="1"
         eType="#//AgenceReservation" eOpposite="#//AgenceReservation/fournit"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="demandeePour" eType="#//Categorie"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="demandeePour" lowerBound="1"
+        eType="#//Categorie" eOpposite="#//Categorie/demande"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="aVoitureAssignee" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Voiture">
@@ -122,7 +123,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Categorie">
     <eStructuralFeatures xsi:type="ecore:EReference" name="categorise" upperBound="-1"
         eType="#//Voiture" eOpposite="#//Voiture/estDeCategorie"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="demande" eType="#//Reservation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="demande" upperBound="-1"
+        eType="#//Reservation" eOpposite="#//Reservation/demandeePour"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DossierClient">
