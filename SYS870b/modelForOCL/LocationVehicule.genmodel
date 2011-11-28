@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/SYS870b/src"
+    modelPluginID="SYS870b" modelName="LocationVehicule" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>LocationVehicule.ecore</foreignModel>
+  <genPackages prefix="LocationVehicule" disposableProviderFactory="true" ecorePackage="LocationVehicule.ecore#/">
+    <genClasses ecoreClass="LocationVehicule.ecore#//Personne">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Personne/agitCommeClient"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Personne/agitCommeCommis"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Personne/agitCommeGestionnaire"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Personne/identifiant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Personne/nom"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Personne/prenom"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Personne/domicile"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//Client">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Client/possede"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Client/loue"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Client/execute"/>
+      <genOperations ecoreOperation="LocationVehicule.ecore#//Client/listeMauvaisesExperiences"/>
+      <genOperations ecoreOperation="LocationVehicule.ecore#//Client/listeTransactions"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//Reservation">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Reservation/Refere"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Reservation/dateDebut"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Reservation/categorie"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Reservation/dateFin"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Reservation/faiteEnVueDe"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Reservation/estFourniePar"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Reservation/demandeePour"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Reservation/aVoitureAssignee"/>
+      <genOperations ecoreOperation="LocationVehicule.ecore#//Reservation/getDuree"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//Voiture">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Voiture/estDeCategorie"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Voiture/estAssigne"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Voiture/identifiant"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Voiture/estAssigneeA"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//Agence">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Agence/possede"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Agence/estDirigePar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Agence/nom"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Agence/seSitue"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Agence/aRoleFournisseur"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Agence/aRoleLocateur"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Agence/aRoleRecepteur"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Agence/effectue"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Agence/estSupporteePar"/>
+      <genOperations ecoreOperation="LocationVehicule.ecore#//Agence/identifieBesoinsSupplementaires">
+        <genParameters ecoreParameter="LocationVehicule.ecore#//Agence/identifieBesoinsSupplementaires/dateDuJour"/>
+      </genOperations>
+      <genOperations ecoreOperation="LocationVehicule.ecore#//Agence/nbVoituresReservees">
+        <genParameters ecoreParameter="LocationVehicule.ecore#//Agence/nbVoituresReservees/categorie"/>
+      </genOperations>
+      <genOperations ecoreOperation="LocationVehicule.ecore#//Agence/nombreDeVoitures">
+        <genParameters ecoreParameter="LocationVehicule.ecore#//Agence/nombreDeVoitures/categorie"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//Commis">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Commis/travailPour"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//Gestionnaire">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Gestionnaire/dirige"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//Location">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Location/a"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Location/datePrevueDuRetour"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Location/produit"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Location/faiteApartirDe"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Location/immediate"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Location/estLoueePar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Location/montantPaye"/>
+      <genOperations ecoreOperation="LocationVehicule.ecore#//Location/getDuree"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//Categorie">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Categorie/categorise"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Categorie/demande"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Categorie/nom"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//DossierClient">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//DossierClient/refere"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//DossierClient/contient"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//DossierClient/relateHistorique"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//SocieteUERent">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//SocieteUERent/possede"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//SocieteUERent/EReference1"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//MauvaiseExperience">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//MauvaiseExperience/relate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//MauvaiseExperience/Detail"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//MauvaiseExperience/seRapporteA"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//Localisation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Localisation/adresseCivique"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Localisation/ville"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Localisation/pays"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Localisation/telephone"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="LocationVehicule.ecore#//EmployeAgence">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//EmployeAgence/traite"/>
+      <genOperations ecoreOperation="LocationVehicule.ecore#//EmployeAgence/assigneVoitureAReservation"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//Retour">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Retour/estLeProduitDe"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Retour/estRecuePar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Retour/vehiculeEnBonneCondition"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//AgenceReservation">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//AgenceReservation/fournit"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//AgenceReservation/fournisseurEstJouePar"/>
+      <genOperations ecoreOperation="LocationVehicule.ecore#//AgenceReservation/enregistre"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//AgenceLocation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//AgenceLocation/asdf"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//AgenceLocation/loue.1"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//AgenceLocation/locateurEstJouePar"/>
+      <genOperations ecoreOperation="LocationVehicule.ecore#//AgenceLocation/loue"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//AgenceRetour">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//AgenceRetour/recoit.1"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//AgenceRetour/recepteurEstJouePar"/>
+      <genOperations ecoreOperation="LocationVehicule.ecore#//AgenceRetour/recoit"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//Transaction">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Transaction/estTraiteePar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Transaction/Id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Transaction/dateTransaction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Transaction/assigne"/>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//AgenceTransfert">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//AgenceTransfert/transfereDe"/>
+      <genOperations ecoreOperation="LocationVehicule.ecore#//AgenceTransfert/transfereVoiture">
+        <genParameters ecoreParameter="LocationVehicule.ecore#//AgenceTransfert/transfereVoiture/voiture"/>
+        <genParameters ecoreParameter="LocationVehicule.ecore#//AgenceTransfert/transfereVoiture/agence"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="LocationVehicule.ecore#//Transfert">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Transfert/objetDuTransfert"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Transfert/de"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LocationVehicule.ecore#//Transfert/transfereVers"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LocationVehicule.ecore#//Transfert/date"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
