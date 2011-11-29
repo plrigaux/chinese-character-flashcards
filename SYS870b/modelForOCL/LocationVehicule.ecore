@@ -10,10 +10,12 @@
   </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="Personne">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="identifiantUnique"/>
+      <details key="constraints" value="identifiantUnique nomPasVide prenomPasVide"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
       <details key="identifiantUnique" value="Personne.allInstances()->isUnique(personne : Personne | personne.identifiant)"/>
+      <details key="nomPasVide" value="nom.size() > 0"/>
+      <details key="prenomPasVide" value="prenom.size() > 0"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="agitCommeClient" ordered="false"
         eType="#//Client" volatile="true" derived="true" containment="true" eOpposite="#//Client/est"/>
@@ -30,7 +32,7 @@
       <details key="constraints" value="uneSeuleVoitureLouee"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-      <details key="uneSeuleVoitureLouee" value="let loc : Bag(Location) = execute->select(t : Transaction | t.oclIsTypeOf(Location))->collect(oclAsType(Bag(Location))) in loc->iterate(locElem : Location ; locationUnique : Bag(Location) = Bag{} | locationUnique->includesAll(loc->select(l : Location | l.datePrevueDuRetour._'>='(locElem.datePrevueDuRetour) and l.datePrevueDuRetour._'&lt;='(locElem.dateTransaction))))->size() &lt;= 1"/>
+      <details key="uneSeuleVoitureLouee" value="let loc : Bag(Location) = execute->select(t : Transaction | t.oclIsTypeOf(Location)) in loc->iterate(locElem : Location ; locationUnique : Bag(Location) = Bag{} | locationUnique->includesAll(loc->select(l : Location | l.datePrevueDuRetour._'>='(locElem.datePrevueDuRetour) and l.datePrevueDuRetour._'&lt;='(locElem.dateTransaction))))->size() &lt;= 1"/>
     </eAnnotations>
     <eOperations name="listeMauvaisesExperiences" eType="#//MauvaiseExperience"/>
     <eOperations name="listeTransactions" eType="#//Transaction"/>
@@ -228,7 +230,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="transfertJouePar" lowerBound="1"
         eType="#//Agence" eOpposite="#//Agence/effectue"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Transaction">
+  <eClassifiers xsi:type="ecore:EClass" name="Transaction" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="estTraiteePar" lowerBound="1"
         eType="#//EmployeAgence" eOpposite="#//EmployeAgence/traite"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"/>
