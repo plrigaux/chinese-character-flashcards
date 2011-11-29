@@ -83,15 +83,20 @@
     <eOperations name="identifieBesoinsSupplementaires">
       <eParameters name="dateDuJour" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     </eOperations>
-    <eOperations name="nbVoituresReservees" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger">
+    <eOperations name="nbVoituresReservees" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.aRoleFournisseur.oclAsSet()->size()"/>
+        <details key="body" value="self.aRoleFournisseur.fournit->select(reservation : Reservation | reservation.statut = 'enCours')->size()"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="nbVoituresReservees" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="self.aRoleFournisseur.fournit->select(reservation : Reservation | reservation.statut = 'enCours' and reservation.categorie = categorie)->size()"/>
       </eAnnotations>
       <eParameters name="categorie" eType="#//Categorie"/>
     </eOperations>
-    <eOperations name="nombreDeVoitures" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger">
+    <eOperations name="nombreDeVoitures" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.possede->select(voiture : Voiture | voiture.estDeCategorie = categorie)"/>
+        <details key="body" value="self.possede->select(voiture : Voiture | voiture.estDeCategorie = categorie)->size()"/>
       </eAnnotations>
       <eParameters name="categorie" eType="#//Categorie"/>
     </eOperations>
@@ -239,10 +244,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="Transaction" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="estTraiteePar" lowerBound="1"
         eType="#//EmployeAgence" eOpposite="#//EmployeAgence/traite"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateTransaction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="assigne" eType="#//Voiture"
         eOpposite="#//Voiture/estAssigneeA"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="statut" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transfert">
     <eStructuralFeatures xsi:type="ecore:EReference" name="objetDuTransfert" lowerBound="1"

@@ -134,7 +134,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_3LsWMQ80EeGPsb9apRAsng" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="10011046" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="LocationVehicule.ecore#//Agence"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3LsWMg80EeGPsb9apRAsng" x="336" y="816" width="291" height="203"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3LsWMg80EeGPsb9apRAsng" x="312" y="816" width="315" height="203"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_-ORoIA80EeGPsb9apRAsng" type="1001">
     <children xmi:type="notation:Node" xmi:id="_-OS2QA80EeGPsb9apRAsng" type="4001"/>
@@ -368,7 +368,7 @@
     <children xmi:type="notation:Node" xmi:id="_IloFYxkYEeGOnLowBctp6w" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_IloFZBkYEeGOnLowBctp6w" type="5001">
       <children xmi:type="notation:Node" xmi:id="_fowzYBkkEeGOnLowBctp6w" type="2001">
-        <element xmi:type="ecore:EAttribute" href="LocationVehicule.ecore#//Transaction/Id"/>
+        <element xmi:type="ecore:EAttribute" href="LocationVehicule.ecore#//Transaction/id"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_fowzYRkkEeGOnLowBctp6w"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="_c9ebYBkwEeGOnLowBctp6w" type="2001">
