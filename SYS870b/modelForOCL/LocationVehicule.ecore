@@ -10,11 +10,11 @@
   </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="Personne">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="identifiantUnique nomPasVide prenomPasVide"/>
+      <details key="constraints" value="nomPasVide identifiantUnique prenomPasVide"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-      <details key="identifiantUnique" value="Personne.allInstances()->isUnique(personne : Personne | personne.identifiant)"/>
       <details key="nomPasVide" value="nom.size() > 0"/>
+      <details key="identifiantUnique" value="Personne.allInstances()->isUnique(personne : Personne | personne.identifiant)"/>
       <details key="prenomPasVide" value="prenom.size() > 0"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="agitCommeClient" ordered="false"
@@ -83,10 +83,16 @@
     <eOperations name="identifieBesoinsSupplementaires">
       <eParameters name="dateDuJour" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     </eOperations>
-    <eOperations name="nbVoituresReservees" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+    <eOperations name="nbVoituresReservees" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="self.aRoleFournisseur.oclAsSet()->size()"/>
+      </eAnnotations>
       <eParameters name="categorie" eType="#//Categorie"/>
     </eOperations>
-    <eOperations name="nombreDeVoitures" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+    <eOperations name="nombreDeVoitures" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="self.possede->select(voiture : Voiture | voiture.estDeCategorie = categorie)"/>
+      </eAnnotations>
       <eParameters name="categorie" eType="#//Categorie"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="possede" upperBound="-1"
