@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<locationVehicule:Agence xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:locationVehicule="http://defaultname/1.0" xsi:schemaLocation="http://defaultname/1.0 LocationVehicule.ecore"/>
