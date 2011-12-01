@@ -283,6 +283,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Statut">
     <eLiterals name="EnCours"/>
-    <eLiterals name="Termine" value="1"/>
+    <eLiterals name="Terminee" value="1"/>
+    <eLiterals name="Annulee" value="2"/>
   </eClassifiers>
 </ecore:EPackage>
