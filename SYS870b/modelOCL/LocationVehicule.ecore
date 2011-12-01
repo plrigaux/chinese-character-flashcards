@@ -52,6 +52,15 @@
       <details key="periodeLocation" value="dateFin._'>'(self.dateDebut)"/>
     </eAnnotations>
     <eOperations name="getDuree" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eOperations name="assigneVoitureJourneeSuivante" ordered="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="pre_estPasAssigee" value="self.assigne.oclAsSet()->size() = 0"/>
+        <details key="pre_estBonneCategorie" value="voiture.estDeCategorie = categorie"/>
+        <details key="body" value="self.assigne = Bag{voiture}"/>
+        <details key="post_estAssigee" value="self.assigne.oclAsSet()->size() = 1"/>
+      </eAnnotations>
+      <eParameters name="voiture" ordered="false" eType="#//Voiture"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Refere" lowerBound="1"
         eType="#//Voiture"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateDebut" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
@@ -64,7 +73,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="demandeePour" lowerBound="1"
         eType="#//Categorie" eOpposite="#//Categorie/demande"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="aVoitureAssignee" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="refuseePourMauvaisesExperiences"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="refuseePourMauvaisesExperiences"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Voiture">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
