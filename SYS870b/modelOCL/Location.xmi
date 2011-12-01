@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<locationVehicule:Location xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:locationVehicule="http://locationVehicule/1.0" xsi:schemaLocation="http://locationVehicule/1.0 LocationVehicule.ecore" dateTransaction="2008-10-10T00:00:00.000-0400" datePrevueDuRetour="2007-10-10T00:00:00.000-0400">
+
+</locationVehicule:Location>
