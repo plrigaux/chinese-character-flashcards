@@ -46,18 +46,20 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Reservation" eSuperTypes="#//Transaction">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="periodeLocation"/>
+      <details key="constraints" value="statutTermine periodeLocation dateTransaction"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="statutTermine" value="if self.faiteEnVueDe &lt;> null then statut = 1 else statut &lt;> 1 endif"/>
       <details key="periodeLocation" value="dateFin._'>'(self.dateDebut)"/>
+      <details key="dateTransaction" value="self.dateTransaction._'&lt;'(self.dateDebut)"/>
     </eAnnotations>
     <eOperations name="getDuree" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eOperations name="assigneVoitureJourneeSuivante" ordered="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="pre_estPasAssigee" value="self.assigne.oclAsSet()->size() = 0"/>
-        <details key="pre_estBonneCategorie" value="voiture.estDeCategorie = categorie"/>
         <details key="body" value="self.assigne = Bag{voiture}"/>
-        <details key="post_estAssigee" value="self.assigne.oclAsSet()->size() = 1"/>
+        <details key="pre_estBonneCategorie" value="voiture.estDeCategorie = categorie"/>
+        <details key="post_estAssigee" value="self.assigne &lt;> null"/>
+        <details key="pre_estPasAssigee" value="self.assigne = null"/>
       </eAnnotations>
       <eParameters name="voiture" ordered="false" eType="#//Voiture"/>
     </eOperations>
