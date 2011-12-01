@@ -64,6 +64,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="demandeePour" lowerBound="1"
         eType="#//Categorie" eOpposite="#//Categorie/demande"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="aVoitureAssignee" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="refuseePourMauvaisesExperiences"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Voiture">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
@@ -78,6 +79,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="identifiant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estAssigneeA" upperBound="-1"
         eType="#//Transaction" eOpposite="#//Transaction/assigne"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enReparation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Agence">
     <eOperations name="identifieBesoinsSupplementaires">
@@ -96,13 +98,13 @@
     </eOperations>
     <eOperations name="nombreDeVoitures" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.possede->select(voiture : Voiture | voiture.estDeCategorie = categorie)->size()"/>
+        <details key="body" value="self.aEnInventaire->select(voiture : Voiture | voiture.estDeCategorie = categorie)->size()"/>
       </eAnnotations>
       <eParameters name="categorie" eType="#//Categorie"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="possede" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="aEnInventaire" upperBound="-1"
         eType="#//Voiture"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="estDirigePar" lowerBound="1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="estDirigeePar" lowerBound="1"
         eType="#//Gestionnaire" containment="true" eOpposite="#//Gestionnaire/dirige"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="seSitue" ordered="false"
@@ -124,7 +126,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Gestionnaire" eSuperTypes="#//EmployeAgence">
     <eStructuralFeatures xsi:type="ecore:EReference" name="dirige" lowerBound="1"
-        eType="#//Agence" eOpposite="#//Agence/estDirigePar"/>
+        eType="#//Agence" eOpposite="#//Agence/estDirigeePar"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//Transaction">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
@@ -145,7 +147,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="immediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estLoueePar" lowerBound="1"
         eType="#//AgenceLocation" eOpposite="#//AgenceLocation/loue"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="montantPaye" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Categorie">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
@@ -193,8 +194,9 @@
         eOpposite="#//Location/produit"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="estRecuePar" lowerBound="1"
         eType="#//AgenceRetour" eOpposite="#//AgenceRetour/recoit"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vehiculeEnBonneCondition"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="voitureEnBonneCondition"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="montantPaye" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AgenceReservation">
     <eOperations name="enregistre"/>
@@ -206,8 +208,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="AgenceLocation">
     <eOperations name="loueVoiture" ordered="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="pre_aVoiture" value="self.locateurEstJouePar.possede->size() > 0"/>
-        <details key="post_uneVoituredeMoins" value="self.locateurEstJouePar.possede->size() = self.locateurEstJouePar.possede->size() - 1"/>
+        <details key="pre_aVoiture" value="self.locateurEstJouePar.aEnInventaire->size() > 0"/>
+        <details key="post_uneVoituredeMoins" value="self.locateurEstJouePar.aEnInventaire->size() = self.locateurEstJouePar.aEnInventaire->size() - 1"/>
       </eAnnotations>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="loue" upperBound="-1" eType="#//Location"
@@ -218,7 +220,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="AgenceRetour">
     <eOperations name="recoitVoiture" ordered="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="post_uneVoituredeMoins" value="self.recepteurEstJouePar.possede->size() = self.recepteurEstJouePar.possede->size() - 1"/>
+        <details key="post_uneVoituredeMoins" value="self.recepteurEstJouePar.aEnInventaire->size() = self.recepteurEstJouePar.aEnInventaire->size() - 1"/>
       </eAnnotations>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="recoit" upperBound="-1"
@@ -229,9 +231,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="AgenceTransfert">
     <eOperations name="transfereVoiture" ordered="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="post_transfertUneVoituredeMoins" value="self.transfertJouePar.possede->size() = self.transfertJouePar.possede->size() - 1"/>
-        <details key="post_transfertUneVoituredePlus" value="agence.possede->size() = agence.possede->size() + 1"/>
-        <details key="pre_transfertAVoiture" value="self.transfertJouePar.possede->size() > 0"/>
+        <details key="post_transfertUneVoituredeMoins" value="self.transfertJouePar.aEnInventaire->size() = self.transfertJouePar.aEnInventaire->size() - 1"/>
+        <details key="post_transfertUneVoituredePlus" value="agence.aEnInventaire->size() = agence.aEnInventaire->size() + 1"/>
+        <details key="pre_transfertAVoiture" value="self.transfertJouePar.aEnInventaire->size() > 0"/>
       </eAnnotations>
       <eParameters name="voiture" eType="#//Voiture"/>
       <eParameters name="agence" eType="#//Agence"/>
