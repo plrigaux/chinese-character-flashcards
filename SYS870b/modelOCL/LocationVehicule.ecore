@@ -97,12 +97,12 @@
     </eOperations>
     <eOperations name="nbVoituresReservees" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.aRoleFournisseur.fournit->select(reservation : Reservation | reservation.statut = 'enCours')->size()"/>
+        <details key="body" value="self.aRoleFournisseur.fournit->select(reservation : Reservation | reservation.statut = 0)->size()"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="nbVoituresReservees" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="self.aRoleFournisseur.fournit->select(reservation : Reservation | reservation.statut = 'enCours' and reservation.categorie = categorie)->size()"/>
+        <details key="body" value="self.aRoleFournisseur.fournit->select(reservation : Reservation | reservation.statut = 0 and reservation.categorie = categorie)->size()"/>
       </eAnnotations>
       <eParameters name="categorie" eType="#//Categorie"/>
     </eOperations>
