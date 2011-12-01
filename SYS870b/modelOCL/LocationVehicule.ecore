@@ -154,11 +154,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//Transaction">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="periodeLocation locationImmediate date"/>
+      <details key="constraints" value="periodeLocation locationImmediate statutTermine"/>
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
       <details key="periodeLocation" value="datePrevueDuRetour._'>'(self.dateTransaction)"/>
-      <details key="locationImmediate" value="immediate = self.faiteApartirDe.oclAsSet()->isEmpty()"/>
+      <details key="locationImmediate" value="immediate = self.faiteApartirDe = null"/>
+      <details key="statutTermine" value="if self.produit &lt;> null then statut = 1 else statut &lt;> 1 endif"/>
     </eAnnotations>
     <eOperations name="getDuree" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="a" lowerBound="1" eType="#//Voiture"
