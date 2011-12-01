@@ -162,8 +162,6 @@
       <details key="statutTermine" value="if self.produit &lt;> null then statut = 1 else statut &lt;> 1 endif"/>
     </eAnnotations>
     <eOperations name="getDuree" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="a" lowerBound="1" eType="#//Voiture"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="datePrevueDuRetour" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="produit" eType="#//Retour"
         eOpposite="#//Retour/estLeProduitDe"/>
