@@ -14,6 +14,8 @@ public class Revision {
 
 	private RecordSaver saver = new RecordSaver();
 
+	private long batchNum = 0;
+	private int batchSize  = 20;
 	
 	private PriorityQueue<Record> pQueue = new PriorityQueue<>(200, new Comparator<Record>() {
 
@@ -25,35 +27,48 @@ public class Revision {
 
 	private TreeMap<Integer, Record> map = new TreeMap<Integer, Record>();
 
-	public void getRecords(ArrayList<Record> list, int num) {
+	private final String key;
+	
+	public Revision(String key) {
+		this.key = key;
+	}
 
-		int limit = Math.min(num, pQueue.size());
+	public List<Record> getRecords() {
+
+		ArrayList<Record> list = new ArrayList<>();
+		
+		int limit = Math.min(batchSize, pQueue.size());
 		for (int i = 0; i < limit; i++) {
 			Record record = pQueue.remove();
 			list.add(record);
 		}
 
-		if (limit < num) {
+		if (limit < batchSize) {
 
 			int id = 1;
 			if (!map.isEmpty()) {
 				id = map.lastKey();
 			}
 
-			for (int i = limit; i < num; i++) {
+			for (int i = limit; i < batchSize; i++) {
 
 				Record record = new RecordImp(id++);
 
 				list.add(record);
 			}
 		}
+		
+		return list;
 	}
 
-	public void load(String key) {
+	public void load() {
 		Records records = loadFromStorage(key);
 
 		if (records == null) {
 			records = new RecordsImp();
+		} else {
+			batchSize = records.getBatchSize();
+			batchNum = records.getBatchNum();
 		}
 
 		pQueue.clear();
@@ -63,7 +78,6 @@ public class Revision {
 			pQueue.add(record);
 			map.put(record.getId(), record);
 		}
-
 	}
 
 	private Records loadFromStorage(String key) {
@@ -92,7 +106,7 @@ public class Revision {
 		return recordMap;
 	}
 
-	public void save(String key) {
+	public void save() {
 		
 
 		RecordsImp records = new RecordsImp();
@@ -100,6 +114,10 @@ public class Revision {
 		List<Record> recordList = new ArrayList<>(map.values());
 		
 		records.setRecords(recordList);
+		
+		records.setBatchSize(batchSize);
+		
+		records.setBatchNum(batchNum);
 				
 		String saveString = saver.serializeToJson(records);
 

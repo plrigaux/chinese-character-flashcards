@@ -13,7 +13,8 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.plr.hanzi.client.system.CharInfo;
+import com.plr.hanzi.client.supermemo.Record;
+import com.plr.hanzi.client.supermemo.SuperMemo;
 import com.plr.hanzi.client.system.LeitnerSystem;
 import com.plr.hanzi.client.system.LeitnerSystem.LEVEL;
 import com.plr.hanzi.client.view.welcome.CustomButton;
@@ -37,7 +38,7 @@ public abstract class ControlerSystem extends Composite {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
-	private LeitnerSystem leitnerSystem = null;
+	private SuperMemo leitnerSystem = null;
 
 	private int training = SESSION_NUMBER;
 
@@ -48,7 +49,7 @@ public abstract class ControlerSystem extends Composite {
 	public ControlerSystem() {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		leitnerSystem = LeitnerSystem.load(getSaverKey());
+		leitnerSystem = SuperMemo.load(getSaverKey());
 
 		init();
 	}
@@ -92,35 +93,23 @@ public abstract class ControlerSystem extends Composite {
 		return newItem;
 	}
 
-	public List<CharInfo> getTrainingList() {
+	public List<Record> getTrainingList() {
 		int nb = getTrainingNb();
-		return leitnerSystem.getTrainingList(nb);
+		return leitnerSystem.getBatch();
 	}
 
 	public void init() {
 		results.clear();
-		int row = 0;
+	
 
-		for (LeitnerSystem.LEVEL l : LeitnerSystem.LEVEL.values()) {
-
-			results.setText(row, 0, l.name());
-			results.setText(row, 1, "" + leitnerSystem.size(l));
-			row++;
-		}
-
-		setNewSize();
 		newCharacters.setText("" + getNewItemNb());
 		trainingNb.setText("" + getTrainingNb());
-		leitnerSystem.save(getSaverKey());
+		leitnerSystem.save();
 	}
 
-	public LeitnerSystem getLeitnerSystem() {
-		return leitnerSystem;
-	}
+//	public LeitnerSystem getLeitnerSystem() {
+//		return leitnerSystem;
+//	}
 
-	private void setNewSize() {
-		int newSize = leitnerSystem.size(LEVEL.NEW);
-		newItem = DEFAULT_NEW - newSize;
-		newItem = Math.max(0, newItem);
-	}
+	
 }
