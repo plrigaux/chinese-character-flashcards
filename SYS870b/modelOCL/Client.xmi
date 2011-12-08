@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="ASCII"?>
 <locationVehicule:Client xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:locationVehicule="http://locationVehicule/1.0" xsi:schemaLocation="http://locationVehicule/1.0 LocationVehicule.ecore">
   <execute xsi:type="locationVehicule:Location" dateTransaction="2012-01-01T00:00:00.000-0500" datePrevueDuRetour="2013-01-01T00:00:00.000-0500" immediate="true">
-    <a identifiant="1234">
+    <assigne identifiant="1234">
       <estDeCategorie nom="Rouge"/>
-    </a>
+    </assigne>
   </execute>
   <execute xsi:type="locationVehicule:Location" dateTransaction="2012-01-01T00:00:00.000-0500" datePrevueDuRetour="2013-01-01T00:00:00.000-0500" immediate="true">
-    <a identifiant="1235">
+    <assigne identifiant="1235">
       <estDeCategorie nom="Rouge"/>
-    </a>
+    </assigne>
   </execute>
 </locationVehicule:Client>
