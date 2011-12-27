@@ -12,13 +12,12 @@ import com.plr.hanzi.client.style.AppResources;
 
 public class Revision {
 
-	private RecordSaver saver = new RecordSaver();
+	private final RecordSaver saver;
 
 	private long batchNum = 0;
 	private int batchSize  = 20;
 	
 	private PriorityQueue<Record> pQueue = new PriorityQueue<>(200, new Comparator<Record>() {
-
 		@Override
 		public int compare(Record o1, Record o2) {
 			return o1.getInterval() - o2.getInterval();
@@ -31,8 +30,11 @@ public class Revision {
 	
 	public Revision(String key) {
 		this.key = key;
+		saver = SuperMemoFactory.getSuperMemoFactory().getRecordSaver();
 	}
 
+
+	
 	public List<Record> getRecords() {
 
 		ArrayList<Record> list = new ArrayList<>();
@@ -83,7 +85,7 @@ public class Revision {
 	private Records loadFromStorage(String key) {
 		Records recordMap = null;
 
-		Storage stockStore = Storage.getLocalStorageIfSupported();
+		Storage stockStore = SuperMemoFactory.getSuperMemoFactory().getLocalStorageIfSupported();
 		if (stockStore != null) {
 
 			String saveString = stockStore.getItem(key);
