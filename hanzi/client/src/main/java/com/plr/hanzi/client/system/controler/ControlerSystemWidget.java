@@ -24,10 +24,6 @@ public abstract class ControlerSystemWidget extends Composite {
 		trainingList = controlerSystem.getTrainingList();
 	}
 
-//	protected LeitnerSystem getLeitnerSystem() {
-//		return controlerSystem.getLeitnerSystem();
-//	}
-
 	protected void nextChar() {
 		if (trainingList.isEmpty()) {
 			Panel panel = (Panel) this.getParent();

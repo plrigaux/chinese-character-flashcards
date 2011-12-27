@@ -32,6 +32,11 @@ public class RecordImp implements Record {
 	public int getId() {		
 		return id;
 	}
+	
+	@Override
+	public int getCharIndex() {		
+		return getId() - 1;
+	}
 
 	@Override
 	public void setRepetition(int repetition) {

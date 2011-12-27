@@ -152,26 +152,26 @@ public class FlashCard extends ControlerSystemWidget {
 	@UiHandler("again")
 	void onAgainClick(ClickEvent event) {
 
-		getLeitnerSystem().answerCard(LEVEL.NEW, charInfo);
+		controlerSystem.answerCard(LEVEL.NEW, charInfo);
 		counter.incAgainNum();
 		nextZwChar();
 	}
 
 	@UiHandler("hard")
 	void onHardClick(ClickEvent event) {
-		getLeitnerSystem().answerCard(LEVEL.LEVEL_1, charInfo);
+		controlerSystem.answerCard(LEVEL.LEVEL_1, charInfo);
 		nextZwChar();
 	}
 
 	@UiHandler("good")
 	void onGoodClick(ClickEvent event) {
-		getLeitnerSystem().answerCard(LEVEL.LEVEL_2, charInfo);
+		controlerSystem.answerCard(LEVEL.LEVEL_2, charInfo);
 		nextZwChar();
 	}
 
 	@UiHandler("easy")
 	void onEasyClick(ClickEvent event) {
-		getLeitnerSystem().answerCard(LEVEL.LEVEL_3, charInfo);
+		controlerSystem.answerCard(LEVEL.LEVEL_3, charInfo);
 		nextZwChar();
 	}
 	
@@ -191,8 +191,8 @@ public class FlashCard extends ControlerSystemWidget {
 		super.nextChar();
 		
 		if (charInfo != null) {
-			// cause the rank start at 1 and index start at 0
-			cellList.setVisibleRange(charInfo.getCharId() - 1, 1);
+			
+			cellList.setVisibleRange(charInfo.getCharIndex(), 1);
 		}
 	}
 

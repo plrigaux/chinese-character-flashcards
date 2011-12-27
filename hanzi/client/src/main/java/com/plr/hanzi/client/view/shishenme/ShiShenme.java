@@ -139,13 +139,13 @@ public class ShiShenme extends ControlerSystemWidget {
 			result.removeClassName(style.wrong());
 			result.addClassName(style.ok());
 			compiledResults.setOk(zwChar.getSimplifiedCharacter());
-			getLeitnerSystem().answerOk(charInfo);
+			controlerSystem.answerOk(charInfo);
 		} else {
 			htmlAnswer = "错";
 			result.removeClassName(style.ok());
 			result.addClassName(style.wrong());
 			compiledResults.setWrong(zwChar.getSimplifiedCharacter());
-			getLeitnerSystem().answerWrong(charInfo);
+			controlerSystem.answerWrong(charInfo);
 		}
 
 		result.setInnerHTML(htmlAnswer);
@@ -189,7 +189,7 @@ public class ShiShenme extends ControlerSystemWidget {
 
 		if (charInfo != null) {
 			// cause the rank start at 1 and index start at 0
-			cellList.setVisibleRange(charInfo.getCharId() - 1, 1);
+			cellList.setVisibleRange(charInfo.getCharIndex(), 1);
 		}
 
 	}
