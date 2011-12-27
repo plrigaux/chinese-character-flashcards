@@ -15,7 +15,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.hanzi.client.supermemo.Record;
 import com.plr.hanzi.client.supermemo.SuperMemo;
-import com.plr.hanzi.client.system.LeitnerSystem;
 import com.plr.hanzi.client.system.LeitnerSystem.LEVEL;
 import com.plr.hanzi.client.view.welcome.CustomButton;
 

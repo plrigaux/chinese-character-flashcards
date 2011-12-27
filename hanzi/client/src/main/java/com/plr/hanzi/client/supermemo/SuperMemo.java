@@ -19,7 +19,6 @@ public class SuperMemo {
 	private final SuperMemoEngine engine = new SuperMemoEngine();
 
 	private SuperMemo(String key) {
-		
 		revision = new Revision(key);
 		revision.load();
 	}
@@ -33,7 +32,6 @@ public class SuperMemo {
 	}
 
 	public void setResult(Record dataRecord, int grade) {
-
 		engine.repetition(dataRecord, grade);
 	}
 
@@ -43,7 +41,6 @@ public class SuperMemo {
 
 	public void save() {
 		revision.save();
-		
 	}
 
 }
