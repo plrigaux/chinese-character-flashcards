@@ -83,6 +83,7 @@ public abstract class ControlerSystem extends Composite {
 
 	}
 
+	@Override
 	public abstract Widget getWidget();
 
 	public int getTrainingNb() {
@@ -101,10 +102,24 @@ public abstract class ControlerSystem extends Composite {
 	public void init() {
 		results.clear();
 	
-
 		newCharacters.setText("" + getNewItemNb());
 		trainingNb.setText("" + getTrainingNb());
 		leitnerSystem.save();
+	}
+
+	public void answerWrong(Record charInfo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void answerOk(Record charInfo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void answerCard(LEVEL level3, Record charInfo) {
+		// TODO Auto-generated method stub
+		
 	}
 
 //	public LeitnerSystem getLeitnerSystem() {
