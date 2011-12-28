@@ -5,6 +5,7 @@ public class RecordImp implements Record {
 	private int repetition;
 	private int interval;
 	private double ef;
+	private int order;
 
 	public RecordImp(int id) {
 		this.repetition = 0;
@@ -33,10 +34,6 @@ public class RecordImp implements Record {
 		return id;
 	}
 	
-	@Override
-	public int getCharIndex() {		
-		return getId() - 1;
-	}
 
 	@Override
 	public void setRepetition(int repetition) {
@@ -51,6 +48,16 @@ public class RecordImp implements Record {
 	@Override
 	public void setEf(double ef) {
 		this.ef = ef;
+	}
+
+	@Override
+	public int getOrder() {
+		return order;
+	}
+
+	@Override
+	public void setOrder(int order) {
+		this.order = order;
 	}
 
 }

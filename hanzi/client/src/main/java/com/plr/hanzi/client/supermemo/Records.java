@@ -7,9 +7,9 @@ public interface Records {
 
 	void setRecords(List<Record> records);
 
-	long getBatchNum();
+	int getBatchNum();
 
-	void setBatchNum(long batchNum);
+	void setBatchNum(int batchNum);
 
 	int getBatchSize();
 
