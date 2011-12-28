@@ -6,7 +6,7 @@ import java.util.List;
 public class RecordsImp implements Records {
 
 	private List<Record> records = new ArrayList<>();
-	private long batchNum = 0;
+	private int batchNum = 0;
 	private int batchSize = 0;
 
 	@Override
@@ -20,12 +20,12 @@ public class RecordsImp implements Records {
 	}
 
 	@Override
-	public long getBatchNum() {
+	public int getBatchNum() {
 		return batchNum;
 	}
 
 	@Override
-	public void setBatchNum(long batchNum) {
+	public void setBatchNum(int batchNum) {
 		this.batchNum = batchNum;
 	}
 

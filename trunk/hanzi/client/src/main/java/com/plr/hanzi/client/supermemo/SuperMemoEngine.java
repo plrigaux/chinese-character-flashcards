@@ -1,19 +1,12 @@
 package com.plr.hanzi.client.supermemo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 public class SuperMemoEngine {
-	
 
-	private final int GRADE_RANK;
-	private final double EF_LIMIT;
-	private final int INTERVAL1;
-	private final int INTERVAL2;
-	private final int MIN_GRADE;
-
-
+	final int GRADE_RANK;
+	final double EF_LIMIT;
+	final int INTERVAL1;
+	final int INTERVAL2;
+	final int MIN_GRADE;
 
 	public SuperMemoEngine() {
 		// this(5, 1.3, 1, 6, 3);
@@ -28,7 +21,7 @@ public class SuperMemoEngine {
 		MIN_GRADE = minGrade;
 	}
 
-	public void repetition(Record dataRecord, int grade) {
+	void repetition(Revision revision, RecordInfo dataRecord, int grade) {
 
 		int repetition = dataRecord.getRepetition();
 		int interval = dataRecord.getInterval();
@@ -58,10 +51,17 @@ public class SuperMemoEngine {
 		if (ef < EF_LIMIT) {
 			ef = EF_LIMIT;
 		}
+		
+		ef = round(ef, 2);
 
+		
+		
 		dataRecord.setEf(ef);
 		dataRecord.setRepetition(repetition);
-		dataRecord.setInterval(interval);
+		
+		
+		revision.setInterval(dataRecord, interval);
+		
 	}
 
 	double newEf(int grade, double ef) {
@@ -79,7 +79,5 @@ public class SuperMemoEngine {
 		double tmp = Math.round(val);
 		return tmp / p;
 	}
-
-	
 
 }

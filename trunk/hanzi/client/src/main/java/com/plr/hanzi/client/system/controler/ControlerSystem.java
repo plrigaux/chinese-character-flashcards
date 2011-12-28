@@ -14,7 +14,8 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.hanzi.client.supermemo.Record;
-import com.plr.hanzi.client.supermemo.SuperMemo;
+import com.plr.hanzi.client.supermemo.RecordInfo;
+import com.plr.hanzi.client.supermemo.Revision;
 import com.plr.hanzi.client.system.LeitnerSystem.LEVEL;
 import com.plr.hanzi.client.view.welcome.CustomButton;
 
@@ -37,7 +38,7 @@ public abstract class ControlerSystem extends Composite {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
-	private SuperMemo leitnerSystem = null;
+	private Revision leitnerSystem = null;
 
 	private int training = SESSION_NUMBER;
 
@@ -48,7 +49,7 @@ public abstract class ControlerSystem extends Composite {
 	public ControlerSystem() {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		leitnerSystem = SuperMemo.load(getSaverKey());
+		leitnerSystem = Revision.load(getSaverKey());
 
 		init();
 	}
@@ -93,9 +94,9 @@ public abstract class ControlerSystem extends Composite {
 		return newItem;
 	}
 
-	public List<Record> getTrainingList() {
+	public List<RecordInfo> getTrainingList() {
 		int nb = getTrainingNb();
-		return leitnerSystem.getBatch();
+		return leitnerSystem.getRecordsBatch();
 	}
 
 	public void init() {
@@ -106,17 +107,17 @@ public abstract class ControlerSystem extends Composite {
 		leitnerSystem.save();
 	}
 
-	public void answerWrong(Record charInfo) {
+	public void answerWrong(RecordInfo charInfo) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void answerOk(Record charInfo) {
+	public void answerOk(RecordInfo charInfo) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void answerCard(LEVEL level3, Record charInfo) {
+	public void answerCard(LEVEL level3, RecordInfo charInfo) {
 		// TODO Auto-generated method stub
 		
 	}
