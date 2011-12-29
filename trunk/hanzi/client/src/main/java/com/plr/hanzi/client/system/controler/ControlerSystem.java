@@ -7,17 +7,20 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.plr.hanzi.client.ApplicationConst;
 import com.plr.hanzi.client.supermemo.RecordInfo;
 import com.plr.hanzi.client.supermemo.Revision;
+import com.plr.hanzi.client.system.stattable.StatTable;
 import com.plr.hanzi.client.view.welcome.CustomButton;
 
-public abstract class ControlerSystem extends Composite {
+public abstract class ControlerSystem extends Composite  implements ApplicationConst {
 	
 	@UiField
 	TextBox newCharacters;
@@ -27,7 +30,9 @@ public abstract class ControlerSystem extends Composite {
 	FlexTable results;
 	@UiField
 	CustomButton start;
-
+	@UiField
+	CustomButton stats;
+	
 	interface Binder extends UiBinder<Widget, ControlerSystem> {
 	}
 
@@ -77,6 +82,16 @@ public abstract class ControlerSystem extends Composite {
 
 	}
 
+	@UiHandler("stats")
+	void onStatsClick(ClickEvent event) {
+		History.newItem(FLASH + '/' + STATS);
+	}
+	
+	
+	public StatTable getStatTable() {
+		return  new StatTable(revision);
+	}
+	
 	@Override
 	public abstract Widget getWidget();
 

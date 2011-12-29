@@ -90,32 +90,41 @@ public class Revision {
 	}
 
 	public List<RecordInfo> getRecordsList() {
+		return getRecordsList(0, recordsBatchSize);
+	}
+
+	public List<RecordInfo> getRecordsList(int min, int length) {
 
 		if (tempBatch != null) {
 			setBatch();
 		}
 
-		ArrayList<RecordInfo> list = new ArrayList<RecordInfo>(recordsBatchSize);
+		int max = min + length;
+		ArrayList<RecordInfo> list = new ArrayList<RecordInfo>(length);
 
-		int limit = Math.min(recordsBatchSize, pQueue.size());
+		int limit = Math.min(max, pQueue.size());
 
 		int i = 0;
 		for (RecordInfo recordInfo : pQueue) {
-			if (i++ < limit) {
+			if (i++ >= limit) {
 				break;
 			}
 
-			list.add(recordInfo);
+			if (i >= min) {
+				list.add(recordInfo);
+			}
 		}
 
-		if (list.size() < recordsBatchSize) {
+		if (list.size() < length) {
 
-			int id = 1;
+			int id = min;
 			if (!map.isEmpty()) {
 				id = map.lastKey() + 1;
 			}
 
-			for (i = list.size(); i < recordsBatchSize; i++) {
+			id = Math.max(id, min);
+
+			for (i = list.size(); i < length; i++) {
 
 				RecordInfo record = new RecordInfo(id++, saver);
 
@@ -239,6 +248,6 @@ public class Revision {
 	}
 
 	public void answer(int level, RecordInfo recordInfo) {
-		engine.repetition(this, recordInfo, level);		
+		engine.repetition(this, recordInfo, level);
 	}
 }
