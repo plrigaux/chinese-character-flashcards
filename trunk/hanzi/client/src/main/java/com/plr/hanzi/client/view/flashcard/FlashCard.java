@@ -25,7 +25,6 @@ import com.plr.hanzi.client.CardData;
 import com.plr.hanzi.client.DataControler;
 import com.plr.hanzi.client.ZhongWenCharacter;
 import com.plr.hanzi.client.style.AppResources;
-import com.plr.hanzi.client.system.LeitnerSystem.LEVEL;
 import com.plr.hanzi.client.system.controler.ControlerSystemWidget;
 import com.plr.hanzi.client.view.definition.DefinitionPanel;
 import com.plr.hanzi.client.view.welcome.CustomButton;
@@ -152,26 +151,26 @@ public class FlashCard extends ControlerSystemWidget {
 	@UiHandler("again")
 	void onAgainClick(ClickEvent event) {
 
-		controlerSystem.answerCard(LEVEL.NEW, charInfo);
+		controlerSystem.answerCard(4, charInfo);
 		counter.incAgainNum();
 		nextZwChar();
 	}
 
 	@UiHandler("hard")
 	void onHardClick(ClickEvent event) {
-		controlerSystem.answerCard(LEVEL.LEVEL_1, charInfo);
+		controlerSystem.answerCard(3, charInfo);
 		nextZwChar();
 	}
 
 	@UiHandler("good")
 	void onGoodClick(ClickEvent event) {
-		controlerSystem.answerCard(LEVEL.LEVEL_2, charInfo);
+		controlerSystem.answerCard(2, charInfo);
 		nextZwChar();
 	}
 
 	@UiHandler("easy")
 	void onEasyClick(ClickEvent event) {
-		controlerSystem.answerCard(LEVEL.LEVEL_3, charInfo);
+		controlerSystem.answerCard(1, charInfo);
 		nextZwChar();
 	}
 	

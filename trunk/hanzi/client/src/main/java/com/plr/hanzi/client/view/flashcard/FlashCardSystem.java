@@ -12,7 +12,7 @@ public class FlashCardSystem extends ControlerSystem {
 
 	@Override
 	protected String getSaverKey() {
-		return "chinese.character.trainer.flashcard.leitner";
+		return "chinese.character.trainer.flashcard.supermemo";
 	}
 
 	

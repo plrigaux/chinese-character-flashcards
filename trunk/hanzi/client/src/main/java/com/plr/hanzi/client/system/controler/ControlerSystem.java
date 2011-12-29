@@ -13,21 +13,16 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.plr.hanzi.client.supermemo.Record;
 import com.plr.hanzi.client.supermemo.RecordInfo;
 import com.plr.hanzi.client.supermemo.Revision;
-import com.plr.hanzi.client.system.LeitnerSystem.LEVEL;
 import com.plr.hanzi.client.view.welcome.CustomButton;
 
 public abstract class ControlerSystem extends Composite {
-	private static final int DEFAULT_NEW = 5;
 	
-	private static final int SESSION_NUMBER = 20;
 	@UiField
 	TextBox newCharacters;
 	@UiField
 	TextBox trainingNb;
-
 	@UiField
 	FlexTable results;
 	@UiField
@@ -38,10 +33,8 @@ public abstract class ControlerSystem extends Composite {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
-	private Revision leitnerSystem = null;
-
-	private int training = SESSION_NUMBER;
-
+	private Revision revision = null;
+	
 	private int newItem = 0;
 
 	protected abstract String getSaverKey();
@@ -49,7 +42,7 @@ public abstract class ControlerSystem extends Composite {
 	public ControlerSystem() {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		leitnerSystem = Revision.load(getSaverKey());
+		revision = Revision.load(getSaverKey());
 
 		init();
 	}
@@ -69,7 +62,8 @@ public abstract class ControlerSystem extends Composite {
 		value = trainingNb.getText();
 
 		try {
-			training = Integer.valueOf(value);
+			int batchSize = Integer.valueOf(value);
+			revision.setRecordsBatchSize(batchSize);
 		} catch (Exception e) {
 			Window.alert("Not int");
 			return;
@@ -87,16 +81,15 @@ public abstract class ControlerSystem extends Composite {
 	public abstract Widget getWidget();
 
 	public int getTrainingNb() {
-		return training;
+		return revision.getRecordsBatchSize();
 	}
 
 	public int getNewItemNb() {
 		return newItem;
 	}
 
-	public List<RecordInfo> getTrainingList() {
-		int nb = getTrainingNb();
-		return leitnerSystem.getRecordsBatch();
+	public List<RecordInfo> getTrainingList() {		
+		return revision.getRecordsBatch();
 	}
 
 	public void init() {
@@ -104,7 +97,7 @@ public abstract class ControlerSystem extends Composite {
 	
 		newCharacters.setText("" + getNewItemNb());
 		trainingNb.setText("" + getTrainingNb());
-		leitnerSystem.save();
+		revision.save();
 	}
 
 	public void answerWrong(RecordInfo charInfo) {
@@ -117,8 +110,8 @@ public abstract class ControlerSystem extends Composite {
 		
 	}
 
-	public void answerCard(LEVEL level3, RecordInfo charInfo) {
-		// TODO Auto-generated method stub
+	public void answerCard(int level, RecordInfo recordInfo) {
+		revision.answer(level, recordInfo);
 		
 	}
 

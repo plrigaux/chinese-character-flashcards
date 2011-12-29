@@ -65,7 +65,7 @@ public class SuperMemoEngine {
 	}
 
 	double newEf(int grade, double ef) {
-		ef = ef + grade(GRADE_RANK, grade);
+		ef = ef + grade(grade, GRADE_RANK);
 		return ef;
 	}
 

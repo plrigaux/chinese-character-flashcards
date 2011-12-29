@@ -3,8 +3,8 @@ package com.plr.hanzi.client.supermemo;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,25 +15,20 @@ public class Revision {
 	public static final Logger logger = Logger.getLogger("SuperMemo");
 
 	private final RecordSaver saver;
-
+	private SuperMemoEngine engine = new SuperMemoEngine();
 	private int recordsBatchNumber = 0;
 	private int recordsBatchSize = 20;
 
 	private List<RecordInfo> tempBatch = null;
 
-	private PriorityQueue<RecordInfo> pQueue = new PriorityQueue<>(200, new Comparator<RecordInfo>() {
+	private TreeSet<RecordInfo> pQueue = new TreeSet<RecordInfo>(new Comparator<RecordInfo>() {
 		@Override
 		public int compare(RecordInfo o1, RecordInfo o2) {
-			return o1.getOrder() - o2.getOrder();
-			// System.out.println(v);
-			// return v;
-
-//			if (o1.getOrder() < o2.getOrder()) {
-//				return -1;
-//			} else if (o1.getOrder() > o2.getOrder()) {
-//				return 1;
-//			}
-//			return 0;
+			int v = o1.getOrder() - o2.getOrder();
+			if (v == 0) {
+				v = o1.getId() - o2.getId();
+			}
+			return v;
 		}
 	});
 
@@ -60,17 +55,17 @@ public class Revision {
 			setBatch();
 		}
 
-		ArrayList<RecordInfo> list = new ArrayList<>(recordsBatchSize);
+		ArrayList<RecordInfo> list = new ArrayList<RecordInfo>(recordsBatchSize);
 
 		int limit = Math.min(recordsBatchSize, pQueue.size());
 		for (int i = 0; i < limit; i++) {
-			RecordInfo record = pQueue.peek();
+			RecordInfo record = pQueue.first();
 
 			if (record.getOrder() > recordsBatchNumber) {
 				break;
 			}
 
-			pQueue.poll();
+			pQueue.remove(record);
 			list.add(record);
 		}
 
@@ -83,18 +78,55 @@ public class Revision {
 
 			for (int i = list.size(); i < recordsBatchSize; i++) {
 
-				RecordInfo record = new RecordInfo(id++);
+				RecordInfo record = new RecordInfo(id++, saver);
 
 				list.add(record);
 			}
 		}
 
 		recordsBatchNumber++;
-		tempBatch = new ArrayList<>(list);
+		tempBatch = new ArrayList<RecordInfo>(list);
 		return list;
 	}
 
-	void setBatch() {
+	public List<RecordInfo> getRecordsList() {
+
+		if (tempBatch != null) {
+			setBatch();
+		}
+
+		ArrayList<RecordInfo> list = new ArrayList<RecordInfo>(recordsBatchSize);
+
+		int limit = Math.min(recordsBatchSize, pQueue.size());
+
+		int i = 0;
+		for (RecordInfo recordInfo : pQueue) {
+			if (i++ < limit) {
+				break;
+			}
+
+			list.add(recordInfo);
+		}
+
+		if (list.size() < recordsBatchSize) {
+
+			int id = 1;
+			if (!map.isEmpty()) {
+				id = map.lastKey() + 1;
+			}
+
+			for (i = list.size(); i < recordsBatchSize; i++) {
+
+				RecordInfo record = new RecordInfo(id++, saver);
+
+				list.add(record);
+			}
+		}
+
+		return list;
+	}
+
+	public void setBatch() {
 		if (tempBatch == null) {
 			return;
 		}
@@ -108,10 +140,10 @@ public class Revision {
 	}
 
 	void load() {
-		Records records = loadFromStorage(key);
+		Records records = loadFromStorage();
 
 		if (records == null) {
-			records = new RecordsImp();
+			records = saver.getNewRecords();
 		} else {
 			recordsBatchSize = records.getBatchSize();
 			recordsBatchNumber = records.getBatchNum();
@@ -127,8 +159,8 @@ public class Revision {
 		}
 	}
 
-	private Records loadFromStorage(String key) {
-		Records recordMap = null;
+	private Records loadFromStorage() {
+		Records records = null;
 
 		Storage stockStore = SuperMemoFactory.getSuperMemoFactory().getLocalStorageIfSupported();
 		if (stockStore != null) {
@@ -138,8 +170,7 @@ public class Revision {
 
 			if (saveString != null) {
 				try {
-					recordMap = saver.deserializeFromJson(saveString);
-
+					records = saver.deserializeFromJson(saveString);
 				} catch (Exception e) {
 					logger.log(Level.ALL, e.getMessage());
 
@@ -150,18 +181,18 @@ public class Revision {
 		} else {
 			logger.log(Level.ALL, "Local storage not Suported");
 		}
-		return recordMap;
+		return records;
 	}
 
 	public void save() {
 
 		setBatch();
 
-		RecordsImp records = new RecordsImp();
+		Records records = saver.getNewRecords();
 
-		List<RecordInfo> recordInfoList = new ArrayList<>(map.values());
+		List<RecordInfo> recordInfoList = new ArrayList<RecordInfo>(map.values());
 
-		List<Record> recordList = new ArrayList<>(recordInfoList.size());
+		List<Record> recordList = new ArrayList<Record>(recordInfoList.size());
 
 		for (RecordInfo recordInfo : recordInfoList) {
 			recordList.add(recordInfo.getRecord());
@@ -205,5 +236,9 @@ public class Revision {
 
 	void setRecordsBatchNumber(int recordsBatchNumber) {
 		this.recordsBatchNumber = recordsBatchNumber;
+	}
+
+	public void answer(int level, RecordInfo recordInfo) {
+		engine.repetition(this, recordInfo, level);		
 	}
 }

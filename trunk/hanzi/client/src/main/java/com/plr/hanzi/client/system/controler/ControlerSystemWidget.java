@@ -4,10 +4,7 @@ import java.util.List;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Panel;
-import com.plr.hanzi.client.supermemo.Record;
 import com.plr.hanzi.client.supermemo.RecordInfo;
-import com.plr.hanzi.client.system.CharInfo;
-import com.plr.hanzi.client.system.LeitnerSystem;
 
 public abstract class ControlerSystemWidget extends Composite {
 
@@ -19,8 +16,6 @@ public abstract class ControlerSystemWidget extends Composite {
 
 	protected ControlerSystemWidget(ControlerSystem controlerSystem) {
 		this.controlerSystem = controlerSystem;
-		
-		int newItems = controlerSystem.getNewItemNb();
 		
 		trainingList = controlerSystem.getTrainingList();
 	}

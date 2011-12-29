@@ -1,7 +1,7 @@
 package com.plr.hanzi.client.supermemo;
 
 public class RecordImp implements Record {
-	private final int id;
+	private int id;
 	private int repetition;
 	private int interval;
 	private double ef;
@@ -15,17 +15,17 @@ public class RecordImp implements Record {
 	}
 
 	@Override
-	public int getRepetition() {
+	public int getR() {
 		return repetition;
 	}
 
 	@Override
-	public int getInterval() {
+	public int getI() {
 		return interval;
 	}
 
 	@Override
-	public double getEf() {
+	public double getE() {
 		return ef;
 	}
 
@@ -36,28 +36,33 @@ public class RecordImp implements Record {
 	
 
 	@Override
-	public void setRepetition(int repetition) {
+	public void setR(int repetition) {
 		this.repetition = repetition;
 	}
 
 	@Override
-	public void setInterval(int interval) {
+	public void setI(int interval) {
 		this.interval = interval;
 	}
 
 	@Override
-	public void setEf(double ef) {
+	public void setE(double ef) {
 		this.ef = ef;
 	}
 
 	@Override
-	public int getOrder() {
+	public int getO() {
 		return order;
 	}
 
 	@Override
-	public void setOrder(int order) {
+	public void setO(int order) {
 		this.order = order;
+	}
+
+	@Override
+	public void setId(int Id) {
+		this.id = Id;
 	}
 
 }
