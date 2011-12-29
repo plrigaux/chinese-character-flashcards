@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RecordsImp implements Records {
 
-	private List<Record> records = new ArrayList<>();
+	private List<Record> records = new ArrayList<Record>();
 	private int batchNum = 0;
 	private int batchSize = 0;
 

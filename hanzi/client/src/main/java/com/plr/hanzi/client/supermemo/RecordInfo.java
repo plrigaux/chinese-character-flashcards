@@ -7,8 +7,8 @@ public class RecordInfo {
 		this.record = record;
 	}
 
-	RecordInfo(int id) {
-		this.record = new RecordImp(id);
+	RecordInfo(int id, RecordSaver saver) {
+		this.record = saver.getNewRecord(id);
 	}
 
 	/**
@@ -22,15 +22,15 @@ public class RecordInfo {
 	}
 
 	public int getRepetition() {
-		return record.getRepetition();
+		return record.getR();
 	}
 
 	public int getInterval() {
-		return record.getInterval();
+		return record.getI();
 	}
 
 	public double getEf() {
-		return record.getEf();
+		return record.getE();
 	}
 
 	public int getId() {
@@ -38,23 +38,23 @@ public class RecordInfo {
 	}
 
 	void setRepetition(int repetition) {
-		record.setRepetition(repetition);
+		record.setR(repetition);
 	}
 
 	void setInterval(int interval) {
-		record.setInterval(interval);
+		record.setI(interval);
 	}
 
 	void setEf(double ef) {
-		record.setEf(ef);
+		record.setE(ef);
 	}
 
 	public int getOrder() {
-		return record.getOrder();
+		return record.getO();
 	}
 
 	public void setOrder(int order) {
-		record.setOrder(order);
+		record.setO(order);
 	}
 
 	@Override
@@ -66,19 +66,19 @@ public class RecordInfo {
 		return record;
 	}
 
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		RecordInfo other = (RecordInfo) obj;
-//
-//		if (record.getId() != other.record.getId())
-//			return false;
-//		return true;
-//	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RecordInfo other = (RecordInfo) obj;
+
+		if (record.getId() != other.record.getId())
+			return false;
+		return true;
+	}
 
 }

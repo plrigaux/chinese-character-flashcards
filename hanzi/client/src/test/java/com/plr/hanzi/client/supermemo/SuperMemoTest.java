@@ -62,7 +62,7 @@ public class SuperMemoTest {
 
 		System.out.println(list);
 
-		List<RecordInfo> expected = new ArrayList<>();
+		List<RecordInfo> expected = new ArrayList<RecordInfo>();
 
 		expected.add(list.get(2));
 		expected.add(list.get(1));
@@ -124,7 +124,7 @@ public class SuperMemoTest {
 		revision.setRecordsBatchSize(3);
 
 		List<RecordInfo> list = revision.getRecordsBatch();
-		Set<Integer> expecteds = new TreeSet<>();
+		Set<Integer> expecteds = new TreeSet<Integer>();
 		for (RecordInfo recordInfo : list) {
 			revision.setInterval(recordInfo, 1);
 			expecteds.add(recordInfo.getId());
@@ -132,7 +132,7 @@ public class SuperMemoTest {
 
 		List<RecordInfo> list2 = revision.getRecordsBatch();
 
-		Set<Integer> actuals = new TreeSet<>();
+		Set<Integer> actuals = new TreeSet<Integer>();
 
 		for (RecordInfo recordInfo : list2) {
 			actuals.add(recordInfo.getId());
@@ -146,7 +146,7 @@ public class SuperMemoTest {
 		revision.setRecordsBatchSize(3);
 
 		List<RecordInfo> list = revision.getRecordsBatch();
-		Set<Integer> expecteds = new TreeSet<>();
+		Set<Integer> expecteds = new TreeSet<Integer>();
 		for (RecordInfo recordInfo : list) {
 			revision.setInterval(recordInfo, 2);
 			expecteds.add(recordInfo.getId());
@@ -160,7 +160,7 @@ public class SuperMemoTest {
 
 		list2 = revision.getRecordsBatch();
 
-		Set<Integer> actuals = new TreeSet<>();
+		Set<Integer> actuals = new TreeSet<Integer>();
 
 		for (RecordInfo recordInfo : list2) {
 			actuals.add(recordInfo.getId());
@@ -175,7 +175,7 @@ public class SuperMemoTest {
 		revision.setRecordsBatchSize(3);
 
 		List<RecordInfo> list = revision.getRecordsBatch();
-		TreeSet<Integer> expecteds = new TreeSet<>();
+		TreeSet<Integer> expecteds = new TreeSet<Integer>();
 		for (RecordInfo recordInfo : list) {
 			revision.setInterval(recordInfo, 2);
 			expecteds.add(recordInfo.getId());
@@ -184,7 +184,7 @@ public class SuperMemoTest {
 
 		List<RecordInfo> list2 = revision.getRecordsBatch();
 
-		TreeSet<Integer> actuals = new TreeSet<>();
+		TreeSet<Integer> actuals = new TreeSet<Integer>();
 
 		for (RecordInfo recordInfo : list2) {
 			actuals.add(recordInfo.getId());
