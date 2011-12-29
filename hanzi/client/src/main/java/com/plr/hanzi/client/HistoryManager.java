@@ -1,5 +1,9 @@
 package com.plr.hanzi.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.common.base.Splitter;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
@@ -38,8 +42,22 @@ public class HistoryManager implements ValueChangeHandler<String>, ApplicationCo
 
 		String value = event.getValue();
 
-		if (FLASH.equals(value)) {
+		List<String> l = new ArrayList<String>();
+		for (String s : Splitter.on('/').split(value)) {
+			l.add(s);
+		}
 
+		
+		if (!l.isEmpty() && FLASH.equals(l.get(0))) {
+
+			if (l.size() > 1 && STATS.equals(l.get(1))) {
+				rootPanel.clear();
+				FlashCardSystem mc = new FlashCardSystem();
+				rootPanel.add(mc.getStatTable());
+				
+				return;
+			}
+			
 			rootPanel.clear();
 			FlashCardSystem mc = new FlashCardSystem();
 			rootPanel.add(mc);

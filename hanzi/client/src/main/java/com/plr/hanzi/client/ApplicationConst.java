@@ -5,4 +5,5 @@ public interface ApplicationConst {
 	 String DICTIONNARY = "dictionnary";
 	 String SHI_SHENME = "shiShenme";
 	 String CHARARCTER = "character";
+	 String STATS = "stats";
 }
