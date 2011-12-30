@@ -22,7 +22,7 @@
 
 	<g:HTMLPanel>
 
-		<c:SimplePager ui:field='pager' addStyleNames='{style.panel}' />
+		<c:AbstractPager ui:field='pager' addStyleNames='{style.panel}' />
 		<c:CellTable addStyleNames='{style.scrollable} {style.panel}'
 			ui:field='cellTable' />
 

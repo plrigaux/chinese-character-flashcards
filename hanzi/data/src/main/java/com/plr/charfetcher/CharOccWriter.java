@@ -26,7 +26,7 @@ public class CharOccWriter {
 
 	private Map<String, String> num2pinyin = new TreeMap<String, String>();
 
-	private final String OUTDIR = "data/cedict";
+	private final String OUTDIR = "target/cedict/data";
 
 	static Pattern pinyinPat = Pattern.compile("(?<=\\[).+?(?=\\])");
 	static Pattern tradPat = Pattern.compile("\\p{L}+\\|");
