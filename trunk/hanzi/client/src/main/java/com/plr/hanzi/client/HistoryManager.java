@@ -37,27 +37,28 @@ public class HistoryManager implements ValueChangeHandler<String>, ApplicationCo
 		History.newItem(hash);
 	}
 
+	static private final Splitter splitter = Splitter.on('/');
+
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 
 		String value = event.getValue();
 
 		List<String> l = new ArrayList<String>();
-		for (String s : Splitter.on('/').split(value)) {
+		for (String s : splitter.split(value)) {
 			l.add(s);
 		}
 
-		
 		if (!l.isEmpty() && FLASH.equals(l.get(0))) {
 
 			if (l.size() > 1 && STATS.equals(l.get(1))) {
 				rootPanel.clear();
 				FlashCardSystem mc = new FlashCardSystem();
 				rootPanel.add(mc.getStatTable());
-				
+
 				return;
 			}
-			
+
 			rootPanel.clear();
 			FlashCardSystem mc = new FlashCardSystem();
 			rootPanel.add(mc);

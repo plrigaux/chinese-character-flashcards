@@ -1,5 +1,6 @@
 package com.plr.hanzi.client;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,14 +13,14 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.view.client.AbstractDataProvider;
 import com.google.gwt.view.client.HasData;
-import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.Range;
 
-public class DataControler {
+public class DataControler implements ApplicationConst {
 	private static final int CHAR_BY_FILE = 200;
-
-	private static final int LIMIT = 2400;
+	
+	private static final int MAXINDEX = LIMIT / CHAR_BY_FILE;
 
 	private static DataControler instance = null;
 
@@ -31,14 +32,26 @@ public class DataControler {
 	/**
 	 * The provider that holds the list of contacts in the database.
 	 */
-	private ListDataProvider<ZhongWenCharacter> dataProvider = new ListDataProvider<ZhongWenCharacter>() {
+
+	private ArrayList<ZhongWenCharacter> mainList = new ArrayList<ZhongWenCharacter>();
+
+	private AbstractDataProvider<ZhongWenCharacter> dataProvider = new AbstractDataProvider<ZhongWenCharacter>() {
 		@Override
 		protected void onRangeChanged(final HasData<ZhongWenCharacter> display) {
 
 			Range visibleRange = display.getVisibleRange();
+			int start = visibleRange.getStart();
+			int length = visibleRange.getLength();
 
-			// System.out.println("visibleRange " + visibleRange);
-			List<ZhongWenCharacter> zhongWenCharacters = dataProvider.getList();
+			System.out.println("visibleRange " + visibleRange);
+
+			if (start + length > LIMIT) {
+				System.out.println("!hasData(visibleRange)");
+				start = Math.max(0, LIMIT - length);
+				// return;
+			}
+
+			List<ZhongWenCharacter> zhongWenCharacters = mainList;
 
 			// System.out.println("zhongWenCharacters.size() " +
 			// zhongWenCharacters.size());
@@ -46,32 +59,34 @@ public class DataControler {
 			// + visibleRange.getStart() + visibleRange.getLength());
 
 			// no need to load data
-			if (zhongWenCharacters.size() > visibleRange.getStart() + visibleRange.getLength()) {
+			if (zhongWenCharacters.size() > start + length) {
 				// System.out.println("onRangeChangedSuper(display); ");
-				onRangeChangedSuper(display);
+
+				setRowData(display, start, length);
 			} else {
 
-				if (!hasData(visibleRange)) {
-					System.out.println("!hasData(visibleRange)");
-					onRangeChangedSuper(display);
-					return;
-				}
-
-				final int lastRangeIndex = ((visibleRange.getStart() + visibleRange.getLength()) / CHAR_BY_FILE) + 1;
+				int lastRangeIndex = Math.min(((start + length) / CHAR_BY_FILE) + 1, MAXINDEX);
 
 				// System.out.println("lastRangeIndex " + lastRangeIndex);
 
 				// System.out.println("call loadData form change" );
-				loadData(display, lastRangeIndex);
+				loadData(display, lastRangeIndex, start, length);
 			}
 		}
 
-		private void loadData(final HasData<ZhongWenCharacter> display, final int lastRangeIndex) {
+		private void loadData(final HasData<ZhongWenCharacter> display, final int lastRangeIndex, final int start,
+				final int length) {
+			
 			final int indexToLoad = lastLoadedIndex + 1;
+			
+			if (indexToLoad > MAXINDEX) {
+				return;
+			}
+			
 			final String resource = "data/chineseChar-" + indexToLoad + ".json";
 			// System.out.println(resource);
 
-			LOGGER.info(resource);
+			System.out.println(resource);
 			RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, resource);
 
 			requestBuilder.setCallback(new RequestCallback() {
@@ -86,7 +101,7 @@ public class DataControler {
 						LOGGER.log(Level.SEVERE, resource + " code http : " + code);
 						return;
 					}
-					
+
 					// System.out.println("jsonString " + jsonString);
 
 					// Load only one time the resource
@@ -94,33 +109,32 @@ public class DataControler {
 						// System.out.println("Already loaded " + resource + " "
 						// + resources);
 						String jsonString = response.getText();
-						
+
 						JsArray<CardData> cardDatas = buildCardData(jsonString);
 
-						List<ZhongWenCharacter> zhongWenCharacters = dataProvider.getList();
+						List<ZhongWenCharacter> zhongWenCharacters = mainList;
 
 						for (int i = 0; i < cardDatas.length(); i++) {
 
 							zhongWenCharacters.add(cardDatas.get(i));
 						}
-						
+
 						lastLoadedIndex = indexToLoad;
 					}
 
 					// System.out.println(" " + resource + " "
 					// +zhongWenCharacters.size());
-					//
-					// System.out.println("lastLoadedIndex " + lastLoadedIndex);
-					// System.out.println("indexToLoad " + indexToLoad);
-					// System.out.println("lastRangeIndex " + lastRangeIndex);
-				
 
-					//We going to get the next range
+					System.out.println("lastLoadedIndex " + lastLoadedIndex);
+					System.out.println("indexToLoad " + indexToLoad);
+					System.out.println("lastRangeIndex " + lastRangeIndex);
+
+					// We going to get the next range
 					if (indexToLoad < lastRangeIndex) {
 						// System.out.println("call loadData form load" );
-						loadData(display, lastRangeIndex);
+						loadData(display, lastRangeIndex, start, length);
 					} else {
-						onRangeChangedSuper(display);
+						setRowData(display, start, length);
 					}
 				}
 
@@ -139,9 +153,15 @@ public class DataControler {
 			}
 		}
 
-		private void onRangeChangedSuper(HasData<ZhongWenCharacter> display) {
-			super.onRangeChanged(display);
+		private void setRowData(HasData<ZhongWenCharacter> display, int start, int length) {
+
+			if (mainList.size() >= start + length) {
+				List<ZhongWenCharacter> list = mainList.subList(start, start + length);
+				display.setRowData(start, list);
+			}
+
 		}
+
 	};
 
 	private boolean dataReady = false;
@@ -158,27 +178,13 @@ public class DataControler {
 
 	}
 
-	private boolean hasData(Range visibleRange) {
-		return visibleRange.getStart() + visibleRange.getLength() < LIMIT;
-	}
-
 	public static final native JsArray<CardData> buildCardData(String json) /*-{
 																			return eval('(' + json + ')');
 																			}-*/;
 
 	public void addDataDisplay(HasData<ZhongWenCharacter> display) {
 		dataProvider.addDataDisplay(display);
-	}
-
-	/**
-	 * Refresh all displays.
-	 */
-	public void refreshDisplays() {
-		dataProvider.refresh();
-	}
-
-	ZhongWenCharacter getCharaterByRank(int rank) {
-		return dataProvider.getList().get(rank);
+		display.setRowCount(LIMIT);
 	}
 
 }

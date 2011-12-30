@@ -6,4 +6,6 @@ public interface ApplicationConst {
 	 String SHI_SHENME = "shiShenme";
 	 String CHARARCTER = "character";
 	 String STATS = "stats";
+	 
+	 int LIMIT = 5000;
 }

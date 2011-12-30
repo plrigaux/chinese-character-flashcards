@@ -93,38 +93,41 @@ public class Revision {
 		return getRecordsList(0, recordsBatchSize);
 	}
 
-	public List<RecordInfo> getRecordsList(int min, int length) {
+	public List<RecordInfo> getRecordsList(int start, int length) {
 
 		if (tempBatch != null) {
 			setBatch();
 		}
 
-		int max = min + length;
+		int end = start + length;
 		ArrayList<RecordInfo> list = new ArrayList<RecordInfo>(length);
 
-		int limit = Math.min(max, pQueue.size());
+		int limit = Math.min(end, pQueue.size());
 
-		int i = 0;
-		for (RecordInfo recordInfo : pQueue) {
-			if (i++ >= limit) {
-				break;
-			}
+		if (start < limit) {
 
-			if (i >= min) {
-				list.add(recordInfo);
+			int i = 0;
+			for (RecordInfo recordInfo : pQueue) {
+				if (i++ >= limit) {
+					break;
+				}
+
+				if (i >= start) {
+					list.add(recordInfo);
+				}
 			}
 		}
 
 		if (list.size() < length) {
 
-			int id = min;
+			int id = start;
 			if (!map.isEmpty()) {
 				id = map.lastKey() + 1;
 			}
 
-			id = Math.max(id, min);
+			id = Math.max(id, start + 1);
 
-			for (i = list.size(); i < length; i++) {
+			for (int i = list.size(); i < length; i++) {
 
 				RecordInfo record = new RecordInfo(id++, saver);
 
@@ -160,6 +163,11 @@ public class Revision {
 
 		pQueue.clear();
 		map.clear();
+
+		// idiosyncrasi of java to js
+		if (records.getRecords() == null) {
+			records.setRecords(new ArrayList<Record>());
+		}
 
 		for (Record record : records.getRecords()) {
 			RecordInfo recordInfo = new RecordInfo(record);

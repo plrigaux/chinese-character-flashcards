@@ -168,8 +168,4 @@ public class DefinitionPanel extends Composite {
 		simplePanel.clear();
 
 	}
-
-	// public void setVisible(boolean visible) {
-	// simplePanel.setVisible(visible);
-	// }
 }
