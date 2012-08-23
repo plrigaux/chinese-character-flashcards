@@ -227,15 +227,20 @@ public class GenarateLocalisedSource extends AbstractMojo {
 			if (prop == null) {
 				prop = new Properties();
 				map.put(propFile.getName(), prop);
-			} 
-			
+			}
+
 			prop.putAll(propFile.getProperties());
 		}
+
+		HumanComparator comp = new HumanComparator();
 
 		for (Map.Entry<String, Properties> en : map.entrySet()) {
 
 			String name = en.getKey();
-			Set<String> keys = en.getValue().stringPropertyNames();
+
+			Set<String> keys = new TreeSet<>(comp);
+
+			keys.addAll(en.getValue().stringPropertyNames());
 
 			try {
 				createFile(name, keys);
@@ -244,6 +249,8 @@ public class GenarateLocalisedSource extends AbstractMojo {
 			}
 		}
 	}
+
+	Pattern func = Pattern.compile("[\\s\\.\\\\//]");
 
 	private void createFile(String name, Set<String> keys) throws Exception {
 
@@ -265,10 +272,16 @@ public class GenarateLocalisedSource extends AbstractMojo {
 			pw.println("final public static String BASENAME = \"" + name + "\";");
 			for (String param : keys) {
 
-				pw.println("static public String " + param + "(Locale webUserLocale) {");
+				pw.println();
+				
+				String funcName = func.matcher(param).replaceAll("_");
+				
+				//funcName = funcName.toLowerCase();
+				
+				pw.println("static public String " + funcName + "(Locale webUserLocale) {");
 				pw.println("\treturn " + BASIC_TOOL_CLASS + ".getValue(BASENAME, webUserLocale, \"" + param + "\");");
 				pw.println("}");
-				pw.println();
+
 			}
 
 			pw.println("}");
