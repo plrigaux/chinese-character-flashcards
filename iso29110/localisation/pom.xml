@@ -5,7 +5,7 @@
 	<groupId>com.plr.iso29110</groupId>
 	<artifactId>iso29110.localisation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Docbkx Maven Quickstart Archetype</name>
+	<name>localisation</name>
 	<packaging>pom</packaging>
 
 
