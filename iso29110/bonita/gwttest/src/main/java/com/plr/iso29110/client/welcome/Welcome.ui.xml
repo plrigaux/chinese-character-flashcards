@@ -8,6 +8,7 @@
 	<ui:style>
 		.panel {
 			margin: 0px auto;
+
 		}
 	</ui:style>
 	
