@@ -16,11 +16,11 @@
 		<gwt.version>2.5.0-rc1</gwt.version>
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 	</properties>
-	
-	
-	
-	
-	
+
+
+
+
+
 	<build>
 
 		<!-- Generate compiled stuff in the folder used for developing mode -->
@@ -64,32 +64,43 @@
 					<debugSuspend>false</debugSuspend>
 					<debugPort>30303</debugPort>
 					<style>DETAILED</style>
-					
+
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
 					<extra>extras</extra>
 					<!-- <i18nMessagesBundle>com.plr.hanzi.client.i18n.HanziMessages</i18nMessagesBundle> -->
 				</configuration>
 			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-war-plugin</artifactId> -->
+			<!-- <version>2.1.1</version> -->
+			<!-- <configuration> -->
+			<!-- Produce a skinny war as only the GWT-generated files are of interest -->
+			<!-- <packagingExcludes>WEB-INF/lib/*.jar,WEB-INF/classes/**</packagingExcludes> -->
+			<!-- <webResources> -->
+			<!-- <resource> -->
+			<!-- <directory>chrome</directory> -->
+			<!-- </resource> -->
+			<!-- <resource> -->
+			<!-- <directory>../data/target/cedict</directory> -->
+			<!-- </resource> -->
+			<!-- </webResources> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
+
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
 				<configuration>
-					<!-- Produce a skinny war as only the GWT-generated files are of interest -->
-					<packagingExcludes>WEB-INF/lib/*.jar,WEB-INF/classes/**</packagingExcludes>
-					<webResources>
-						<!-- <resource> -->
-						<!-- <directory>chrome</directory> -->
-						<!-- </resource> -->
-						<!-- <resource> -->
-						<!-- <directory>../data/target/cedict</directory> -->
-						<!-- </resource> -->
-					</webResources>
+					<connectors>
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+							<port>8088</port>
+							<maxIdleTime>60000</maxIdleTime>
+						</connector>
+					</connectors>
 				</configuration>
 			</plugin>
 
-			
-		
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -150,7 +161,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
@@ -161,10 +171,15 @@
 			<version>20090211</version>
 		</dependency>
 
-
-
-
-
+		<dependency>
+			<groupId>org.ow2.bonita</groupId>
+			<artifactId>bonita-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava-gwt</artifactId>
+			<type>jar</type>
+		</dependency>
 	</dependencies>
 
 	<packaging>war</packaging>

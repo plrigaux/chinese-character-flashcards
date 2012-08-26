@@ -27,7 +27,7 @@ public class BonitaProcessManagement {
 	public static final String BONITA_STORE_USERNAME = "admin";
 	public static final String BONITA_STORE_PASSWORD = "bpm";
 
-//	private static final String jaasFile = "jaas-standard.cfg";
+	// private static final String jaasFile = "jaas-standard.cfg";
 	private static final String jaasFile = "src/main/resources/jaas-standard.cfg";
 
 	static {
@@ -79,56 +79,7 @@ public class BonitaProcessManagement {
 
 	private void passUserToBosEngine() throws LoginException {
 		SimpleCallbackHandler callbackHandler = new SimpleCallbackHandler(BONITA_STORE_USERNAME, BONITA_STORE_PASSWORD);
-		// SecurityManager sm = System.getSecurityManager();
-		//
-		// System.setSecurityManager(null);
-		// sm = System.getSecurityManager();
 
-		// Configuration config = Configuration.getConfiguration();
-
-		String config_class = AccessController.doPrivileged(new PrivilegedAction<String>() {
-			@Override
-			public String run() {
-				return java.security.Security.getProperty("login.configuration.provider");
-			}
-		});
-
-		final ClassLoader contextClassLoader = AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
-			@Override
-			public ClassLoader run() {
-				return Thread.currentThread().getContextClassLoader();
-			}
-		});
-
-		final String finalClass = config_class;
-		String extra_config = System.getProperty("java.security.auth.login.config");
-		System.out.println("extra_config " + extra_config);
-		
-//		File dsaf = new File("");
-		
-//		try {
-//			System.out.println(dsaf.getCanonicalPath());
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-		
-//		Configuration configuration = null;
-//		try {
-//			configuration = AccessController.doPrivileged(new PrivilegedExceptionAction<Configuration>() {
-//				@Override
-//				public Configuration run() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-//					return (Configuration) Class.forName(finalClass, true, contextClassLoader).newInstance();
-//				}
-//			});
-//		} catch (PrivilegedActionException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-
-		
-		
-//		loginContext = new LoginContext(BONITA_STORE, null, callbackHandler, configuration);
 		loginContext = new LoginContext(BONITA_STORE, callbackHandler);
 		loginContext.login();
 	}
@@ -147,6 +98,11 @@ public class BonitaProcessManagement {
 
 	public static void main(String[] args) throws Exception {
 		BonitaProcessManagement bpm = new BonitaProcessManagement();
-		bpm.getConnectTest();
+		
+		String taskId = "Bug_report--1.0--3--Review_bug--it1--mainActivityInstance--noLoop";
+		
+		Bug bug =  bpm.getBug(taskId);
+		
+		System.out.println(bug);
 	}
 }
