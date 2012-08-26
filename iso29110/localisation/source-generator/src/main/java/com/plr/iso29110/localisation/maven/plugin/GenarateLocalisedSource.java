@@ -36,8 +36,7 @@ import com.google.common.base.Splitter;
 /**
  * Says "Hi" to the user.
  * 
- * @goal run
- * @phase generate-sources
+ * @goal doit
  */
 public class GenarateLocalisedSource extends AbstractMojo {
 

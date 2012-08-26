@@ -18,7 +18,7 @@ public class MyMojoTest extends AbstractMojoTestCase {
 		assertNotNull(pom);
 		assertTrue(pom.exists());
 
-		myMojo = (GenarateLocalisedSource) lookupMojo("run", pom);
+		myMojo = (GenarateLocalisedSource) lookupMojo("doit", pom);
 
 		assertNotNull(myMojo);
 	}
