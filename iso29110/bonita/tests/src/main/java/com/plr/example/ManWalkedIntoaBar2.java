@@ -58,6 +58,7 @@ public class ManWalkedIntoaBar2 {
 		runtimeAPI = AccessorUtil.getRuntimeAPI();
 		queryRuntimeAPI = AccessorUtil.getQueryRuntimeAPI();
 		queryDefinitionAPI = AccessorUtil.getQueryDefinitionAPI();
+				
 	}
 
 	private void doStuff() throws Exception {

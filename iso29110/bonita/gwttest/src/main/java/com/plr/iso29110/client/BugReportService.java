@@ -1,5 +1,7 @@
 package com.plr.iso29110.client;
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.plr.iso29110.shared.Bug;
@@ -8,4 +10,8 @@ import com.plr.iso29110.shared.Bug;
 public interface BugReportService extends RemoteService {
 
 	Boolean submitBug(Bug bug);
+	List<Bug> listBugsToReview();
+	Boolean acceptBug(String taskId, String priority);
+	Boolean rejectBug(String taskId);
+	Bug retieveBug(String taskId);
 }

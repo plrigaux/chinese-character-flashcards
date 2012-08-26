@@ -1,0 +1,49 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.plr.iso29110.client.welcome">
+
+	<ui:style>
+		.panel {
+			margin: 0px auto;
+			;
+		}
+	</ui:style>
+
+	<g:HTMLPanel>
+		<g:VerticalPanel styleName="{style.panel}" spacing="10">
+			<g:HTMLPanel>
+				<h2>Review Bug</h2>
+				<table>
+					<tr>
+						<td>Project </td>
+						<td>
+							<g:Label ui:field="project"></g:Label>
+						</td>
+					</tr>
+					<tr>
+						<td>Version </td>
+						<td>
+							<g:Label ui:field="version"></g:Label>
+						</td>
+					</tr>
+					<tr>
+						<td>Description </td>
+						<td>
+							<g:Label ui:field="summary"></g:Label>
+						</td>
+					</tr>
+					<tr>
+						<td>Priority </td>
+						<td>
+							<g:TextBox ui:field="priority"></g:TextBox>
+						</td>
+					</tr>
+				</table>
+				<g:Button text="Accept" ui:field="accept" width="160px" />
+				<g:Button text="Reject" ui:field="reject" width="160px" />
+			</g:HTMLPanel>
+		</g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
+
+

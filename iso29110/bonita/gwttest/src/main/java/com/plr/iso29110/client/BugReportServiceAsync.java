@@ -1,8 +1,11 @@
 package com.plr.iso29110.client;
 
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
+import com.plr.iso29110.shared.Bug;
 
 public interface BugReportServiceAsync
 {
@@ -37,4 +40,12 @@ public interface BugReportServiceAsync
             // Utility class should not be instanciated
         }
     }
+
+	void listBugsToReview(AsyncCallback<List<Bug>> callback);
+
+	void rejectBug(String taskId, AsyncCallback<Boolean> callback);
+
+	void acceptBug(String taskId, String priority, AsyncCallback<Boolean> callback);
+
+	void retieveBug(String taskId, AsyncCallback<Bug> callback);
 }

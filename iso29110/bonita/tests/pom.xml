@@ -20,14 +20,17 @@
 	<dependencies>
 
 
-
+		<dependency>
+			<groupId>org.ow2.bonita</groupId>
+			<artifactId>bonita-client</artifactId>
+		</dependency>
 	</dependencies>
 
-<!-- 	<parent> -->
-<!-- 		<groupId>org.ow2</groupId> -->
-<!-- 		<artifactId>ow2</artifactId> -->
-<!-- 		<version>1.1</version> -->
-<!-- 	</parent> -->
+	<!-- <parent> -->
+	<!-- <groupId>org.ow2</groupId> -->
+	<!-- <artifactId>ow2</artifactId> -->
+	<!-- <version>1.1</version> -->
+	<!-- </parent> -->
 	<parent>
 		<groupId>com.plr.iso29110</groupId>
 		<artifactId>iso29110.bonita</artifactId>
