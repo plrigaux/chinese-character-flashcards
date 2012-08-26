@@ -1,0 +1,35 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.plr.iso29110.client.welcome">
+
+	<g:HTMLPanel>
+		<g:HTMLPanel>
+			<h2>Submit Bug</h2>
+			<table>
+				<tr>
+					<td>Project </td>
+					<td>
+						<g:TextBox ui:field="project"></g:TextBox>
+					</td>
+				</tr>
+				<tr>
+					<td>Version </td>
+					<td>
+						<g:TextBox ui:field="version"></g:TextBox>
+					</td>
+				</tr>
+				<tr>
+					<td>Summary </td>
+					<td>
+						<g:TextBox ui:field="summary"></g:TextBox>
+					</td>
+				</tr>
+			</table>
+		</g:HTMLPanel>
+		<g:Button text="Submit" ui:field="submit" width="160px" />
+	</g:HTMLPanel>
+</ui:UiBinder> 
+
+
+
+
