@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.plr.iso29110.client.service.MyUser;
-import com.plr.iso29110.client.service.MyUserService;
+import com.plr.iso29110.client.MyUser;
+import com.plr.iso29110.client.MyUserService;
 
 public class MyUserServiceImpl extends RemoteServiceServlet implements MyUserService {
 

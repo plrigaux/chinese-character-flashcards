@@ -4,32 +4,35 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
-  
-  <!-- Servlets -->
-<!--   <servlet> -->
-<!--     <servlet-name>flashcard</servlet-name> -->
-<!--     <servlet-class>asdf.asdf.asdf.server.GreetingServiceImpl</servlet-class> -->
-<!--   </servlet> -->
-  
-<!--   <servlet-mapping> -->
-<!--     <servlet-name>greetServlet</servlet-name> -->
-<!--     <url-pattern>/plr/greet</url-pattern> -->
-<!--   </servlet-mapping> -->
-  
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>bonitagwt.html</welcome-file>
-  </welcome-file-list>
+
+	<!-- Servlets -->
+	<!-- <servlet> -->
+	<!-- <servlet-name>flashcard</servlet-name> -->
+	<!-- <servlet-class>asdf.asdf.asdf.server.GreetingServiceImpl</servlet-class> -->
+	<!-- </servlet> -->
+
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>greetServlet</servlet-name> -->
+	<!-- <url-pattern>/plr/greet</url-pattern> -->
+	<!-- </servlet-mapping> -->
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>bonitagwt.html</welcome-file>
+	</welcome-file-list>
 
 
- <!-- Servlets -->
-  <servlet>
-    <servlet-name>userServlet</servlet-name>
-    <servlet-class>com.plr.iso29110.server.MyUserServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>userServlet</servlet-name>
-    <url-pattern>/userService</url-pattern>
-  </servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>BugReportService</servlet-name>
+		<servlet-class>com.plr.iso29110.server.BugReportServiceImp</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>BugReportService</servlet-name>
+		<url-pattern>com.plr.iso29110.ISO29110/BugReportService</url-pattern>
+	</servlet-mapping>
+
 </web-app>

@@ -64,6 +64,7 @@
 					<debugSuspend>false</debugSuspend>
 					<debugPort>30303</debugPort>
 					<style>DETAILED</style>
+					
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
 					<extra>extras</extra>
 					<!-- <i18nMessagesBundle>com.plr.hanzi.client.i18n.HanziMessages</i18nMessagesBundle> -->
