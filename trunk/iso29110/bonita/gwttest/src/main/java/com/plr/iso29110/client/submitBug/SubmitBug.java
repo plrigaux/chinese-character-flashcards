@@ -25,52 +25,42 @@ public class SubmitBug extends Composite implements ApplicationConst {
 
 	@UiField
 	Button submit;
-	
-	
+
 	@UiField
 	TextBox project;
-	
+
 	@UiField
 	TextBox version;
-	
+
 	@UiField
 	TextBox summary;
-	
+
 	public SubmitBug() {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		
-	  
-		
-		
-		
 	}
 
 	@UiHandler("submit")
 	void onSubmit(ClickEvent event) {
-Bug  bug = new Bug();
-		
+		Bug bug = new Bug();
+
 		bug.setProject(project.getText());
 		bug.setSummary(summary.getText());
 		bug.setVersion(version.getText());
-		
-		
+
 		BugReportServiceAsync.Util.getInstance().submitBug(bug, new AsyncCallback<java.lang.Boolean>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());			
+				Window.alert(caught.getMessage());
 			}
 
 			@Override
-			public void onSuccess(Boolean result) {				
+			public void onSuccess(Boolean result) {
 				History.newItem("");
 			}
-			
+
 		});
 	}
 
-	
-	
-	
 }
