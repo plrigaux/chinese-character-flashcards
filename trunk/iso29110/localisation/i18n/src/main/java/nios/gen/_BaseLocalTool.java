@@ -36,10 +36,18 @@ public class _BaseLocalTool {
 		return MessageFormat.format(pattern, arguments);
 	}
 	
+	/**
+	 * Use the %s and %d
+	 * @param baseName
+	 * @param locale
+	 * @param key
+	 * @param arguments
+	 * @return
+	 */
 	static public String getFormater(String baseName, Locale locale, String key,
 			Object... arguments) {
 		String format = getValue(baseName, locale, key);
-			
+		
 		return String.format(locale, format, arguments);
 	}
 }
