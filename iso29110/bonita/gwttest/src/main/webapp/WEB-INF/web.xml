@@ -21,4 +21,15 @@
     <welcome-file>bonitagwt.html</welcome-file>
   </welcome-file-list>
 
+
+ <!-- Servlets -->
+  <servlet>
+    <servlet-name>userServlet</servlet-name>
+    <servlet-class>com.plr.iso29110.server.MyUserServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>userServlet</servlet-name>
+    <url-pattern>/userService</url-pattern>
+  </servlet-mapping>
 </web-app>
