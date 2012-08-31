@@ -30,6 +30,9 @@ public class Welcome extends Composite implements ApplicationConst {
 	CustomButton submitBug;
 	@UiField
 	CustomButton bugsToReview;
+	
+	@UiField
+	CustomButton processInstances;
 
 	public Welcome() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -52,8 +55,11 @@ public class Welcome extends Composite implements ApplicationConst {
 		History.newItem(SUBMIT_BUG);
 	}
 	
-
-	
+	@UiHandler("processInstances")
+	void onProcessInstancesClick(ClickEvent event) {
+		History.newItem(PROCESS_INSTANCES);
+	}
+		
 	public static DialogBox alertWidget(final String header, final String content) {
 		final DialogBox box = new DialogBox();
 		final VerticalPanel panel = new VerticalPanel();

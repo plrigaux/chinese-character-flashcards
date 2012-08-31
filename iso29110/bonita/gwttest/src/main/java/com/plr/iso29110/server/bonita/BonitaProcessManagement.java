@@ -1,7 +1,6 @@
 package com.plr.iso29110.server.bonita;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
+import java.util.Collection;
 import java.util.List;
 
 import javax.security.auth.login.LoginContext;
@@ -19,12 +18,15 @@ import org.ow2.bonita.util.SimpleCallbackHandler;
 import com.plr.iso29110.server.bonita.executor.BugRetriever;
 import com.plr.iso29110.server.bonita.executor.BugValidator;
 import com.plr.iso29110.server.bonita.executor.BugsToReview;
+import com.plr.iso29110.server.bonita.executor.ProcessLister;
 import com.plr.iso29110.server.bonita.executor.ProcessStarter;
+import com.plr.iso29110.shared.BonitaProcessInstance;
+import com.plr.iso29110.shared.BonitaTask;
 import com.plr.iso29110.shared.Bug;
 
 public class BonitaProcessManagement {
 	public static final String BONITA_STORE = "BonitaStore";
-	public static final String BONITA_STORE_USERNAME = "admin";
+	public static final String BONITA_STORE_USERNAME = "jack";
 	public static final String BONITA_STORE_PASSWORD = "bpm";
 
 	// private static final String jaasFile = "jaas-standard.cfg";
@@ -99,10 +101,35 @@ public class BonitaProcessManagement {
 	public static void main(String[] args) throws Exception {
 		BonitaProcessManagement bpm = new BonitaProcessManagement();
 		
-		String taskId = "Bug_report--1.0--3--Review_bug--it1--mainActivityInstance--noLoop";
+//		String taskId = "Bug_report--1.0--3--Review_bug--it1--mainActivityInstance--noLoop";
+//		
+//		Bug bug =  bpm.getBug(taskId);
 		
-		Bug bug =  bpm.getBug(taskId);
+//		System.out.println(bug);
 		
-		System.out.println(bug);
+		Collection<BonitaProcessInstance> pi = bpm.getProcessInstances();
+
+		bpm.passUserToBosEngine();
+		List<BonitaTask> bonitaProcessInstances = new ProcessLister().getReadyTasks();
+		bpm.releaseBosEngine();
+		
+		System.out.println(pi.size());
+		System.out.println(bonitaProcessInstances.size());
+	}
+
+	public Collection<BonitaProcessInstance> getProcessInstances() throws LoginException {
+		passUserToBosEngine();
+		Collection<BonitaProcessInstance> bonitaProcessInstances = new ProcessLister().getProcessInstances();
+		releaseBosEngine();
+
+		return bonitaProcessInstances;
+	}
+	
+	public List<BonitaTask> getReadyTasks() throws LoginException {
+		passUserToBosEngine();
+		List<BonitaTask> bonitaProcessInstances = new ProcessLister().getReadyTasks();
+		releaseBosEngine();
+
+		return bonitaProcessInstances;
 	}
 }
