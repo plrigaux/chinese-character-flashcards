@@ -1,10 +1,13 @@
 package com.plr.iso29110.client;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
+import com.plr.iso29110.shared.BonitaProcessInstance;
+import com.plr.iso29110.shared.BonitaTask;
 import com.plr.iso29110.shared.Bug;
 
 public interface BugReportServiceAsync
@@ -48,4 +51,8 @@ public interface BugReportServiceAsync
 	void acceptBug(String taskId, String priority, AsyncCallback<Boolean> callback);
 
 	void retieveBug(String taskId, AsyncCallback<Bug> callback);
+
+	void getProcessInstances(AsyncCallback<Collection<BonitaProcessInstance>> callback);
+
+	void getReadyTasks(AsyncCallback<List<BonitaTask>> callback);
 }

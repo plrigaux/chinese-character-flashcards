@@ -21,16 +21,13 @@ public class BugsToReview {
 	public List<Bug> retrieve() {
 		List<Bug> bugs = new ArrayList<Bug>();
 
-//		for (ActivityState as : ActivityState.values()) {
-//
-//			getTasks(as);
-//		}
-
 		Collection<LightTaskInstance> lightTaskList = getTasks(ActivityState.READY);
 
-		for (LightTaskInstance lightTaskInstance : lightTaskList)
-			if (lightTaskInstance.getActivityName().equals("Review_bug"))
+		for (LightTaskInstance lightTaskInstance : lightTaskList) {
+			if (lightTaskInstance.getActivityName().equals("Review_bug")) {
 				bugs.add(createBugForBugsToReviewList(lightTaskInstance));
+			}
+		}
 
 		return bugs;
 	}
@@ -39,14 +36,12 @@ public class BugsToReview {
 		Collection<LightTaskInstance> lightTaskList;
 		lightTaskList = queryRuntimeAPI.getLightTaskList(as);
 
-//		System.out.println("" + as + "lightTaskList size " + lightTaskList.size());
-//		System.out.println("" + as + "lightTaskList " + lightTaskList);
-
 		return lightTaskList;
 	}
 
 	private Bug createBugForBugsToReviewList(LightTaskInstance lightTaskInstance) {
 		Bug bug = new Bug();
+
 		bug.setCreationDate(lightTaskInstance.getCreatedDate());
 		bug.setName(lightTaskInstance.getActivityLabel());
 		bug.setExecutionId(lightTaskInstance.getProcessInstanceUUID().toString());

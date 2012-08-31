@@ -1,11 +1,14 @@
 package com.plr.iso29110.server;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.plr.iso29110.client.BugReportService;
 import com.plr.iso29110.server.bonita.BonitaProcessManagement;
+import com.plr.iso29110.shared.BonitaProcessInstance;
+import com.plr.iso29110.shared.BonitaTask;
 import com.plr.iso29110.shared.Bug;
 
 public class BugReportServiceImp extends RemoteServiceServlet implements BugReportService {
@@ -65,11 +68,32 @@ public class BugReportServiceImp extends RemoteServiceServlet implements BugRepo
 		Bug bug = null;
 		try {
 			bug = new BonitaProcessManagement().getBug(taskId);
-			System.out.println(bug);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return bug;
 	}
 
+	@Override
+	public Collection<BonitaProcessInstance> getProcessInstances() {
+		Collection<BonitaProcessInstance> bonitaProcessInstances = java.util.Collections.emptyList();
+		try {
+			bonitaProcessInstances = new BonitaProcessManagement().getProcessInstances();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bonitaProcessInstances;
+	}
+
+	
+	@Override
+	public List<BonitaTask> getReadyTasks() {
+		List<BonitaTask> bonitaTask = java.util.Collections.emptyList();
+		try {
+			bonitaTask = new BonitaProcessManagement().getReadyTasks();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bonitaTask;
+	}
 }

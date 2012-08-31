@@ -10,6 +10,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.plr.iso29110.client.bugsReview.BugsReviewList;
+import com.plr.iso29110.client.processInstances.ProcessInstances;
 import com.plr.iso29110.client.reviewBug.ReviewBug;
 import com.plr.iso29110.client.submitBug.SubmitBug;
 import com.plr.iso29110.client.welcome.Welcome;
@@ -54,9 +55,12 @@ public class HistoryManager implements ValueChangeHandler<String>, ApplicationCo
 			rootPanel.add(submitBug);
 		} else if (BUGS_TO_REVIEW.equals(value)) {
 			rootPanel.clear();
-			BugsReviewList bugsReviewList = new BugsReviewList();
-			rootPanel.add(bugsReviewList);
-			
+			BugsReviewList view = new BugsReviewList();
+			rootPanel.add(view);
+		} else if (PROCESS_INSTANCES.equals(value)) {
+			rootPanel.clear();
+			ProcessInstances view = new ProcessInstances();
+			rootPanel.add(view);	
 		} else if (value.startsWith(REVIEW_BUG)) {
 
 			if (value.charAt(REVIEW_BUG.length()) == '/') {
