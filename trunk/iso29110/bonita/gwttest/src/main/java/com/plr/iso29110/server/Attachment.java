@@ -3,7 +3,9 @@ package com.plr.iso29110.server;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,11 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.plr.iso29110.server.bonita.BonitaProcessManagement;
+import com.plr.iso29110.shared.SomeConsts;
 
 public class Attachment extends HttpServlet {
 
@@ -40,8 +42,6 @@ public class Attachment extends HttpServlet {
 
 		try {
 
-			String name = null;
-			String processInstanceUUID = null;
 			String fileName = null;
 			String mimeType = null;
 			byte[] content = null;
@@ -53,14 +53,14 @@ public class Attachment extends HttpServlet {
 			@SuppressWarnings("unchecked")
 			List<FileItem> items = upload.parseRequest(request);
 
+			Map<String, String> params = new HashMap<>();
+
 			for (FileItem item : items) {
 
 				if (item.isFormField()) {
-					if ("name".equals(item.getFieldName())) {
-						name = item.getString();
-					} else if ("processInstanceUUID".equals(item.getFieldName())) {
-						processInstanceUUID = item.getString();
-					}
+
+					params.put(item.getFieldName(), item.getString());
+
 				} else {
 					fileName = item.getName();
 					// fileName = item.getFieldName();
@@ -83,14 +83,25 @@ public class Attachment extends HttpServlet {
 
 					// String name, String processInstanceUUID, String fileName,
 					// String mimeType, byte[] content
-					
+
 				}
-				
-				
+
 			}
-			
-			new BonitaProcessManagement().uploadDocument(name, processInstanceUUID, fileName, mimeType, content);
-			
+
+			String method = params.get(SomeConsts.METHOD);
+
+			if (SomeConsts.ADD_DOCUMENT_VERSION.equals(method)) {
+				boolean isMajorVersion = Boolean.getBoolean(params.get(SomeConsts.IS_MAJOR_VERSION));
+				String documentUUID = params.get(SomeConsts.DOCUMENTUUID);
+
+				new BonitaProcessManagement().addDocumentVersion(documentUUID, isMajorVersion, fileName, mimeType, content);
+			} else if (SomeConsts.CREATATE_DOCUMENT.equals(method)) {
+				String name = params.get(SomeConsts.NAME);
+				String processInstanceUUID = params.get(SomeConsts.PROCESS_INSTANCE_UUID);
+
+				new BonitaProcessManagement().creatateDocument(name, processInstanceUUID, fileName, mimeType, content);
+			}
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

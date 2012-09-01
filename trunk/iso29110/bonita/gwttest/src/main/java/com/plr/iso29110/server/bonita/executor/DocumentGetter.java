@@ -12,7 +12,6 @@ import org.ow2.bonita.facade.exception.DocumentNotFoundException;
 import org.ow2.bonita.facade.exception.DocumentationCreationException;
 import org.ow2.bonita.facade.exception.InstanceNotFoundException;
 import org.ow2.bonita.facade.runtime.Document;
-import org.ow2.bonita.facade.runtime.ProcessInstance;
 import org.ow2.bonita.facade.uuid.DocumentUUID;
 import org.ow2.bonita.facade.uuid.ProcessInstanceUUID;
 import org.ow2.bonita.util.AccessorUtil;
@@ -51,7 +50,7 @@ public class DocumentGetter {
 			list.add(element);
 		}
 
-		//remove 2 times
+		// remove 2 times
 		list.removeLast();
 		String documentUUID = list.removeLast();
 
@@ -71,23 +70,22 @@ public class DocumentGetter {
 
 	}
 
-	public void uploadDocument(String name, String processInstanceUUID, String fileName, String mimeType,  byte[] content) throws DocumentationCreationException, InstanceNotFoundException {
+	public void createDocument(String name, String processInstanceUUID, String fileName, String mimeType, byte[] content)
+			throws DocumentationCreationException, InstanceNotFoundException {
 		RuntimeAPI runtimeAPI = AccessorUtil.getRuntimeAPI();
-		
+
 		ProcessInstanceUUID puuid = new ProcessInstanceUUID(processInstanceUUID);
-				
+
 		runtimeAPI.createDocument(name, puuid, fileName, mimeType, content);
+
 	}
 
-//	void test() {
-//		ProcessInstance pi;
-//		
-//		RuntimeAPI ra;
-//		
-//		
-//		
-////		ra.createDocument(name, processDefinitionUUID, fileName, mimeType, content);
-//		
-//	}
-	
+	public void addDocumentVersion(String documentUUID, boolean isMajorVersion, String fileName, String mimeType, byte[] content)
+			throws DocumentationCreationException {
+		RuntimeAPI runtimeAPI = AccessorUtil.getRuntimeAPI();
+
+		runtimeAPI.addDocumentVersion(new DocumentUUID(documentUUID), isMajorVersion, fileName, mimeType, content);
+	}
+
+
 }

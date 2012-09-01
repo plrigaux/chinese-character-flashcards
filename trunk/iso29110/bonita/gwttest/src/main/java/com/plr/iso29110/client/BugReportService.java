@@ -20,5 +20,7 @@ public interface BugReportService extends RemoteService {
 	Bug retieveBug(String taskId);
 	Collection<BonitaProcessInstance> getProcessInstances();
 	List<BonitaTask> getReadyTasks();
+	List<BonitaTask> getReadyTasks(String processInstanceId);
 	Task getTask(String taskId);
+	Boolean execute(Task task);
 }
