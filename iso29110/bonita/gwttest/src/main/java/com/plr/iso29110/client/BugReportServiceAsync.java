@@ -59,4 +59,8 @@ public interface BugReportServiceAsync
 
 	void getTask(String taskId, AsyncCallback<Task> callback);
 
+	void execute(Task task, AsyncCallback<Boolean> callback);
+
+	void getReadyTasks(String processInstanceId, AsyncCallback<List<BonitaTask>> callback);
+
 }

@@ -39,6 +39,9 @@ public class BugValidator {
         runtimeAPI.startTask(activityInstanceUUID, true);
         runtimeAPI.setProcessInstanceVariable(lightProcessInstance.getProcessInstanceUUID(), "result", "Rejected");
         runtimeAPI.finishTask(activityInstanceUUID, true);
+        
+        
+        
     }
 
 }

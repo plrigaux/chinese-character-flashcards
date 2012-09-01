@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Task implements Serializable {
+	private String UUID;
+
+
 	private String activityName;
 	private String activityLabel;
 	private String activityDescription;
@@ -23,7 +26,21 @@ public class Task implements Serializable {
 	
 	private List<DataField> processDataFields;
 	private List<DataField> activityDataFields;
+
+
 	private List<DocumentInfo> documents;
+	
+	private String processInstanceUUID;
+	
+	private ActivityState state;
+
+	public ActivityState getState() {
+		return state;
+	}
+
+	public void setState(ActivityState state) {
+		this.state = state;
+	}
 
 	public List<DataField> getActivityDataFields() {
 		return activityDataFields;
@@ -97,5 +114,19 @@ public class Task implements Serializable {
 	public List<DocumentInfo> getDocuments() {
 		return documents;
 	}
+	
+	public String getUUID() {
+		return UUID;
+	}
 
+	public void setUUID(String uUID) {
+		UUID = uUID;
+	}
+
+	public String getProcessInstanceUUID() {
+		return processInstanceUUID;
+	}
+	public void setProcessInstanceUUID(String processInstanceUUID) {
+		this.processInstanceUUID = processInstanceUUID;
+	}
 }

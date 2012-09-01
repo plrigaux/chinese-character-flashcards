@@ -19,9 +19,6 @@ import org.ow2.bonita.facade.exception.TaskNotFoundException;
 import org.ow2.bonita.facade.exception.VariableNotFoundException;
 import org.ow2.bonita.facade.runtime.Document;
 import org.ow2.bonita.facade.uuid.DocumentUUID;
-import org.ow2.bonita.search.DocumentResult;
-import org.ow2.bonita.search.DocumentSearchBuilder;
-import org.ow2.bonita.search.index.DocumentIndex;
 import org.ow2.bonita.util.AccessorUtil;
 import org.ow2.bonita.util.BonitaConstants;
 import org.ow2.bonita.util.SimpleCallbackHandler;
@@ -32,11 +29,10 @@ import com.plr.iso29110.server.bonita.executor.BugsToReview;
 import com.plr.iso29110.server.bonita.executor.DocumentGetter;
 import com.plr.iso29110.server.bonita.executor.ProcessLister;
 import com.plr.iso29110.server.bonita.executor.ProcessStarter;
-import com.plr.iso29110.server.bonita.executor.TaskInfoGetter;
+import com.plr.iso29110.server.bonita.executor.TaskMangement;
 import com.plr.iso29110.shared.BonitaProcessInstance;
 import com.plr.iso29110.shared.BonitaTask;
 import com.plr.iso29110.shared.Bug;
-import com.plr.iso29110.shared.DocumentInfo;
 import com.plr.iso29110.shared.Task;
 
 public class BonitaProcessManagement {
@@ -156,28 +152,56 @@ public class BonitaProcessManagement {
 	}
 
 	public List<BonitaTask> getReadyTasks() throws LoginException {
-		passUserToBosEngine();
-		List<BonitaTask> bonitaProcessInstances = new ProcessLister().getReadyTasks();
-		releaseBosEngine();
-
-		return bonitaProcessInstances;
+		try {
+			return getReadyTasks(null);
+		} catch (InstanceNotFoundException e) {
+			// not throwed
+		}
+		
+		return new ArrayList<>();
 	}
 
 	public Task getTask(String taskId) throws LoginException, ActivityNotFoundException, InstanceNotFoundException,
 			TaskNotFoundException, ActivityDefNotFoundException, ProcessNotFoundException {
 		passUserToBosEngine();
-		Task task = new TaskInfoGetter(taskId).getTask();
+		Task task = new TaskMangement(taskId).getTask();
 		releaseBosEngine();
 
 		return task;
 	}
 
-	public void uploadDocument(String name, String processInstanceUUID, String fileName, String mimeType, byte[] content) throws LoginException, DocumentationCreationException, InstanceNotFoundException {
+	public void creatateDocument(String name, String processInstanceUUID, String fileName, String mimeType, byte[] content) throws LoginException, DocumentationCreationException, InstanceNotFoundException {
 		passUserToBosEngine();
 
-		new DocumentGetter().uploadDocument(name, processInstanceUUID, fileName, mimeType, content);
+		new DocumentGetter().createDocument(name, processInstanceUUID, fileName, mimeType, content);
 
 		releaseBosEngine();
 
+	}
+	
+	public void addDocumentVersion(String documentUUID, boolean isMajorVersion, String fileName, String mimeType, byte[] content) throws LoginException, DocumentationCreationException {
+		passUserToBosEngine();
+
+		new DocumentGetter().addDocumentVersion(documentUUID, isMajorVersion, fileName, mimeType, content);
+
+		releaseBosEngine();
+
+	}
+
+	public Boolean execute(Task task) throws LoginException, TaskNotFoundException, IllegalTaskStateException, InstanceNotFoundException, VariableNotFoundException, ActivityNotFoundException {
+		passUserToBosEngine();
+		boolean val = new TaskMangement(task.getUUID()).executeTask(task);
+		releaseBosEngine();
+		
+		return val;
+
+	}
+
+	public List<BonitaTask> getReadyTasks(String processInstanceId) throws LoginException, InstanceNotFoundException {
+		passUserToBosEngine();
+		List<BonitaTask> bonitaProcessInstances = new ProcessLister().getReadyTasks(processInstanceId);
+		releaseBosEngine();
+
+		return bonitaProcessInstances;
 	}
 }

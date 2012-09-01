@@ -21,8 +21,9 @@
 				<g:Label ui:field="activityName"></g:Label>
 				<g:Label ui:field="activityLabel"></g:Label>
 				<g:Label ui:field="activityDescription"></g:Label>
+				State: <g:Label ui:field="state"></g:Label>
 				
-				Variables
+				<g:Button ui:field="execute" text="Execute"></g:Button>
 				<g:FlexTable ui:field="variables" styleName="{style.table-style}" borderWidth="2"/>
 				
 				

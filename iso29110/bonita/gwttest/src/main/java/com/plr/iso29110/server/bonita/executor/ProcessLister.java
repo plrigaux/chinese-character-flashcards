@@ -10,11 +10,13 @@ import java.util.Set;
 import org.ow2.bonita.facade.QueryDefinitionAPI;
 import org.ow2.bonita.facade.QueryRuntimeAPI;
 import org.ow2.bonita.facade.def.majorElement.ProcessDefinition;
+import org.ow2.bonita.facade.exception.InstanceNotFoundException;
 import org.ow2.bonita.facade.exception.ProcessNotFoundException;
 import org.ow2.bonita.facade.runtime.ActivityState;
 import org.ow2.bonita.facade.runtime.InstanceState;
 import org.ow2.bonita.facade.runtime.ProcessInstance;
 import org.ow2.bonita.facade.uuid.ProcessDefinitionUUID;
+import org.ow2.bonita.facade.uuid.ProcessInstanceUUID;
 import org.ow2.bonita.light.LightTaskInstance;
 import org.ow2.bonita.util.AccessorUtil;
 
@@ -61,9 +63,22 @@ public class ProcessLister {
 		return list;
 	}
 
-	public List<BonitaTask> getReadyTasks() {
-		Collection<LightTaskInstance> lightTaskList = queryRuntimeAPI.getLightTaskList(ActivityState.READY);
-
+	public List<BonitaTask> getReadyTasks(String processInstanceId) throws InstanceNotFoundException {
+		
+		
+		Collection<LightTaskInstance> lightTaskList;
+		
+		if (processInstanceId == null) {
+		lightTaskList = queryRuntimeAPI.getLightTaskList(ActivityState.READY);
+		} else {
+			lightTaskList = queryRuntimeAPI.getLightTaskList (new  ProcessInstanceUUID(processInstanceId), ActivityState.READY);
+		}
+		
+		return getReadyTasks(lightTaskList);
+	}
+	
+	private  List<BonitaTask> getReadyTasks(Collection<LightTaskInstance> lightTaskList) {
+		
 		List<BonitaTask> list = new ArrayList<>(lightTaskList.size());
 
 		for (LightTaskInstance lightTaskInstance : lightTaskList) {
@@ -107,5 +122,7 @@ public class ProcessLister {
 
 		return pd;
 	}
+
+	
 
 }

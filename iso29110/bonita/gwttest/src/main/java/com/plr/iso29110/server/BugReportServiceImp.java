@@ -111,4 +111,27 @@ public class BugReportServiceImp extends RemoteServiceServlet implements BugRepo
 		}
 		return task;
 	}
+
+	@Override
+	public List<BonitaTask> getReadyTasks(String processInstanceId) {
+		List<BonitaTask> bonitaTask;
+		try {
+			bonitaTask = new BonitaProcessManagement().getReadyTasks(processInstanceId);
+			return bonitaTask;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<BonitaTask>();
+	}
+
+	@Override
+	public Boolean execute(Task task) {
+		try {
+			Boolean res = new BonitaProcessManagement().execute(task);
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
