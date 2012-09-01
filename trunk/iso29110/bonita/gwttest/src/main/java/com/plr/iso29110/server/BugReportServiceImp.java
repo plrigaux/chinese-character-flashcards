@@ -10,6 +10,7 @@ import com.plr.iso29110.server.bonita.BonitaProcessManagement;
 import com.plr.iso29110.shared.BonitaProcessInstance;
 import com.plr.iso29110.shared.BonitaTask;
 import com.plr.iso29110.shared.Bug;
+import com.plr.iso29110.shared.Task;
 
 public class BugReportServiceImp extends RemoteServiceServlet implements BugReportService {
 
@@ -79,8 +80,10 @@ public class BugReportServiceImp extends RemoteServiceServlet implements BugRepo
 		Collection<BonitaProcessInstance> bonitaProcessInstances = java.util.Collections.emptyList();
 		try {
 			bonitaProcessInstances = new BonitaProcessManagement().getProcessInstances();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			bonitaProcessInstances = new ArrayList<BonitaProcessInstance>();
 		}
 		return bonitaProcessInstances;
 	}
@@ -88,12 +91,24 @@ public class BugReportServiceImp extends RemoteServiceServlet implements BugRepo
 	
 	@Override
 	public List<BonitaTask> getReadyTasks() {
-		List<BonitaTask> bonitaTask = java.util.Collections.emptyList();
+		List<BonitaTask> bonitaTask;
 		try {
 			bonitaTask = new BonitaProcessManagement().getReadyTasks();
+			return bonitaTask;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return bonitaTask;
+		return new ArrayList<BonitaTask>();
+	}
+	
+	@Override
+	public Task getTask(String taskId) {
+		Task task = null;
+		try {
+			task = new BonitaProcessManagement().getTask(taskId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return task;
 	}
 }

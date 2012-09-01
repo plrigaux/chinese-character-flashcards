@@ -19,6 +19,17 @@ public class BonitaTask implements Serializable {
 	private String activityName;
 	private String activityLabel;
 	private String activityDescription;
+	
+	private String taskId;
+	
+
+	public String getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
+	}
 
 	public String getActivityName() {
 		return activityName;

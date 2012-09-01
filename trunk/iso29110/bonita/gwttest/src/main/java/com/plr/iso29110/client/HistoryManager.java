@@ -13,6 +13,7 @@ import com.plr.iso29110.client.bugsReview.BugsReviewList;
 import com.plr.iso29110.client.processInstances.ProcessInstances;
 import com.plr.iso29110.client.reviewBug.ReviewBug;
 import com.plr.iso29110.client.submitBug.SubmitBug;
+import com.plr.iso29110.client.task.TaskDisplay;
 import com.plr.iso29110.client.welcome.Welcome;
 
 public class HistoryManager implements ValueChangeHandler<String>, ApplicationConst {
@@ -60,16 +61,27 @@ public class HistoryManager implements ValueChangeHandler<String>, ApplicationCo
 		} else if (PROCESS_INSTANCES.equals(value)) {
 			rootPanel.clear();
 			ProcessInstances view = new ProcessInstances();
-			rootPanel.add(view);	
+			rootPanel.add(view);
+
+		} else if (value.startsWith(TASK)) {
+
+			if (value.charAt(TASK.length()) == '/') {
+				String taskId = value.substring(TASK.length() + 1);
+
+				rootPanel.clear();
+				TaskDisplay view = new TaskDisplay(taskId);
+				rootPanel.add(view);
+			}
+
 		} else if (value.startsWith(REVIEW_BUG)) {
 
 			if (value.charAt(REVIEW_BUG.length()) == '/') {
 				String taskId = value.substring(REVIEW_BUG.length() + 1);
 
 				rootPanel.clear();
-				
+
 				ReviewBug reviewBug = new ReviewBug();
-				
+
 				rootPanel.add(reviewBug);
 
 				reviewBug.setTaskId(taskId);

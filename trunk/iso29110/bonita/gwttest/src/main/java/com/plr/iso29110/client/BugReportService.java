@@ -8,6 +8,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.plr.iso29110.shared.BonitaProcessInstance;
 import com.plr.iso29110.shared.BonitaTask;
 import com.plr.iso29110.shared.Bug;
+import com.plr.iso29110.shared.Task;
 
 @RemoteServiceRelativePath("BugReportService")
 public interface BugReportService extends RemoteService {
@@ -19,4 +20,5 @@ public interface BugReportService extends RemoteService {
 	Bug retieveBug(String taskId);
 	Collection<BonitaProcessInstance> getProcessInstances();
 	List<BonitaTask> getReadyTasks();
+	Task getTask(String taskId);
 }

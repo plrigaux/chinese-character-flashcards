@@ -9,6 +9,7 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.plr.iso29110.shared.BonitaProcessInstance;
 import com.plr.iso29110.shared.BonitaTask;
 import com.plr.iso29110.shared.Bug;
+import com.plr.iso29110.shared.Task;
 
 public interface BugReportServiceAsync
 {
@@ -55,4 +56,7 @@ public interface BugReportServiceAsync
 	void getProcessInstances(AsyncCallback<Collection<BonitaProcessInstance>> callback);
 
 	void getReadyTasks(AsyncCallback<List<BonitaTask>> callback);
+
+	void getTask(String taskId, AsyncCallback<Task> callback);
+
 }
