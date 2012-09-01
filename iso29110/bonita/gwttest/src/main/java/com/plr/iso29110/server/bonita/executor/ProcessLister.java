@@ -84,6 +84,8 @@ public class ProcessLister {
 
 			bpi.setLastUpdateDate(lightTaskInstance.getLastUpdateDate());
 
+			bpi.setTaskId(lightTaskInstance.getUUID().toString());
+			
 			list.add(bpi);
 		}
 

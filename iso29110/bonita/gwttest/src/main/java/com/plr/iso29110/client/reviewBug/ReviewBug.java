@@ -1,7 +1,5 @@
 package com.plr.iso29110.client.reviewBug;
 
-import java.util.List;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;

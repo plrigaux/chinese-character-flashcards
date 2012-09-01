@@ -34,5 +34,26 @@
 		<servlet-name>BugReportService</servlet-name>
 		<url-pattern>com.plr.iso29110.ISO29110/BugReportService</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>attachment</servlet-name>
+		<servlet-class>com.plr.iso29110.server.Attachment</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>attachment</servlet-name>
+		<url-pattern>/attachment/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>uploadAttachment</servlet-name>
+		<servlet-class>com.plr.iso29110.server.Attachment</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>uploadAttachment</servlet-name>
+		<url-pattern>/uploadAttachment</url-pattern>
+	</servlet-mapping>
+
 
 </web-app>

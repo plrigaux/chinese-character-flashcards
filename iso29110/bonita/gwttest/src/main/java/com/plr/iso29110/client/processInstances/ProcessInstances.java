@@ -1,10 +1,6 @@
 package com.plr.iso29110.client.processInstances;
 
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -17,9 +13,7 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.iso29110.client.ApplicationConst;
 import com.plr.iso29110.client.BugReportServiceAsync;
-import com.plr.iso29110.shared.BonitaProcessInstance;
 import com.plr.iso29110.shared.BonitaTask;
-import com.plr.iso29110.shared.Bug;
 
 public class ProcessInstances extends Composite implements ApplicationConst {
 
@@ -36,6 +30,7 @@ public class ProcessInstances extends Composite implements ApplicationConst {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		int j = 0;
+		table.setText(0, j++, "");
 		table.setText(0, j++, "Process Name");
 		table.setText(0, j++, "Process Label");
 		table.setText(0, j++, "Version");
@@ -59,7 +54,10 @@ public class ProcessInstances extends Composite implements ApplicationConst {
 				for (BonitaTask processInstance : result) {
 
 					int j = 0;
-
+					Hyperlink link = new Hyperlink("go to", ApplicationConst.TASK + "/" + processInstance.getTaskId());
+					table.setWidget(i, j++, link);
+					
+					
 					table.setText(i, j++, processInstance.getProcessName());
 					table.setText(i, j++, processInstance.getProcessLabel());
 					table.setText(i, j++, processInstance.getProcessVersion());
