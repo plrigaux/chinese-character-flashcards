@@ -137,7 +137,7 @@ public class TaskMangement {
 	}
 
 	private List<DataField> transfert(Set<DataFieldDefinition> dataFieldOrgs) {
-		List<DataField> dataFields = new ArrayList<>(dataFieldOrgs.size());
+		List<DataField> dataFields = new ArrayList<DataField>(dataFieldOrgs.size());
 
 		for (DataFieldDefinition dtd : dataFieldOrgs) {
 

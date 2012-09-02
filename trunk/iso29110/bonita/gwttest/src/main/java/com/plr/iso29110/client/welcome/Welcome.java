@@ -33,6 +33,9 @@ public class Welcome extends Composite implements ApplicationConst {
 	
 	@UiField
 	CustomButton processInstances;
+	
+	@UiField
+	CustomButton processDefinitions;
 
 	public Welcome() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -45,6 +48,11 @@ public class Welcome extends Composite implements ApplicationConst {
 		alertWidget("About", "Developed by Pier Rigaux plrigaux@gmail.com based on the CEDICT").center();
 	}
 
+	@UiHandler("processDefinitions")
+	void onProcessDefinitionsClick(ClickEvent event) {
+		History.newItem(PROCESS_DEFINITIONS);
+	}
+	
 	@UiHandler("bugsToReview")
 	void onFlashcardsClick(ClickEvent event) {
 		History.newItem(BUGS_TO_REVIEW);

@@ -19,6 +19,7 @@ import org.ow2.bonita.facade.exception.TaskNotFoundException;
 import org.ow2.bonita.facade.exception.VariableNotFoundException;
 import org.ow2.bonita.facade.runtime.Document;
 import org.ow2.bonita.facade.uuid.DocumentUUID;
+import org.ow2.bonita.light.LightProcessDefinition;
 import org.ow2.bonita.util.AccessorUtil;
 import org.ow2.bonita.util.BonitaConstants;
 import org.ow2.bonita.util.SimpleCallbackHandler;
@@ -27,12 +28,13 @@ import com.plr.iso29110.server.bonita.executor.BugRetriever;
 import com.plr.iso29110.server.bonita.executor.BugValidator;
 import com.plr.iso29110.server.bonita.executor.BugsToReview;
 import com.plr.iso29110.server.bonita.executor.DocumentGetter;
-import com.plr.iso29110.server.bonita.executor.ProcessLister;
+import com.plr.iso29110.server.bonita.executor.ProcessManager;
 import com.plr.iso29110.server.bonita.executor.ProcessStarter;
 import com.plr.iso29110.server.bonita.executor.TaskMangement;
 import com.plr.iso29110.shared.BonitaProcessInstance;
 import com.plr.iso29110.shared.BonitaTask;
 import com.plr.iso29110.shared.Bug;
+import com.plr.iso29110.shared.LightProcessDef;
 import com.plr.iso29110.shared.Task;
 
 public class BonitaProcessManagement {
@@ -145,7 +147,7 @@ public class BonitaProcessManagement {
 
 	public Collection<BonitaProcessInstance> getProcessInstances() throws LoginException {
 		passUserToBosEngine();
-		Collection<BonitaProcessInstance> bonitaProcessInstances = new ProcessLister().getProcessInstances();
+		Collection<BonitaProcessInstance> bonitaProcessInstances = new ProcessManager().getProcessInstances();
 		releaseBosEngine();
 
 		return bonitaProcessInstances;
@@ -158,7 +160,7 @@ public class BonitaProcessManagement {
 			// not throwed
 		}
 		
-		return new ArrayList<>();
+		return new ArrayList<BonitaTask>();
 	}
 
 	public Task getTask(String taskId) throws LoginException, ActivityNotFoundException, InstanceNotFoundException,
@@ -199,9 +201,17 @@ public class BonitaProcessManagement {
 
 	public List<BonitaTask> getReadyTasks(String processInstanceId) throws LoginException, InstanceNotFoundException {
 		passUserToBosEngine();
-		List<BonitaTask> bonitaProcessInstances = new ProcessLister().getReadyTasks(processInstanceId);
+		List<BonitaTask> bonitaProcessInstances = new ProcessManager().getReadyTasks(processInstanceId);
 		releaseBosEngine();
 
 		return bonitaProcessInstances;
+	}
+
+	public List<LightProcessDef> getLightProcesses() throws LoginException {
+		passUserToBosEngine();
+		List<LightProcessDef> list = new ProcessManager().getDeployedProcess();
+		releaseBosEngine();
+
+		return list;
 	}
 }

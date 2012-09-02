@@ -53,7 +53,7 @@ public class Attachment extends HttpServlet {
 			@SuppressWarnings("unchecked")
 			List<FileItem> items = upload.parseRequest(request);
 
-			Map<String, String> params = new HashMap<>();
+			Map<String, String> params = new HashMap<String, String>();
 
 			for (FileItem item : items) {
 

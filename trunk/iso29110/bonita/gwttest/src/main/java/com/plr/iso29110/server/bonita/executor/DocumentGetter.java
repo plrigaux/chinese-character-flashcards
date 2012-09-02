@@ -45,7 +45,7 @@ public class DocumentGetter {
 
 		String requestURI = req.getRequestURI();
 
-		LinkedList<String> list = new LinkedList<>();
+		LinkedList<String> list = new LinkedList<String>();
 		for (String element : sp.split(requestURI)) {
 			list.add(element);
 		}

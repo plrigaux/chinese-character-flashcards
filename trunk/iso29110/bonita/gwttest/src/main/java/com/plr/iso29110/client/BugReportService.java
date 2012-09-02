@@ -3,11 +3,14 @@ package com.plr.iso29110.client;
 import java.util.Collection;
 import java.util.List;
 
+import org.ow2.bonita.light.LightProcessDefinition;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.plr.iso29110.shared.BonitaProcessInstance;
 import com.plr.iso29110.shared.BonitaTask;
 import com.plr.iso29110.shared.Bug;
+import com.plr.iso29110.shared.LightProcessDef;
 import com.plr.iso29110.shared.Task;
 
 @RemoteServiceRelativePath("BugReportService")
@@ -23,4 +26,5 @@ public interface BugReportService extends RemoteService {
 	List<BonitaTask> getReadyTasks(String processInstanceId);
 	Task getTask(String taskId);
 	Boolean execute(Task task);
+	List<LightProcessDef> getLightProcesses();
 }
