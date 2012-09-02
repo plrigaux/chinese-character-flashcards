@@ -10,6 +10,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.plr.iso29110.client.bugsReview.BugsReviewList;
+import com.plr.iso29110.client.processDefinition.ProcessDefinitions;
 import com.plr.iso29110.client.processInstances.ProcessInstances;
 import com.plr.iso29110.client.reviewBug.ReviewBug;
 import com.plr.iso29110.client.submitBug.SubmitBug;
@@ -61,6 +62,10 @@ public class HistoryManager implements ValueChangeHandler<String>, ApplicationCo
 		} else if (PROCESS_INSTANCES.equals(value)) {
 			rootPanel.clear();
 			ProcessInstances view = new ProcessInstances();
+			rootPanel.add(view);
+		} else if (PROCESS_DEFINITIONS.equals(value)) {
+			rootPanel.clear();
+			ProcessDefinitions view = new ProcessDefinitions();
 			rootPanel.add(view);
 
 		} else if (value.startsWith(TASK)) {

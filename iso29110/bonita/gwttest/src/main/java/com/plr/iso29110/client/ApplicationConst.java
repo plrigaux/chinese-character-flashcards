@@ -6,4 +6,5 @@ public interface ApplicationConst {
 	 String REVIEW_BUG = "reviewBug";
 	 String PROCESS_INSTANCES =  "processInstances";
 	 String TASK =  "task";
+	 String PROCESS_DEFINITIONS =  "processDefinitions";
 }

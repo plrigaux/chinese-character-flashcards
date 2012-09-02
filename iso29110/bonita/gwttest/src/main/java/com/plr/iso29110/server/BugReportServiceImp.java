@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.ow2.bonita.light.LightProcessDefinition;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.plr.iso29110.client.BugReportService;
 import com.plr.iso29110.server.bonita.BonitaProcessManagement;
 import com.plr.iso29110.shared.BonitaProcessInstance;
 import com.plr.iso29110.shared.BonitaTask;
 import com.plr.iso29110.shared.Bug;
+import com.plr.iso29110.shared.LightProcessDef;
 import com.plr.iso29110.shared.Task;
 
 public class BugReportServiceImp extends RemoteServiceServlet implements BugReportService {
@@ -31,7 +34,7 @@ public class BugReportServiceImp extends RemoteServiceServlet implements BugRepo
 	@Override
 	public List<Bug> listBugsToReview() {
 		
-		List<Bug> list = new ArrayList<>();
+		List<Bug> list = new ArrayList<Bug>();
 		
 		try {
 			list = new BonitaProcessManagement().listBugsToReview();
@@ -133,5 +136,17 @@ public class BugReportServiceImp extends RemoteServiceServlet implements BugRepo
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public List<LightProcessDef> getLightProcesses() {
+		List<LightProcessDef> processes;
+		try {
+			processes = new BonitaProcessManagement().getLightProcesses();
+			return processes;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<LightProcessDef>();
 	}
 }
