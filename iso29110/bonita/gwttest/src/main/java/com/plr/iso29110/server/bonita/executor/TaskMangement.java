@@ -1,6 +1,5 @@
 package com.plr.iso29110.server.bonita.executor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -52,8 +51,7 @@ public class TaskMangement {
 
 		Set<DataFieldDefinition> activityDataFields = queryDefinitionAPI.getActivityDataFields(lightTaskInstance
 				.getActivityDefinitionUUID());
-		Set<DataFieldDefinition> processDataFields = queryDefinitionAPI.getProcessDataFields(lightTaskInstance
-				.getProcessDefinitionUUID());
+		
 
 		Task t = new Task();
 
@@ -82,11 +80,14 @@ public class TaskMangement {
 		t.setActivityInstanceVariables(queryRuntimeAPI.getActivityInstanceVariables(activityInstanceUUID));
 		t.setProcessInstanceVariables(queryRuntimeAPI.getProcessInstanceVariables(processInstanceUUID));
 
-		List<DataField> dataFields = transfert(processDataFields);
+		Set<DataFieldDefinition> processDataFields = queryDefinitionAPI.getProcessDataFields(lightTaskInstance
+				.getProcessDefinitionUUID());
+		
+		List<DataField> dataFields = ExecutorUtils.transfert(processDataFields);
 
 		t.setProcessDataFields(dataFields);
 
-		dataFields = transfert(activityDataFields);
+		dataFields = ExecutorUtils.transfert(activityDataFields);
 
 		t.setActivityDataFields(dataFields);
 
@@ -107,57 +108,11 @@ public class TaskMangement {
 		DocumentResult res = queryRuntimeAPI.searchDocuments(dsb, 0, 1000);
 		List<Document> doclist = res.getDocuments();
 
-		List<DocumentInfo> docs = new ArrayList<DocumentInfo>();
-		for (Document doc : doclist) {
-
-			DocumentInfo di = new DocumentInfo();
-
-			di.setAuthor(doc.getAuthor());
-			di.setContentFileName(doc.getContentFileName());
-			di.setContentMimeType(doc.getContentMimeType());
-			di.setContentSize(doc.getContentSize());
-			di.setCreationDate(doc.getCreationDate());
-
-			di.setLatestVersion(doc.isLatestVersion());
-			di.setMajorVersion(doc.isMajorVersion());
-			di.setLastModificationDate(doc.getLastModificationDate());
-			di.setLastModifiedBy(doc.getLastModifiedBy());
-
-			di.setName(doc.getName());
-			di.setProcessDefinitionUUID(doc.getProcessDefinitionUUID().toString());
-			di.setProcessInstanceUUID(doc.getProcessInstanceUUID().toString());
-			di.setUUID(doc.getUUID().toString());
-			di.setVersionLabel(doc.getVersionLabel());
-			di.setVersionSeriesId(doc.getVersionSeriesId());
-
-			docs.add(di);
-
-		}
-		return docs;
+		
+		return ExecutorUtils.doDocs(doclist);
 	}
 
-	private List<DataField> transfert(Set<DataFieldDefinition> dataFieldOrgs) {
-		List<DataField> dataFields = new ArrayList<DataField>(dataFieldOrgs.size());
 
-		for (DataFieldDefinition dtd : dataFieldOrgs) {
-
-			DataField df = new DataField();
-
-			df.setDataTypeClassName(dtd.getDataTypeClassName());
-			df.setDescription(dtd.getDescription());
-			df.setEnumeration(dtd.isEnumeration());
-			df.setLabel(dtd.getLabel());
-			df.setName(dtd.getLabel());
-			df.setScriptingValue(dtd.getScriptingValue());
-			df.setTransient(dtd.isTransient());
-			df.setEnumerationValues(dtd.getEnumerationValues());
-
-			df.setInitialValue(dtd.getInitialValue());
-			dataFields.add(df);
-
-		}
-		return dataFields;
-	}
 
 	public boolean executeTask(Task task) throws TaskNotFoundException, IllegalTaskStateException, InstanceNotFoundException,
 			VariableNotFoundException, ActivityNotFoundException {

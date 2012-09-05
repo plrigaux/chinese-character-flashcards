@@ -18,5 +18,6 @@
 	
 	<modules>
 		<module>localisation</module>
+		<module>bonita</module>
 	</modules>
 </project>

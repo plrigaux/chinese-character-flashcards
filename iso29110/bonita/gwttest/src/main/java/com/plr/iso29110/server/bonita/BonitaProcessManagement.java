@@ -19,7 +19,6 @@ import org.ow2.bonita.facade.exception.TaskNotFoundException;
 import org.ow2.bonita.facade.exception.VariableNotFoundException;
 import org.ow2.bonita.facade.runtime.Document;
 import org.ow2.bonita.facade.uuid.DocumentUUID;
-import org.ow2.bonita.light.LightProcessDefinition;
 import org.ow2.bonita.util.AccessorUtil;
 import org.ow2.bonita.util.BonitaConstants;
 import org.ow2.bonita.util.SimpleCallbackHandler;
@@ -35,6 +34,7 @@ import com.plr.iso29110.shared.BonitaProcessInstance;
 import com.plr.iso29110.shared.BonitaTask;
 import com.plr.iso29110.shared.Bug;
 import com.plr.iso29110.shared.LightProcessDef;
+import com.plr.iso29110.shared.ProcessDef;
 import com.plr.iso29110.shared.Task;
 
 public class BonitaProcessManagement {
@@ -213,5 +213,13 @@ public class BonitaProcessManagement {
 		releaseBosEngine();
 
 		return list;
+	}
+
+	public ProcessDef getProcessDef(String processName, String processVersion) throws ProcessNotFoundException, LoginException {
+		passUserToBosEngine();
+		ProcessDef task = new ProcessManager().getProcess(processName, processVersion);
+		releaseBosEngine();
+
+		return task;
 	}
 }
