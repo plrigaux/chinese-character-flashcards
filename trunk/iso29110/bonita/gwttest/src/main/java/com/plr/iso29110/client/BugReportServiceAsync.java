@@ -10,6 +10,7 @@ import com.plr.iso29110.shared.BonitaProcessInstance;
 import com.plr.iso29110.shared.BonitaTask;
 import com.plr.iso29110.shared.Bug;
 import com.plr.iso29110.shared.LightProcessDef;
+import com.plr.iso29110.shared.ProcessDef;
 import com.plr.iso29110.shared.Task;
 
 public interface BugReportServiceAsync
@@ -65,5 +66,7 @@ public interface BugReportServiceAsync
 	void getReadyTasks(String processInstanceId, AsyncCallback<List<BonitaTask>> callback);
 
 	void getLightProcesses(AsyncCallback<List<LightProcessDef>> callback);
+
+	void getProcessDef(String processDefId, String processVersion, AsyncCallback<ProcessDef> callback);
 
 }

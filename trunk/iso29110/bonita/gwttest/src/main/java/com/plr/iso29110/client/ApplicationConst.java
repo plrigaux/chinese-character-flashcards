@@ -7,4 +7,5 @@ public interface ApplicationConst {
 	 String PROCESS_INSTANCES =  "processInstances";
 	 String TASK =  "task";
 	 String PROCESS_DEFINITIONS =  "processDefinitions";
+	 String PROCESS_START =  "processStart";
 }

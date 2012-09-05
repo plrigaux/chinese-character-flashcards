@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.plr.iso29110.client.bugsReview.BugsReviewList;
 import com.plr.iso29110.client.processDefinition.ProcessDefinitions;
 import com.plr.iso29110.client.processInstances.ProcessInstances;
+import com.plr.iso29110.client.processStat.ProcessStart;
 import com.plr.iso29110.client.reviewBug.ReviewBug;
 import com.plr.iso29110.client.submitBug.SubmitBug;
 import com.plr.iso29110.client.task.TaskDisplay;
@@ -46,9 +47,9 @@ public class HistoryManager implements ValueChangeHandler<String>, ApplicationCo
 
 		String value = event.getValue();
 
-		List<String> l = new ArrayList<String>();
+		List<String> params = new ArrayList<String>();
 		for (String s : splitter.split(value)) {
-			l.add(s);
+			params.add(s);
 		}
 
 		if (SUBMIT_BUG.equals(value)) {
@@ -91,6 +92,17 @@ public class HistoryManager implements ValueChangeHandler<String>, ApplicationCo
 
 				reviewBug.setTaskId(taskId);
 			}
+		} else if (params.get(0).equals(PROCESS_START)) {
+
+			String processDefId = params.get(1);
+			String version = params.get(2);
+
+			rootPanel.clear();
+
+			ProcessStart view = new ProcessStart(processDefId, version);
+
+			rootPanel.add(view);
+
 		} else {
 			History.newItem("", false);
 			rootPanel.clear();
