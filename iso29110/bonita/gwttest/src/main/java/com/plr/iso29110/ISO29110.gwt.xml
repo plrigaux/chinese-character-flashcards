@@ -1,5 +1,5 @@
 <!DOCTYPE module PUBLIC "//gwt-module/" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.2/distro-source/core/src/gwt-module.dtd">
-<module>
+<module rename-to="iso29110">
 	<set-configuration-property name="UiBinder.usesafeHtmlTemplates"
 		value="true" />
 
@@ -27,6 +27,14 @@
 
 	<!-- <set-property name="locale" value="default"/> -->
 
+	<!-- <inherits name='org.bonitasoft.console.security.SecurityView' /> -->
+	<!-- <inherits name="org.bonitasoft.console.LoginView" /> -->
+	<!-- <inherits name="org.bonitasoft.console.ProcessView" /> -->
+	<!-- Other Bonita resources -->
+	<inherits name='org.bonitasoft.console.ConsoleView' />
+	<inherits name='org.bonitasoft.console.ProcessView' />
+	<inherits name='org.bonitasoft.console.security.SecurityView' />
+	<inherits name='org.bonitasoft.forms.FormsView' />
 
 	<inherits name="com.google.gwt.i18n.I18N" />
 
@@ -38,9 +46,9 @@
 	<!-- <inherits name="com.google.gwt.i18n.I18N" /> -->
 
 	<!-- English language, independent of country -->
-	<extend-property name="locale" values="en" />
-	<extend-property name="locale" values="fr" />
-	<set-property-fallback name="locale" value="en" />
+	<!-- <extend-property name="locale" values="en" /> -->
+	<!-- <extend-property name="locale" values="fr" /> -->
+	<!-- <set-property-fallback name="locale" value="en" /> -->
 
 	<inherits name="com.google.gwt.logging.Logging" />
 	<set-property name="gwt.logging.logLevel" value="FINE" />
@@ -49,6 +57,9 @@
 
 	<set-property name="user.agent" value="safari" />
 
+	<servlet path="/bugReportService" class="com.plr.iso29110.server.BugReportServiceImp" />
 
+	<servlet path="/attachment/*" class="com.plr.iso29110.server.Attachment" />
+	<servlet path="/uploadAttachment" class="com.plr.iso29110.server.Attachment" />
 
 </module>

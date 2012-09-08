@@ -5,13 +5,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bonitasoft.console.client.processes.BonitaProcess;
+import org.bonitasoft.console.client.processes.BonitaProcess.BonitaProcessState;
+import org.bonitasoft.console.client.processes.BonitaProcessUUID;
+import org.bonitasoft.console.client.processes.ProcessServiceAsync;
+import org.bonitasoft.forms.client.model.FormPage;
+import org.bonitasoft.forms.client.rpc.FormsServiceAsync;
+import org.bonitasoft.forms.client.view.common.RpcFormsServices;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -30,16 +37,13 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
+import com.plr.iso29110.client.Application;
 import com.plr.iso29110.client.ApplicationConst;
-import com.plr.iso29110.client.BugReportServiceAsync;
+import com.plr.iso29110.client.widget.AlertWidget;
 import com.plr.iso29110.client.widget.CustomTextBox;
 import com.plr.iso29110.client.widget.DigitValidator;
-import com.plr.iso29110.shared.AttachmentDefinition;
 import com.plr.iso29110.shared.DataField;
-import com.plr.iso29110.shared.LightProcessDef.ProcessState;
-import com.plr.iso29110.shared.ProcessDef;
 import com.plr.iso29110.shared.SomeConsts;
-import com.plr.iso29110.shared.Task;
 
 public class ProcessStart extends Composite implements ApplicationConst {
 
@@ -48,7 +52,8 @@ public class ProcessStart extends Composite implements ApplicationConst {
 	interface WelcomeUiBinder extends UiBinder<Widget, ProcessStart> {
 	}
 
-	private ProcessDef processDef;
+	private BonitaProcess processDef;
+	BonitaProcessUUID anProcessUUID;
 
 	@UiField
 	FlexTable variables;
@@ -73,23 +78,25 @@ public class ProcessStart extends Composite implements ApplicationConst {
 	public ProcessStart(String processDefId, String version) {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		BugReportServiceAsync.Util.getInstance().getProcessDef(processDefId, version, new AsyncCallback<ProcessDef>() {
+		ProcessServiceAsync instance = Application.getInstance();
+
+		anProcessUUID = new BonitaProcessUUID(processDefId + "--" + version, ":)");
+		instance.getProcess(anProcessUUID, new AsyncCallback<BonitaProcess>() {
 
 			@Override
-			public void onSuccess(ProcessDef result) {
-				processDef = result;
+			public void onFailure(Throwable caught) {
+				new AlertWidget("Error", caught.getMessage()).center();
 
+			}
+
+			@Override
+			public void onSuccess(BonitaProcess result) {
+				processDef = result;
 				if (processDef == null) {
 					return;
 				}
 
 				fillTable();
-
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert(caught.getMessage());
 
 			}
 		});
@@ -99,30 +106,32 @@ public class ProcessStart extends Composite implements ApplicationConst {
 	@UiHandler("start")
 	public void onExecuteClick(ClickEvent event) {
 
-		Task t = new Task();
-
-		t.setUUID(processDef.getUUID());
-
-		Map<String, Object> processInstanceVariables = new HashMap<String, Object>();
-
-		t.setProcessInstanceVariables(processInstanceVariables);
-
-		fillSendValues(processDef.getDataFields(), processInstanceVariables);
-
-		BugReportServiceAsync.Util.getInstance().execute(t, new AsyncCallback<Boolean>() {
-
-			@Override
-			public void onSuccess(Boolean result) {
-				if (result) {
-					findNextTasks();
-				}
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-
-			}
-		});
+		// Task t = new Task();
+		//
+		// t.setUUID(processDef.getUUID());
+		//
+		// Map<String, Object> processInstanceVariables = new HashMap<String,
+		// Object>();
+		//
+		// t.setProcessInstanceVariables(processInstanceVariables);
+		//
+		// fillSendValues(processDef.getDataFields(), processInstanceVariables);
+		//
+		// BugReportServiceAsync.Util.getInstance().execute(t, new
+		// AsyncCallback<Boolean>() {
+		//
+		// @Override
+		// public void onSuccess(Boolean result) {
+		// if (result) {
+		// findNextTasks();
+		// }
+		// }
+		//
+		// @Override
+		// public void onFailure(Throwable caught) {
+		//
+		// }
+		// });
 	}
 
 	private void fillSendValues(List<DataField> dataFields, Map<String, Object> activityInstanceVariables) {
@@ -172,29 +181,83 @@ public class ProcessStart extends Composite implements ApplicationConst {
 
 	private void fillTable() {
 		activityName.setText(processDef.getName());
-		activityLabel.setText(processDef.getLabel());
+		activityLabel.setText(processDef.getDisplayName());
 
-		ProcessState activityState = processDef.getState();
+		BonitaProcessState activityState = processDef.getState();
 		state.setText(activityState == null ? "" : activityState.name());
+
+		// StepServiceAsync ssa = RpcConsoleServices.getStepService();
+
+		ProcessServiceAsync instance = Application.getInstance();
+
+		// BonitaProcessUUID anProcessUUID = new BonitaProcessUUID(processDefId
+		// + "--" + version, ":)");
+		// instance.getProcess(anProcessUUID, new AsyncCallback<BonitaProcess>()
+		// {
+
+		// ssa.getAllSteps(new StepFilter(anProcessUUID, 0, 1000), new
+		// AsyncCallback<ItemUpdates<StepItem>>() {
+		//
+		// @Override
+		// public void onFailure(Throwable caught) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// @Override
+		// public void onSuccess(ItemUpdates<StepItem> result) {
+		// // TODO Auto-generated method stub
+		// for (StepItem si : result.getItems()) {
+		// System.out.println(si);
+		// }
+		// }
+		// });
+
+		FormsServiceAsync formsServiceAsync = RpcFormsServices.getFormsService();
+
+		Map<String, Object> urlContext = new HashMap<String, Object>();
+
+		String formID = anProcessUUID.getValue() + "$entry";
+		urlContext.put("process", anProcessUUID.getValue());
+		urlContext.put("autoInstantiate", Boolean.FALSE.toString());
+		urlContext.put("form", formID);
+		urlContext.put("mode", "form");
+		// {process=Process_Loop--1.0, autoInstantiate=false,
+		// form=Process_Loop--1.0$entry, mode=form}
+		
+		formsServiceAsync.getFormFirstPage(formID, urlContext, new AsyncCallback<FormPage>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				new AlertWidget("Error", caught.getMessage()).center();
+
+			}
+
+			@Override
+			public void onSuccess(FormPage result) {
+
+			}
+		});
 
 		int row = 0;
 
-		row = fillTable("P", processDef.getDataFields(), row);
+		// row = fillTable("P", processDef.getDataFields(), row);
 
-		for (Map.Entry<String, AttachmentDefinition> en : processDef.getAttachments().entrySet()) {
-			int j = 0;
-
-			AttachmentDefinition di = en.getValue();
-			
-			variables.setText(row, j++, "F");
-			variables.setText(row, j++, di.getName());
-			variables.setText(row, j++, di.getLabel());
-			variables.setText(row, j++, di.getDescription());
-			variables.setText(row, j++, di.getFileName());
-			variables.setText(row, j++, di.getFilePath());
-
-			row++;
-		}
+		// for (Map.Entry<String, AttachmentDefinition> en :
+		// processDef.getAttachments().entrySet()) {
+		// int j = 0;
+		//
+		// AttachmentDefinition di = en.getValue();
+		//
+		// variables.setText(row, j++, "F");
+		// variables.setText(row, j++, di.getName());
+		// variables.setText(row, j++, di.getLabel());
+		// variables.setText(row, j++, di.getDescription());
+		// variables.setText(row, j++, di.getFileName());
+		// variables.setText(row, j++, di.getFilePath());
+		//
+		// row++;
+		// }
 	}
 
 	private interface WidjetGetter {

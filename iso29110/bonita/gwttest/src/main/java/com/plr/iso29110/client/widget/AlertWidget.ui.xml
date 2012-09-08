@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.plr.iso29110.client.welcome"
+
+	ui:generateLocales="default" xmlns:generic="urn:import:org.apache.bcel.generic">
+
+
+	<ui:style>
+		.panel {
+
+			
+		}
+	</ui:style>
+	<g:VerticalPanel >
+	
+	<g:HTML ui:field="contentLabel" styleName="{style.panel}"></g:HTML>
+	<g:Label height="50px"></g:Label>
+	<g:Button ui:field="close" width="90px">Close</g:Button>
+	</g:VerticalPanel>
+	
+</ui:UiBinder> 

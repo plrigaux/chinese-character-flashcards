@@ -35,8 +35,9 @@ public interface BugReportServiceAsync
             if ( instance == null )
             {
                 instance = (BugReportServiceAsync) GWT.create( BugReportService.class );
-                ServiceDefTarget target = (ServiceDefTarget) instance;
-                target.setServiceEntryPoint( GWT.getModuleBaseURL() + "BugReportService" );
+      
+ 
+       
             }
             return instance;
         }

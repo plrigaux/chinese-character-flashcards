@@ -17,10 +17,6 @@
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 	</properties>
 
-
-
-
-
 	<build>
 
 		<!-- Generate compiled stuff in the folder used for developing mode -->
@@ -52,6 +48,8 @@
 
 				</dependencies>
 				<configuration>
+					<disableCastChecking>true</disableCastChecking>
+					<disableClassMetadata>true</disableClassMetadata>
 					<runTarget>bonitagwt.html</runTarget>
 					<server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
 					<workDir> ${webappDirectory}</workDir>
@@ -68,6 +66,10 @@
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
 					<extra>extras</extra>
 					<!-- <i18nMessagesBundle>com.plr.hanzi.client.i18n.HanziMessages</i18nMessagesBundle> -->
+					<compileSourcesArtifacts>
+						<!-- <compileSourcesArtifact>org.bonitasoft.console:console-rpc</compileSourcesArtifact> -->
+						<!-- <compileSourcesArtifact>org.bonitasoft.console:console-model</compileSourcesArtifact> -->
+					</compileSourcesArtifacts>
 				</configuration>
 			</plugin>
 			<!-- <plugin> -->
@@ -179,7 +181,71 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.2</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>security-server</artifactId>
+			<version>${bonita.version}</version>
+		</dependency>
+
+
+
+
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-config</artifactId>
+			<version>${bonita.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-server</artifactId>
+			<version>${bonita.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-view</artifactId>
+			<version>${bonita.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>console-view</artifactId>
+			<version>${bonita.version}</version>
+			
+		</dependency>
+
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>console-server</artifactId>
+			<version>${bonita.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>security-view</artifactId>
+			<version>${bonita.version}</version>
+		</dependency>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.google.code.gwtx</groupId> -->
+<!-- 			<artifactId>gwtx</artifactId> -->
+<!-- 			<version>1.5.3</version> -->
+<!-- 		</dependency> -->
+		<!-- Junit -->
+
+		<!-- GChart -->
+		<dependency>
+			<groupId>com.googlecode.gchart</groupId>
+			<artifactId>gchart</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.plr.iso29110</groupId>
+			<artifactId>iso29110.bonita.mapping</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<packaging>war</packaging>
