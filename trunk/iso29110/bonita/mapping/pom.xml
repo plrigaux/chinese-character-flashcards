@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>iso29110.bonita.mapping</artifactId>
+
+	<parent>
+		<groupId>com.plr.iso29110</groupId>
+		<artifactId>iso29110.bonita</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- convenience to define GWT version in one place -->
+
+	</properties>
+
+
+	<build>
+
+
+
+
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+
+					<include>**/*.gwt.xml</include>
+				</includes>
+			</resource>
+
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.0</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>org.bonitasoft.*</include>
+								</includes>
+								<excludes>
+									<exclude>org.bonitasoft.console:console-server:*</exclude>
+									<exclude>org.bonitasoft.console:security-server:*</exclude>
+									<exclude>org.bonitasoft.forms:forms-server:*</exclude>
+									<exclude>org.bonitasoft.console:console-common:*</exclude>
+									<exclude>org.bonitasoft.theme:*</exclude>
+									<!-- <exclude>xpp3:*</exclude> -->
+									<!-- <exclude>java*</exclude> -->
+									<!-- <exclude>org.apache*</exclude> -->
+								</excludes>
+							</artifactSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+	</build>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>console-rpc</artifactId>
+			<version>${bonita.version}</version>
+			<classifier>sources</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>console-model</artifactId>
+			<version>${bonita.version}</version>
+			<classifier>sources</classifier>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>console-rpc</artifactId>
+			<version>${bonita.version}</version>
+
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>console-model</artifactId>
+			<version>${bonita.version}</version>
+
+		</dependency>
+
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>console-view</artifactId>
+			<version>${bonita.version}</version>
+
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>console-view</artifactId>
+			<version>${bonita.version}</version>
+			<classifier>sources</classifier>
+		</dependency>
+	</dependencies>
+
+</project>
