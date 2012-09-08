@@ -12,7 +12,7 @@ import com.plr.iso29110.shared.LightProcessDef;
 import com.plr.iso29110.shared.ProcessDef;
 import com.plr.iso29110.shared.Task;
 
-@RemoteServiceRelativePath("BugReportService")
+@RemoteServiceRelativePath("bugReportService")
 public interface BugReportService extends RemoteService {
 
 	Boolean submitBug(Bug bug);
@@ -20,8 +20,8 @@ public interface BugReportService extends RemoteService {
 	Boolean acceptBug(String taskId, String priority);
 	Boolean rejectBug(String taskId);
 	Bug retieveBug(String taskId);
-	Collection<BonitaProcessInstance> getProcessInstances();
-	List<BonitaTask> getReadyTasks();
+	Collection<BonitaProcessInstance> getProcessInstances() throws Exception;
+	List<BonitaTask> getReadyTasks() throws Exception;
 	List<BonitaTask> getReadyTasks(String processInstanceId);
 	Task getTask(String taskId);
 	Boolean execute(Task task);

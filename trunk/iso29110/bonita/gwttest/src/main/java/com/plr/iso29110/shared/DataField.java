@@ -15,7 +15,8 @@ public class DataField implements Serializable {
 
 	String dataTypeClassName;
 
-	Serializable initialValue;
+	
+	
 
 	String scriptingValue;
 
@@ -66,11 +67,10 @@ public class DataField implements Serializable {
 	}
 
 	public Serializable getInitialValue() {
-		return initialValue;
+		return null;
 	}
 
 	public void setInitialValue(Serializable getInitialValue) {
-		this.initialValue = getInitialValue;
 	}
 
 	public String getScriptingValue() {

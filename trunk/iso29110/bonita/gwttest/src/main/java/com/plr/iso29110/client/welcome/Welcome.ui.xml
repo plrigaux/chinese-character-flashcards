@@ -14,6 +14,7 @@
 	
 	<g:HTMLPanel>
 		<g:VerticalPanel styleName="{style.panel}" spacing="10" horizontalAlignment="ALIGN_CENTER">
+		<w:CustomButton text="Login" ui:field="login" width="160px"/>
 			<w:CustomButton text="Submit Bug" ui:field="submitBug" width="160px" />
 			<w:CustomButton text="List of bugs to review" ui:field="bugsToReview" width="160px"/>
 			<w:CustomButton text="Process Instances" ui:field="processInstances" width="160px"/>

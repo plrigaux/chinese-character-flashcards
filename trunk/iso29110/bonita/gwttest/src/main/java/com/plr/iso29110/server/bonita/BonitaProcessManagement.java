@@ -46,9 +46,9 @@ public class BonitaProcessManagement {
 	private static final String jaasFile = "src/main/resources/jaas-standard.cfg";
 
 	static {
-		System.setProperty(BonitaConstants.API_TYPE_PROPERTY, "REST");
-		System.setProperty(BonitaConstants.REST_SERVER_ADDRESS_PROPERTY, "http://localhost:8080/bonita-server-rest/");
-		System.setProperty(BonitaConstants.JAAS_PROPERTY, jaasFile);
+//		System.setProperty(BonitaConstants.API_TYPE_PROPERTY, "REST");
+//		System.setProperty(BonitaConstants.REST_SERVER_ADDRESS_PROPERTY, "http://localhost:8080/bonita-server-rest/");
+//		System.setProperty(BonitaConstants.JAAS_PROPERTY, jaasFile);
 	}
 
 	private LoginContext loginContext;

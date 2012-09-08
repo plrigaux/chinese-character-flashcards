@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -13,6 +12,7 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.iso29110.client.ApplicationConst;
 import com.plr.iso29110.client.BugReportServiceAsync;
+import com.plr.iso29110.client.widget.AlertWidget;
 import com.plr.iso29110.shared.BonitaTask;
 
 public class ProcessInstances extends Composite implements ApplicationConst {
@@ -43,8 +43,8 @@ public class ProcessInstances extends Composite implements ApplicationConst {
 		BugReportServiceAsync.Util.getInstance().getReadyTasks(new AsyncCallback<List<BonitaTask>>() {
 
 			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert(caught.getMessage());
+			public void onFailure(Throwable caught) {				
+				new AlertWidget("Error", caught.getMessage()).center();
 			}
 
 
