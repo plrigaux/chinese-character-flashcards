@@ -230,7 +230,7 @@ public class BugReportServiceImp extends FormsServlet implements BugReportServic
             final Date deployementDate = formServiceProvider.getDeployementDate(context);
             final boolean isEditMode = formServiceProvider.isEditMode(formID, context);
             final boolean isCurrentValue = formServiceProvider.isCurrentValue(context);
-            final IFormDefinitionAPI definitionAPI = (IFormDefinitionAPI) FormAPIFactory.getFormDefinitionAPI(document, deployementDate, localeStr);
+            final IFormDefinitionAPI definitionAPI = FormAPIFactory.getFormDefinitionAPI(document, deployementDate, localeStr);
             final String permissions = definitionAPI.getFormPermissions(formID, context);
             final String productVersion = definitionAPI.getProductVersion();
             final String migrationProductVersion = definitionAPI.getMigrationProductVersion(formID, context);

@@ -27,7 +27,7 @@ public class ExecutorUtils {
 			df.setTransient(dtd.isTransient());
 			df.setEnumerationValues(dtd.getEnumerationValues());
 
-			df.setInitialValue(dtd.getInitialValue());
+	
 			dataFields.add(df);
 
 		}

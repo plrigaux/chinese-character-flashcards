@@ -4,8 +4,6 @@ import org.bonitasoft.console.client.common.RpcConsoleServices;
 import org.bonitasoft.console.client.processes.ProcessServiceAsync;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.plr.iso29110.client.welcome.Welcome;
 import com.plr.iso29110.client.widget.AppResources;

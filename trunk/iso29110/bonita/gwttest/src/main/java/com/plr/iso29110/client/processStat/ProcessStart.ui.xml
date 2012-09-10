@@ -14,21 +14,29 @@
 	</ui:style>
 
 	<g:HTMLPanel>
-		<g:VerticalPanel styleName="{style.panel}" spacing="10">
-			<g:HTMLPanel>
-				<h2>Process: </h2>
-				
-				<g:Label ui:field="activityName"></g:Label>
-				<g:Label ui:field="activityLabel"></g:Label>
-				<g:Label ui:field="activityDescription"></g:Label>
-				State: <g:Label ui:field="state"></g:Label>
-				
-				<g:Button ui:field="start" text="Start"></g:Button>
-				<g:FlexTable ui:field="variables" styleName="{style.table-style}" borderWidth="2"/>
-				
-				
-			</g:HTMLPanel>
-		</g:VerticalPanel>
+
+
+		<h2>Process: </h2>
+
+		<g:Label ui:field="activityName"></g:Label>
+		<g:Label ui:field="activityLabel"></g:Label>
+		<g:Label ui:field="activityDescription"></g:Label>
+		State:
+		<g:Label ui:field="state"></g:Label>
+
+		<g:Button ui:field="start" text="Start"></g:Button>
+		<g:FlexTable ui:field="variables" styleName="{style.table-style}"
+			borderWidth="2" />
+
+
+		<g:HTMLPanel ui:field="applicationHTMLPanel">
+
+		</g:HTMLPanel>
+		
+		<g:HTMLPanel ui:field="static_application">
+
+		</g:HTMLPanel>
+		
 	</g:HTMLPanel>
 </ui:UiBinder> 
 

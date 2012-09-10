@@ -8,4 +8,5 @@ public interface ApplicationConst {
 	 String TASK =  "task";
 	 String PROCESS_DEFINITIONS =  "processDefinitions";
 	 String PROCESS_START =  "processStart";
+	 String BONITA_FORM =  "bonitaForm";
 }
