@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.iso29110.client.Application;
 import com.plr.iso29110.client.ApplicationConst;
+import com.plr.iso29110.client.Utils;
 import com.plr.iso29110.client.widget.AlertWidget;
 
 public class ProcessDefinitions extends Composite implements ApplicationConst {
@@ -78,7 +79,7 @@ public class ProcessDefinitions extends Composite implements ApplicationConst {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				new AlertWidget("Error", caught.getMessage()).center();
+				Utils.errorManagement(caught);
 
 			}
 		});
