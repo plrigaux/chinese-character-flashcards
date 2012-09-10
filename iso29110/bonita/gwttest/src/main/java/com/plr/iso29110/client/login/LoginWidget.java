@@ -10,15 +10,19 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.plr.iso29110.client.main.MainPanel;
 import com.plr.iso29110.client.widget.AlertWidget;
 
 public class LoginWidget extends DialogBox {
+
+	private static final String BONITA_TEST_USER_NAME = "bonitaTestUserName";
 
 	@UiField
 	TextBox password;
@@ -34,6 +38,8 @@ public class LoginWidget extends DialogBox {
 
 	@UiField
 	Label errorMsg;
+	
+	MainPanel mainPanel;
 
 	private org.bonitasoft.console.security.client.users.User user = null;
 
@@ -81,16 +87,21 @@ public class LoginWidget extends DialogBox {
 				user = new org.bonitasoft.console.security.client.users.User(u.getUsername(), result.isAdmin(), result
 						.getLocale(), result.getUserRights(), false);
 
-				LoginWidget.this.hide();
+				Cookies.setCookie(BONITA_TEST_USER_NAME, u.getUsername());
 
+				LoginWidget.this.hide();
+				
+				
+				mainPanel.setLogout();
 			}
 
 			@Override
 			public void onFailure(Throwable caught) {
 				new AlertWidget("Error", caught.getMessage()).center();
-
 			}
 		});
+		
+		
 	}
 
 	public org.bonitasoft.console.security.client.users.User getUser() {
@@ -110,4 +121,30 @@ public class LoginWidget extends DialogBox {
 		}
 		return lw;
 	}
+
+	public static String getUsername() {
+
+		org.bonitasoft.console.security.client.users.User user = getLogin().getUser();
+
+		if (user != null) {
+
+			return user.getUsername();
+		}
+
+		String us = Cookies.getCookie(BONITA_TEST_USER_NAME);
+
+		if (us != null) {
+
+			return us;
+		}
+		new AlertWidget("Error", "No user").center();
+
+		return null;
+	}
+
+	public void setMainPanel(MainPanel mainPanel2) {
+		mainPanel = mainPanel2;
+	}
+	
+	
 }
