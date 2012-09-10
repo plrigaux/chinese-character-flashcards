@@ -10,7 +10,7 @@
 	<inherits name='org.bonitasoft.console.security.SecurityView' />
 	<inherits name="org.bonitasoft.console.LoginView" />
 	<inherits name="org.bonitasoft.console.ProcessView" />
-	<inherits name='org.bonitasoft.forms.FormsView' />
+<!-- 	<inherits name='org.bonitasoft.forms.FormsView' /> -->
 	
 	<source path='client' />
 	<!--
