@@ -10,12 +10,11 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.plr.iso29110.client.bonitaform.BonitaFormAdapter;
 import com.plr.iso29110.client.bugsReview.BugsReviewList;
 import com.plr.iso29110.client.processDefinition.ProcessDefinitions;
 import com.plr.iso29110.client.processInstances.ProcessInstances;
-import com.plr.iso29110.client.processStat.ProcessStart;
 import com.plr.iso29110.client.reviewBug.ReviewBug;
 import com.plr.iso29110.client.submitBug.SubmitBug;
 import com.plr.iso29110.client.task.TaskDisplay;
@@ -23,11 +22,12 @@ import com.plr.iso29110.client.welcome.Welcome;
 
 public class HistoryManager implements ValueChangeHandler<String>, ApplicationConst {
 
-	private final RootLayoutPanel rootPanel;
 
-	public HistoryManager() {
+	private final HTMLPanel rootPanel;
+	
+	public HistoryManager(HTMLPanel htmlPanel) {
 
-		rootPanel = RootLayoutPanel.get();
+		rootPanel = htmlPanel;
 
 		History.addValueChangeHandler(this);
 
@@ -97,44 +97,15 @@ public class HistoryManager implements ValueChangeHandler<String>, ApplicationCo
 			}
 		} else if (params.get(0).equals(BONITA_FORM)) {
 
-			Map<String, Object> urlContext = new HashMap<String, Object>();
-
 			String urlContextParams = params.get(1);
 
-			Splitter urlContextParamsSplitter = Splitter.on('&');
-			Splitter urlContextParamsSplitter2 = Splitter.on('=');
-			for (String s : urlContextParamsSplitter.split(urlContextParams)) {
-
-				String key = null;
-				String value1 = null;
-				int i = 0;
-				for (String ss : urlContextParamsSplitter2.split(s)) {
-					if (i == 0) {
-						key = ss;
-						i++;
-					} else {
-						value1 = ss;
-					}
-				}
-				urlContext.put(key, value1);
-			}
+			Map<String, Object> urlContext = extractParam(urlContextParams);
 
 			rootPanel.clear();
 
 			BonitaFormAdapter view = new BonitaFormAdapter(urlContext);
 
 			rootPanel.add(view);
-		} else if (params.get(0).equals(PROCESS_START)) {
-
-			String processDefId = params.get(1);
-			String version = params.get(2);
-
-			rootPanel.clear();
-
-			ProcessStart view = new ProcessStart(processDefId, version);
-
-			rootPanel.add(view);
-
 		} else {
 			History.newItem("", false);
 			rootPanel.clear();
@@ -142,44 +113,31 @@ public class HistoryManager implements ValueChangeHandler<String>, ApplicationCo
 			rootPanel.add(welcome);
 		}
 
-		// if (!l.isEmpty() && FLASH.equals(l.get(0))) {
-		//
-		// if (l.size() > 1 && STATS.equals(l.get(1))) {
-		// rootPanel.clear();
-		// FlashCardSystem mc = new FlashCardSystem();
-		// rootPanel.add(mc.getStatTable());
-		//
-		// return;
-		// }
-		//
-		// rootPanel.clear();
-		// FlashCardSystem mc = new FlashCardSystem();
-		// rootPanel.add(mc);
-		//
-		// } else if (SHI_SHENME.equals(value)) {
-		// rootPanel.clear();
-		// ShiShenmeSystem charDictionnary = new ShiShenmeSystem();
-		// rootPanel.add(charDictionnary);
-		// } else if (value.startsWith(CHARARCTER)) {
-		//
-		// if (value.charAt(CHARARCTER.length()) == '/') {
-		// String charId = value.substring(CHARARCTER.length() + 1);
-		//
-		// rootPanel.clear();
-		// ZwCharDetails charDetails = new ZwCharDetails();
-		// rootPanel.add(charDetails);
-		//
-		// charDetails.setCharaterId(charId);
-		// }
-		// } else if (value.equals(DICTIONNARY)) {
-		// rootPanel.clear();
-		// ZwCharBrowser charDictionnary = new ZwCharBrowser();
-		// rootPanel.add(charDictionnary);
-		// } else {
-		// History.newItem("", false);
-		// rootPanel.clear();
-		// Welcome welcome = new Welcome();
-		// rootPanel.add(welcome);
-		// }
+	
+	}
+
+	private Map<String, Object> extractParam(String urlContextParams) {
+		Map<String, Object> urlContext = new HashMap<String, Object>();
+		
+		Splitter urlContextParamsSplitter = Splitter.on('&');
+		Splitter urlContextParamsSplitter2 = Splitter.on('=');
+		
+		for (String s : urlContextParamsSplitter.split(urlContextParams)) {
+
+			String key = null;
+			String value1 = null;
+			int i = 0;
+			for (String ss : urlContextParamsSplitter2.split(s)) {
+				if (i == 0) {
+					key = ss;
+					i++;
+				} else {
+					value1 = ss;
+				}
+			}
+			urlContext.put(key, value1);
+		}
+		
+		return urlContext;
 	}
 }
