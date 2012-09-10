@@ -43,10 +43,9 @@ public class ProcessInstances extends Composite implements ApplicationConst {
 		BugReportServiceAsync.Util.getInstance().getReadyTasks(new AsyncCallback<List<BonitaTask>>() {
 
 			@Override
-			public void onFailure(Throwable caught) {				
+			public void onFailure(Throwable caught) {
 				new AlertWidget("Error", caught.getMessage()).center();
 			}
-
 
 			@Override
 			public void onSuccess(List<BonitaTask> result) {
@@ -54,10 +53,14 @@ public class ProcessInstances extends Composite implements ApplicationConst {
 				for (BonitaTask processInstance : result) {
 
 					int j = 0;
-					Hyperlink link = new Hyperlink("go to", ApplicationConst.TASK + "/" + processInstance.getTaskId());
+
+					String linkParam = ApplicationConst.BONITA_FORM + "/" + "autoInstantiate" + "=" + Boolean.FALSE + "&"
+							+ "form" + "=" + processInstance.getActivityName() + "$entry" + "&" + "task" + "="
+							+ processInstance.getTaskId() + "&" + "mode" + "=" + "form";
+
+					Hyperlink link = new Hyperlink("go to", linkParam);
 					table.setWidget(i, j++, link);
-					
-					
+
 					table.setText(i, j++, processInstance.getProcessName());
 					table.setText(i, j++, processInstance.getProcessLabel());
 					table.setText(i, j++, processInstance.getProcessVersion());
@@ -66,10 +69,10 @@ public class ProcessInstances extends Composite implements ApplicationConst {
 					table.setText(i, j++, "" + processInstance.getActivityName());
 					table.setText(i, j++, "" + processInstance.getActivityLabel());
 					table.setText(i, j++, "" + processInstance.getActivityDescription());
-					
+
 					i++;
 				}
-				
+
 			}
 
 		});

@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.HasAlignment;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -444,7 +445,7 @@ public class TaskDisplay extends Composite implements ApplicationConst {
 
 		buttonClose.setWidth("90px");
 		panel.add(buttonClose);
-		panel.setCellHorizontalAlignment(buttonClose, HasAlignment.ALIGN_RIGHT);
+		panel.setCellHorizontalAlignment(buttonClose, HasHorizontalAlignment.ALIGN_RIGHT);
 		box.add(form);
 
 		panel.add(msg);

@@ -20,7 +20,6 @@ import org.ow2.bonita.facade.exception.VariableNotFoundException;
 import org.ow2.bonita.facade.runtime.Document;
 import org.ow2.bonita.facade.uuid.DocumentUUID;
 import org.ow2.bonita.util.AccessorUtil;
-import org.ow2.bonita.util.BonitaConstants;
 import org.ow2.bonita.util.SimpleCallbackHandler;
 
 import com.plr.iso29110.server.bonita.executor.BugRetriever;

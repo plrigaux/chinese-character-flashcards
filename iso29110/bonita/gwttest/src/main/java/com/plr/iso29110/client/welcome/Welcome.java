@@ -2,17 +2,12 @@ package com.plr.iso29110.client.welcome;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HasAlignment;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.iso29110.client.ApplicationConst;
 import com.plr.iso29110.client.login.LoginWidget;
@@ -50,7 +45,7 @@ public class Welcome extends Composite implements ApplicationConst {
 
 	@UiHandler("login")
 	void onLoginClick(ClickEvent event) {
-		new LoginWidget().center();
+		 LoginWidget.getLogin().center();
 	}
 	@UiHandler("about")
 	void onAboutClick(ClickEvent event) {

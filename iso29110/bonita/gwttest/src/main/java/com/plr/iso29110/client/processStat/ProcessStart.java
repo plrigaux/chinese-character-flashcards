@@ -1,6 +1,5 @@
 package com.plr.iso29110.client.processStat;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +8,13 @@ import org.bonitasoft.console.client.processes.BonitaProcess;
 import org.bonitasoft.console.client.processes.BonitaProcess.BonitaProcessState;
 import org.bonitasoft.console.client.processes.BonitaProcessUUID;
 import org.bonitasoft.console.client.processes.ProcessServiceAsync;
+import org.bonitasoft.console.security.client.users.User;
 import org.bonitasoft.forms.client.model.FormPage;
+import org.bonitasoft.forms.client.model.FormWidget;
 import org.bonitasoft.forms.client.rpc.FormsServiceAsync;
+import org.bonitasoft.forms.client.view.common.DOMUtils;
 import org.bonitasoft.forms.client.view.common.RpcFormsServices;
+import org.bonitasoft.forms.client.view.controller.FormViewControllerFactory;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -19,9 +22,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FileUpload;
@@ -29,19 +32,17 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasAlignment;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.datepicker.client.DateBox;
 import com.plr.iso29110.client.Application;
 import com.plr.iso29110.client.ApplicationConst;
+import com.plr.iso29110.client.login.LoginWidget;
 import com.plr.iso29110.client.widget.AlertWidget;
-import com.plr.iso29110.client.widget.CustomTextBox;
-import com.plr.iso29110.client.widget.DigitValidator;
 import com.plr.iso29110.shared.DataField;
 import com.plr.iso29110.shared.SomeConsts;
 
@@ -73,11 +74,32 @@ public class ProcessStart extends Composite implements ApplicationConst {
 	@UiField
 	Button start;
 
+	@UiField
+	HTMLPanel applicationHTMLPanel;
+	
+	@UiField
+	HTMLPanel static_application;
+	
+	final String applicationHTMLPanelId;
+	
+	final String static_applicationId;
+
 	private final Map<String, WidjetGetter> widjet = new HashMap<String, WidjetGetter>();
 
 	public ProcessStart(String processDefId, String version) {
 		initWidget(uiBinder.createAndBindUi(this));
 
+		applicationHTMLPanel.getElement().setId(DOM.createUniqueId());
+		
+		applicationHTMLPanelId = applicationHTMLPanel.getElement().getId();
+		
+		static_application.getElement().setId(DOM.createUniqueId());
+		
+		static_applicationId = static_application.getElement().getId();
+		
+		DOMUtils.getInstance().		
+		setApplicationHTMLPanel(static_application);
+		
 		ProcessServiceAsync instance = Application.getInstance();
 
 		anProcessUUID = new BonitaProcessUUID(processDefId + "--" + version, ":)");
@@ -85,7 +107,12 @@ public class ProcessStart extends Composite implements ApplicationConst {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				new AlertWidget("Error", caught.getMessage()).center();
+
+				if ("org.bonitasoft.console.client.exceptions.SessionTimeOutException".equals(caught.getClass().getName())) {
+					LoginWidget.getLogin(caught.getMessage()).center();
+				} else {
+					new AlertWidget("Error", caught.getMessage()).center();
+				}
 
 			}
 
@@ -179,6 +206,8 @@ public class ProcessStart extends Composite implements ApplicationConst {
 		// });
 	}
 
+	String formID = null;
+
 	private void fillTable() {
 		activityName.setText(processDef.getName());
 		activityLabel.setText(processDef.getDisplayName());
@@ -189,29 +218,6 @@ public class ProcessStart extends Composite implements ApplicationConst {
 		// StepServiceAsync ssa = RpcConsoleServices.getStepService();
 
 		ProcessServiceAsync instance = Application.getInstance();
-
-		// BonitaProcessUUID anProcessUUID = new BonitaProcessUUID(processDefId
-		// + "--" + version, ":)");
-		// instance.getProcess(anProcessUUID, new AsyncCallback<BonitaProcess>()
-		// {
-
-		// ssa.getAllSteps(new StepFilter(anProcessUUID, 0, 1000), new
-		// AsyncCallback<ItemUpdates<StepItem>>() {
-		//
-		// @Override
-		// public void onFailure(Throwable caught) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		//
-		// @Override
-		// public void onSuccess(ItemUpdates<StepItem> result) {
-		// // TODO Auto-generated method stub
-		// for (StepItem si : result.getItems()) {
-		// System.out.println(si);
-		// }
-		// }
-		// });
 
 		FormsServiceAsync formsServiceAsync = RpcFormsServices.getFormsService();
 
@@ -224,40 +230,30 @@ public class ProcessStart extends Composite implements ApplicationConst {
 		urlContext.put("mode", "form");
 		// {process=Process_Loop--1.0, autoInstantiate=false,
 		// form=Process_Loop--1.0$entry, mode=form}
+
+		User aUser = LoginWidget.getLogin().getUser();
+//		PageflowViewController pfc = new PageflowViewController(formID, urlContext, LoginWidget.getLogin().getUser(),
+//				"fakeElementId", applicationHTMLPanel);
+//		pfc.createForm();
 		
-		formsServiceAsync.getFormFirstPage(formID, urlContext, new AsyncCallback<FormPage>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				new AlertWidget("Error", caught.getMessage()).center();
-
-			}
-
-			@Override
-			public void onSuccess(FormPage result) {
-
-			}
-		});
-
-		int row = 0;
-
-		// row = fillTable("P", processDef.getDataFields(), row);
-
-		// for (Map.Entry<String, AttachmentDefinition> en :
-		// processDef.getAttachments().entrySet()) {
-		// int j = 0;
+		
+		FormViewControllerFactory.getFormApplicationViewController(formID, urlContext, aUser).createFormInitialView(applicationHTMLPanelId);
+		
+		// formsServiceAsync.getFormFirstPage(formID, urlContext, new
+		// AsyncCallback<FormPage>() {
 		//
-		// AttachmentDefinition di = en.getValue();
+		// @Override
+		// public void onFailure(Throwable caught) {
+		// new AlertWidget("Error", caught.getMessage()).center();
 		//
-		// variables.setText(row, j++, "F");
-		// variables.setText(row, j++, di.getName());
-		// variables.setText(row, j++, di.getLabel());
-		// variables.setText(row, j++, di.getDescription());
-		// variables.setText(row, j++, di.getFileName());
-		// variables.setText(row, j++, di.getFilePath());
-		//
-		// row++;
 		// }
+		//
+		// @Override
+		// public void onSuccess(FormPage result) {
+		// fillTable(result);
+		// }
+		// });
+
 	}
 
 	private interface WidjetGetter {
@@ -265,131 +261,18 @@ public class ProcessStart extends Composite implements ApplicationConst {
 		Object getValue();
 	}
 
-	private int fillTable(String type, List<DataField> activity, int row) {
-		for (DataField df : activity) {
-			int j = 0;
-			String name = df.getName();
-			variables.setText(row, j++, type);
-			variables.setText(row, j++, name);
-
-			variables.setText(row, j++, "" + df.getDataTypeClassName());
-
-			if (df.isEnumeration()) {
-				final ListBox lb = new ListBox();
-
-				// lb.addItem("" + df.getInitialValue());
-
-				Object o = df.getInitialValue();
-
-				int index = 0;
-				int i = 0;
-				for (String s : df.getEnumerationValues()) {
-					lb.addItem(s);
-
-					if (s.equals(o)) {
-						index = i;
-					}
-					i++;
-				}
-
-				lb.setSelectedIndex(index);
-				variables.setWidget(row, j++, lb);
-
-				widjet.put(name, new WidjetGetter() {
-
-					@Override
-					public Object getValue() {
-						int index = lb.getSelectedIndex();
-						return lb.getValue(index);
-					}
-
-				});
-
-			} else {
-				String className = df.getDataTypeClassName();
-				if (String.class.getName().equals(className)) {
-
-					final TextBox tf = new TextBox();
-					variables.setWidget(row, j++, tf);
-
-					Object o = df.getInitialValue();
-
-					tf.setText(o == null ? "" : o.toString());
-
-					widjet.put(name, new WidjetGetter() {
-
-						@Override
-						public Object getValue() {
-							return tf.getValue();
-						}
-
-					});
-
-				} else if (Long.class.getName().equals(className) || Integer.class.getName().equals(className)) {
-
-					final CustomTextBox tf = new CustomTextBox();
-					tf.addValidator(new DigitValidator());
-					variables.setWidget(row, j++, tf);
-
-					Object o = df.getInitialValue();
-
-					tf.setText(o == null ? "" : o.toString());
-
-					widjet.put(name, new WidjetGetter() {
-
-						@Override
-						public Object getValue() {
-							return Long.valueOf(tf.getValue());
-						}
-
-					});
-
-				} else if (Date.class.getName().equals(className)) {
-
-					final DateBox tf = new DateBox();
-					variables.setWidget(row, j++, tf);
-
-					Object o = df.getInitialValue();
-
-					tf.setValue((Date) o);
-
-					widjet.put(name, new WidjetGetter() {
-
-						@Override
-						public Object getValue() {
-							return tf.getValue();
-						}
-
-					});
-
-				} else if (Boolean.class.getName().equals(className)) {
-
-					final CheckBox tf = new CheckBox();
-					variables.setWidget(row, j++, tf);
-
-					Object o = df.getInitialValue();
-
-					tf.setValue((Boolean) o);
-
-					widjet.put(name, new WidjetGetter() {
-
-						@Override
-						public Object getValue() {
-							return tf.getValue();
-						}
-
-					});
-
-				}
-
-				else {
-					variables.setText(row, j++, "" + df.getInitialValue());
-				}
-			}
-
+	private void fillTable(FormPage formPage) {
+		int row = 0;
+		for (FormWidget formWidget : formPage.getFormWidgets()) {
+			fillTable(formWidget, row);
 			row++;
 		}
-		return row;
+	}
+
+	private void fillTable(FormWidget formWidget, int row) {
+		int j = 0;
+		variables.setText(row, j++, formWidget.getLabel());
+
 	}
 
 	public static DialogBox sendForm(final String documentUUID, final boolean isMajorVersion) {
@@ -490,7 +373,7 @@ public class ProcessStart extends Composite implements ApplicationConst {
 
 		buttonClose.setWidth("90px");
 		panel.add(buttonClose);
-		panel.setCellHorizontalAlignment(buttonClose, HasAlignment.ALIGN_RIGHT);
+		panel.setCellHorizontalAlignment(buttonClose, HasHorizontalAlignment.ALIGN_RIGHT);
 		box.add(form);
 
 		panel.add(msg);

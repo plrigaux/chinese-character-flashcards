@@ -66,13 +66,6 @@ public class DataField implements Serializable {
 		this.dataTypeClassName = dataTypeClassName;
 	}
 
-	public Serializable getInitialValue() {
-		return null;
-	}
-
-	public void setInitialValue(Serializable getInitialValue) {
-	}
-
 	public String getScriptingValue() {
 		return scriptingValue;
 	}

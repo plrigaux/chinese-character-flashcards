@@ -1,7 +1,9 @@
 package com.plr.iso29110.client;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.base.Splitter;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -9,6 +11,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.plr.iso29110.client.bonitaform.BonitaFormAdapter;
 import com.plr.iso29110.client.bugsReview.BugsReviewList;
 import com.plr.iso29110.client.processDefinition.ProcessDefinitions;
 import com.plr.iso29110.client.processInstances.ProcessInstances;
@@ -92,6 +95,35 @@ public class HistoryManager implements ValueChangeHandler<String>, ApplicationCo
 
 				reviewBug.setTaskId(taskId);
 			}
+		} else if (params.get(0).equals(BONITA_FORM)) {
+
+			Map<String, Object> urlContext = new HashMap<String, Object>();
+
+			String urlContextParams = params.get(1);
+
+			Splitter urlContextParamsSplitter = Splitter.on('&');
+			Splitter urlContextParamsSplitter2 = Splitter.on('=');
+			for (String s : urlContextParamsSplitter.split(urlContextParams)) {
+
+				String key = null;
+				String value1 = null;
+				int i = 0;
+				for (String ss : urlContextParamsSplitter2.split(s)) {
+					if (i == 0) {
+						key = ss;
+						i++;
+					} else {
+						value1 = ss;
+					}
+				}
+				urlContext.put(key, value1);
+			}
+
+			rootPanel.clear();
+
+			BonitaFormAdapter view = new BonitaFormAdapter(urlContext);
+
+			rootPanel.add(view);
 		} else if (params.get(0).equals(PROCESS_START)) {
 
 			String processDefId = params.get(1);

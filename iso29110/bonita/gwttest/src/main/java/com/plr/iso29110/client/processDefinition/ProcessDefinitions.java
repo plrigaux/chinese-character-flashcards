@@ -1,5 +1,7 @@
 package com.plr.iso29110.client.processDefinition;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.bonitasoft.console.client.processes.BonitaProcess;
@@ -9,7 +11,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Hyperlink;
@@ -40,8 +41,6 @@ public class ProcessDefinitions extends Composite implements ApplicationConst {
 		table.setText(0, j++, "State");
 		table.setText(0, j++, "Deployment date");
 
-	
-
 		ProcessServiceAsync instance = Application.getInstance();
 
 		instance.getAllProcesses(new AsyncCallback<Set<BonitaProcess>>() {
@@ -53,7 +52,18 @@ public class ProcessDefinitions extends Composite implements ApplicationConst {
 
 					int j = 0;
 
-					Hyperlink hl = new Hyperlink("start", PROCESS_START + "/" + lprocess.getName() + "/" + lprocess.getVersion());
+					// Hyperlink hl = new Hyperlink("start", PROCESS_START + "/"
+					// + lprocess.getName() + "/" + lprocess.getVersion());
+
+					String processUUID = lprocess.getName() + "--" + lprocess.getVersion();
+
+					String formID = processUUID + "$entry";
+
+					Hyperlink hl = new Hyperlink("start", BONITA_FORM + "/"
+
+					+ "process" + "=" + processUUID + "&" + "autoInstantiate" + "=" + Boolean.FALSE + "&" + "form" + "=" + formID
+							+ "&" + "mode" + "=" + "form");
+
 					table.setWidget(i, j++, hl);
 					table.setText(i, j++, lprocess.getName());
 					table.setText(i, j++, lprocess.getDisplayName());

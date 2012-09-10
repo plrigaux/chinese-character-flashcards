@@ -19,7 +19,6 @@ import org.ow2.bonita.facade.def.majorElement.ParticipantDefinition;
 import org.ow2.bonita.facade.def.majorElement.ProcessDefinition;
 import org.ow2.bonita.facade.exception.InstanceNotFoundException;
 import org.ow2.bonita.facade.exception.ProcessNotFoundException;
-import org.ow2.bonita.facade.exception.VariableNotFoundException;
 import org.ow2.bonita.facade.runtime.ActivityState;
 import org.ow2.bonita.facade.runtime.InitialAttachment;
 import org.ow2.bonita.facade.runtime.InstanceState;

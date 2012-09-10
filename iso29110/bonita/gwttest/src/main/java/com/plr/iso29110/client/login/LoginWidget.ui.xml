@@ -9,26 +9,33 @@
 		.panel {
 			
 		}
+		
+		.error {
+			color: red;
+			font-weight: bold;
+		}
 	</ui:style>
 	<g:HTMLPanel>
 		<table>
 			<tr>
 				<td>
-				user
+					user
 				</td>
-				<td><g:TextBox ui:field="userName">admin</g:TextBox>
+				<td>
+					<g:TextBox ui:field="userName">admin</g:TextBox>
 				</td>
 			</tr>
 			<tr>
 				<td>
-				pass
+					pass
 				</td>
 				<td>
-				<g:TextBox ui:field="password">bpm</g:TextBox>
+					<g:TextBox ui:field="password">bpm</g:TextBox>
 				</td>
 			</tr>
 		</table>
 
+		<g:Label ui:field="errorMsg" styleName="{style.error}"></g:Label>
 		<g:Button ui:field="close" width="90px">Close</g:Button>
 		<g:Button ui:field="login" width="90px">Login</g:Button>
 	</g:HTMLPanel>
