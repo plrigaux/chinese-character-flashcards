@@ -26,16 +26,12 @@
 	</repositories>
 
 	<modules>
-<module>gwttest</module>
-
-	<module>tests</module>
+		<module>mapping</module>
+		<module>gwttest</module>
+		<module>tests</module>
 	</modules>
 
-	<parent>
-		<groupId>com.plr.iso29110</groupId>
-		<artifactId>iso29110</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -57,4 +53,9 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<properties>
+		<bonita.version>5.7.2</bonita.version>
+	</properties>
+	<groupId>com.plr.iso29110</groupId>
+	<version>0.0.1-SNAPSHOT</version>
 </project>
