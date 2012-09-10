@@ -21,6 +21,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.iso29110.client.ApplicationConst;
+import com.plr.iso29110.client.BugReportServiceAsync.Util;
 import com.plr.iso29110.client.Utils;
 import com.plr.iso29110.client.login.LoginWidget;
 
@@ -50,7 +51,7 @@ public class ProcessInstances extends Composite implements ApplicationConst {
 		table.setText(0, j++, "Activity desc");
 
 		String userName = LoginWidget.getUsername();
-		
+
 		if (userName == null) {
 			return;
 		}
@@ -67,15 +68,18 @@ public class ProcessInstances extends Composite implements ApplicationConst {
 			public void onSuccess(CaseUpdates result) {
 				int i = 1;
 				for (CaseItem caseItem : result.getCases()) {
-	
 
-					
 					for (StepItem stepItem : caseItem.getSteps()) {
 						int j = 0;
 
-						String linkParam = ApplicationConst.BONITA_FORM + "/" + "autoInstantiate" + "=" + Boolean.FALSE + "&"
-								+ "form" + "=" + stepItem.getName() + "$entry" + "&" + "task" + "="
-								+ stepItem.getUUID() + "&" + "mode" + "=" + "form";
+						String linkParam = ApplicationConst.BONITA_FORM + "/" ;
+
+						linkParam = Utils.appenParam(linkParam, CASEID, caseItem.getUUID());
+						linkParam = Utils.appenParam(linkParam, "form", stepItem.getName() + "$entry");
+						linkParam = Utils.appenParam(linkParam, "task", stepItem.getUUID());
+						linkParam = Utils.appenParam(linkParam, "autoInstantiate", Boolean.FALSE);
+						linkParam = Utils.appenParam(linkParam, "mode", "form");
+						
 
 						Hyperlink link = new Hyperlink("go to", linkParam);
 						table.setWidget(i, j++, link);
@@ -88,10 +92,10 @@ public class ProcessInstances extends Composite implements ApplicationConst {
 						table.setText(i, j++, "" + stepItem.getApplicationURL());
 						table.setText(i, j++, "" + stepItem.getDesc());
 						table.setText(i, j++, "" + stepItem.getState());
-						
+
 						i++;
 					}
-					
+
 				}
 
 			}

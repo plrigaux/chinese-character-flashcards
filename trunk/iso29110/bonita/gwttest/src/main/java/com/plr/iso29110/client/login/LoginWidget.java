@@ -1,6 +1,7 @@
 package com.plr.iso29110.client.login;
 
 import org.bonitasoft.console.client.common.RpcConsoleServices;
+import org.bonitasoft.console.client.controller.UserRightsManager;
 import org.bonitasoft.console.client.identity.User;
 import org.bonitasoft.console.client.login.ConsoleLoginServiceAsync;
 import org.bonitasoft.console.client.users.UserProfile;
@@ -82,16 +83,8 @@ public class LoginWidget extends DialogBox {
 			public void onSuccess(UserProfile result) {
 				System.out.println(result.getUsername());
 
-				User u = result.getUser();
-
-				user = new org.bonitasoft.console.security.client.users.User(u.getUsername(), result.isAdmin(), result
-						.getLocale(), result.getUserRights(), false);
-
-				Cookies.setCookie(BONITA_TEST_USER_NAME, u.getUsername());
-
+				setUserProfile(result);
 				LoginWidget.this.hide();
-				
-				
 				mainPanel.setLogout();
 			}
 
@@ -144,6 +137,18 @@ public class LoginWidget extends DialogBox {
 
 	public void setMainPanel(MainPanel mainPanel2) {
 		mainPanel = mainPanel2;
+	}
+
+	public void setUserProfile(UserProfile result) {
+		User u = result.getUser();
+
+		user = new org.bonitasoft.console.security.client.users.User(u.getUsername(), result.isAdmin(), result
+				.getLocale(), result.getUserRights(), false);
+
+		Cookies.setCookie(BONITA_TEST_USER_NAME, u.getUsername());
+		
+		UserRightsManager.getInstance().updateUserRights(result);
+		
 	}
 	
 	

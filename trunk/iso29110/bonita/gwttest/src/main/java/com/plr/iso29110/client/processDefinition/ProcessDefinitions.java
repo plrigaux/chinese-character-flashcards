@@ -1,7 +1,5 @@
 package com.plr.iso29110.client.processDefinition;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import org.bonitasoft.console.client.processes.BonitaProcess;
@@ -18,7 +16,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.plr.iso29110.client.Application;
 import com.plr.iso29110.client.ApplicationConst;
 import com.plr.iso29110.client.Utils;
-import com.plr.iso29110.client.widget.AlertWidget;
 
 public class ProcessDefinitions extends Composite implements ApplicationConst {
 

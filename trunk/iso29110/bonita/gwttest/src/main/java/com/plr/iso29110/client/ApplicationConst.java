@@ -9,4 +9,8 @@ public interface ApplicationConst {
 	 String PROCESS_DEFINITIONS =  "processDefinitions";
 	 String PROCESS_START =  "processStart";
 	 String BONITA_FORM =  "bonitaForm";
+	 
+	 
+	 
+	 String CASEID = "caseId";
 }
