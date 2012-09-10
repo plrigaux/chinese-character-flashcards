@@ -52,6 +52,7 @@
 									<exclude>org.bonitasoft.console:console-server:*</exclude>
 									<exclude>org.bonitasoft.console:security-server:*</exclude>
 									<exclude>org.bonitasoft.forms:forms-server:*</exclude>
+									<!-- <exclude>org.bonitasoft.forms:forms*</exclude> -->
 									<exclude>org.bonitasoft.console:console-common:*</exclude>
 									<exclude>org.bonitasoft.theme:*</exclude>
 									<!-- <exclude>xpp3:*</exclude> -->
@@ -109,16 +110,87 @@
 			<version>${bonita.version}</version>
 
 		</dependency>
-
 		<dependency>
 			<groupId>org.bonitasoft.console</groupId>
-			<artifactId>console-view</artifactId>
+			<artifactId>security-view</artifactId>
 			<version>${bonita.version}</version>
 
 		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>security-view</artifactId>
+			<version>${bonita.version}</version>
+			<classifier>sources</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>security-rpc</artifactId>
+			<version>${bonita.version}</version>
+
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>security-rpc</artifactId>
+			<version>${bonita.version}</version>
+			<classifier>sources</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>security-model</artifactId>
+			<version>${bonita.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
+			<artifactId>security-model</artifactId>
+			<version>${bonita.version}</version>
+			<classifier>sources</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.console</groupId>
 			<artifactId>console-view</artifactId>
+			<version>${bonita.version}</version>
+			<classifier>sources</classifier>
+			<exclusions>
+				<exclusion>
+					<artifactId>gwtx</artifactId>
+					<groupId>com.google.code.gwtx</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-model</artifactId>
+			<version>${bonita.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-model</artifactId>
+			<version>${bonita.version}</version>
+			<classifier>sources</classifier>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-rpc</artifactId>
+			<version>${bonita.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-rpc</artifactId>
+			<version>${bonita.version}</version>
+			<classifier>sources</classifier>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-view</artifactId>
+			<version>${bonita.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bonitasoft.forms</groupId>
+			<artifactId>forms-view</artifactId>
 			<version>${bonita.version}</version>
 			<classifier>sources</classifier>
 		</dependency>
