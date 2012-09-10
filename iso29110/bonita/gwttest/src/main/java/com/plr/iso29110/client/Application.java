@@ -5,6 +5,7 @@ import org.bonitasoft.console.client.processes.ProcessServiceAsync;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.plr.iso29110.client.main.MainPanel;
 import com.plr.iso29110.client.welcome.Welcome;
 import com.plr.iso29110.client.widget.AppResources;
 
@@ -28,10 +29,13 @@ public class Application implements EntryPoint {
 		RootLayoutPanel rootPanel = RootLayoutPanel.get();
 
 		rootPanel.clear();
-		Welcome welcome = new Welcome();
+		MainPanel welcome = new MainPanel();
 		rootPanel.add(welcome);
 
-		historyManager = new HistoryManager();
+		welcome.getCenterPanel().clear();
+		welcome.getCenterPanel().add(new Welcome());
+		
+		historyManager = new HistoryManager(welcome.getCenterPanel());
 
 	}
 
