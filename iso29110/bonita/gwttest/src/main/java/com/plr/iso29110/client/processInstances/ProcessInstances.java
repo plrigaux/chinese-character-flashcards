@@ -1,6 +1,16 @@
 package com.plr.iso29110.client.processInstances;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.bonitasoft.console.client.cases.CaseFilter;
+import org.bonitasoft.console.client.cases.CaseItem;
+import org.bonitasoft.console.client.cases.CaseUpdates;
+import org.bonitasoft.console.client.common.RpcConsoleServices;
+import org.bonitasoft.console.client.labels.LabelModel;
+import org.bonitasoft.console.client.labels.LabelUUID;
+import org.bonitasoft.console.client.steps.StepItem;
+import org.bonitasoft.console.client.users.UserUUID;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -11,9 +21,8 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
 import com.plr.iso29110.client.ApplicationConst;
-import com.plr.iso29110.client.BugReportServiceAsync;
-import com.plr.iso29110.client.widget.AlertWidget;
-import com.plr.iso29110.shared.BonitaTask;
+import com.plr.iso29110.client.Utils;
+import com.plr.iso29110.client.login.LoginWidget;
 
 public class ProcessInstances extends Composite implements ApplicationConst {
 
@@ -40,41 +49,58 @@ public class ProcessInstances extends Composite implements ApplicationConst {
 		table.setText(0, j++, "Activity Label");
 		table.setText(0, j++, "Activity desc");
 
-		BugReportServiceAsync.Util.getInstance().getReadyTasks(new AsyncCallback<List<BonitaTask>>() {
+		String userName = LoginWidget.getUsername();
+		
+		if (userName == null) {
+			return;
+		}
+
+		LabelModel aLabelUUIDCollection = new LabelModel(LabelModel.INBOX_LABEL, new UserUUID(userName));
+		Collection<LabelUUID> theLabels = new ArrayList<LabelUUID>();
+		theLabels.add(aLabelUUIDCollection.getUUID());
+
+		CaseFilter aCaseFilter = new CaseFilter(theLabels, 0, 100);
+
+		RpcConsoleServices.getCaseService().getAllCases(aCaseFilter, new AsyncCallback<CaseUpdates>() {
 
 			@Override
-			public void onFailure(Throwable caught) {
-				new AlertWidget("Error", caught.getMessage()).center();
-			}
-
-			@Override
-			public void onSuccess(List<BonitaTask> result) {
+			public void onSuccess(CaseUpdates result) {
 				int i = 1;
-				for (BonitaTask processInstance : result) {
+				for (CaseItem caseItem : result.getCases()) {
+	
 
-					int j = 0;
+					
+					for (StepItem stepItem : caseItem.getSteps()) {
+						int j = 0;
 
-					String linkParam = ApplicationConst.BONITA_FORM + "/" + "autoInstantiate" + "=" + Boolean.FALSE + "&"
-							+ "form" + "=" + processInstance.getActivityName() + "$entry" + "&" + "task" + "="
-							+ processInstance.getTaskId() + "&" + "mode" + "=" + "form";
+						String linkParam = ApplicationConst.BONITA_FORM + "/" + "autoInstantiate" + "=" + Boolean.FALSE + "&"
+								+ "form" + "=" + stepItem.getName() + "$entry" + "&" + "task" + "="
+								+ stepItem.getUUID() + "&" + "mode" + "=" + "form";
 
-					Hyperlink link = new Hyperlink("go to", linkParam);
-					table.setWidget(i, j++, link);
+						Hyperlink link = new Hyperlink("go to", linkParam);
+						table.setWidget(i, j++, link);
 
-					table.setText(i, j++, processInstance.getProcessName());
-					table.setText(i, j++, processInstance.getProcessLabel());
-					table.setText(i, j++, processInstance.getProcessVersion());
-					table.setText(i, j++, "" + processInstance.getNb());
-					table.setText(i, j++, "" + processInstance.getLastUpdateDate());
-					table.setText(i, j++, "" + processInstance.getActivityName());
-					table.setText(i, j++, "" + processInstance.getActivityLabel());
-					table.setText(i, j++, "" + processInstance.getActivityDescription());
-
-					i++;
+						table.setText(i, j++, stepItem.getName());
+						table.setText(i, j++, stepItem.getLabel());
+						table.setText(i, j++, "" + stepItem.getProcessUUID());
+						table.setText(i, j++, "" + stepItem.getPriority());
+						table.setText(i, j++, "" + caseItem.getLastUpdateDate());
+						table.setText(i, j++, "" + stepItem.getApplicationURL());
+						table.setText(i, j++, "" + stepItem.getDesc());
+						table.setText(i, j++, "" + stepItem.getState());
+						
+						i++;
+					}
+					
 				}
 
 			}
 
+			@Override
+			public void onFailure(Throwable caught) {
+				Utils.errorManagement(caught);
+
+			}
 		});
 
 	}
