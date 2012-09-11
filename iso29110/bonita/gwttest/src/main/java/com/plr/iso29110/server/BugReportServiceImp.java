@@ -15,10 +15,8 @@ import javax.security.auth.login.LoginContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.bonitasoft.console.common.exception.NoCredentialsInSessionException;
 import org.bonitasoft.console.security.client.users.User;
 import org.bonitasoft.console.security.server.LoginServlet;
-import org.bonitasoft.console.servlet.ServletLoginUtils;
 import org.bonitasoft.forms.client.model.FormFieldValue;
 import org.bonitasoft.forms.client.model.FormPage;
 import org.bonitasoft.forms.client.model.TransientData;
@@ -213,84 +211,7 @@ public class BugReportServiceImp extends FormsServlet implements BugReportServic
             SuspendedFormException, CanceledFormException, FormAlreadySubmittedException, ForbiddenFormAccessException, FormInErrorException,
             MigrationProductVersionNotIdenticalException, SkippedFormException {
 
-        if (LOGGER.isLoggable(Level.FINER)) {
-            String time = DATE_FORMAT.format(new Date());
-            LOGGER.log(Level.FINER, "### " + time + " - getFormFirstPage - start");
-        }
-        LoginContext loginContext = null;
-        String localeStr = getLocale();
-        Locale userLocale = resolveLocale(localeStr);
-        Map<String, Object> context = initContext(urlContext, userLocale);
-        final ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
-        try {
-            final HttpServletRequest request = this.getThreadLocalRequest();
-            loginContext = ServletLoginUtils.engineLogin(request);
-            final FormServiceProvider formServiceProvider = FormServiceProviderFactory.getFormServiceProvider();
-            final FormDocument document = formServiceProvider.getFormDefinitionDocument(context);
-            final Date deployementDate = formServiceProvider.getDeployementDate(context);
-            final boolean isEditMode = formServiceProvider.isEditMode(formID, context);
-            final boolean isCurrentValue = formServiceProvider.isCurrentValue(context);
-            final IFormDefinitionAPI definitionAPI = FormAPIFactory.getFormDefinitionAPI(document, deployementDate, localeStr);
-            final String permissions = definitionAPI.getFormPermissions(formID, context);
-            final String productVersion = definitionAPI.getProductVersion();
-            final String migrationProductVersion = definitionAPI.getMigrationProductVersion(formID, context);
-            final HttpSession session = request.getSession();
-            final User user = (User) session.getAttribute(LoginServlet.USER_SESSION_PARAM_KEY);
-            context.put(FormServiceProviderUtil.USER, user);
-            formServiceProvider.isAllowed(formID, permissions, productVersion, migrationProductVersion, context, true);
-            final String pageIdExpression = definitionAPI.getFormFirstPage(formID, context);
-            FormPage formPage = null;
-            if (pageIdExpression != null) {
-                setClassloader(formServiceProvider, context);
-                final List<TransientData> transientData = definitionAPI.getFormTransientData(formID, context);
-                final Map<String, Object> transientDataContext = definitionAPI.getTransientDataContext(transientData, userLocale, context);
-                setFormTransientDataContext(formID, transientDataContext);
-                context.put(FormServiceProviderUtil.TRANSIENT_DATA_CONTEXT, transientDataContext);
-                context.put(FormServiceProviderUtil.IS_EDIT_MODE, isEditMode);
-                context.put(FormServiceProviderUtil.IS_CURRENT_VALUE, isCurrentValue);
-                context.put(FormServiceProviderUtil.FIELD_VALUES, new HashMap<String, FormFieldValue>());
-                final String pageId = (String) formServiceProvider.resolveExpression(pageIdExpression, context);
-                formPage = definitionAPI.getFormPage(formID, pageId, context);
-                if (formPage != null) {
-                    formPage.setPageLabel((String) formServiceProvider.resolveExpression(formPage.getPageLabel(), context));
-                    formFieldValuesUtil.setFormWidgetsValues(formPage.getFormWidgets(), context);
-                    formFieldValuesUtil.clearExpressionsOrConnectors(formID, pageId, localeStr, deployementDate, formPage.getFormWidgets());
-                }
-                return formPage;
-            }
-            return formPage;
-        } catch (final ForbiddenFormAccessException e) {
-            throw new ForbiddenFormAccessException(e);
-        } catch (final MigrationProductVersionNotIdenticalException e) {
-            throw new MigrationProductVersionNotIdenticalException(e);
-        } catch (final CanceledFormException e) {
-            throw new CanceledFormException(e);
-        } catch (final SuspendedFormException e) {
-            throw new SuspendedFormException(e);
-        } catch (final FormInErrorException e) {
-            throw new FormInErrorException(e);
-        } catch (final SkippedFormException e) {
-            throw new SkippedFormException(e);
-        } catch (final FormAlreadySubmittedException e) {
-            throw new FormAlreadySubmittedException(e);
-        } catch (final NoCredentialsInSessionException e) {
-            if (LOGGER.isLoggable(Level.INFO)) {
-                LOGGER.log(Level.INFO, "Session timeout");
-            }
-            throw new SessionTimeOutException(e.getMessage(), e);
-        } catch (final Throwable e) {
-            if (LOGGER.isLoggable(Level.SEVERE)) {
-                LOGGER.log(Level.SEVERE, "Error while getting the first page for application " + formID, e);
-            }
-            throw new RPCException(e.getMessage(), e);
-        } finally {
-            Thread.currentThread().setContextClassLoader(originalClassLoader);
-            ServletLoginUtils.engineLogout(loginContext);
-            if (LOGGER.isLoggable(Level.FINER)) {
-                String time = DATE_FORMAT.format(new Date());
-                LOGGER.log(Level.FINER, "### " + time + " - getFormFirstPage - end");
-            }
-        }
+       return null;
     }
     
    
