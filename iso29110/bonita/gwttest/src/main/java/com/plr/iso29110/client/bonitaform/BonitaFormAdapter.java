@@ -23,6 +23,7 @@ import org.bonitasoft.console.client.model.cases.CaseDataSource;
 import org.bonitasoft.console.client.model.cases.CaseDataSourceImpl;
 import org.bonitasoft.console.client.model.cases.CaseSelection;
 import org.bonitasoft.console.client.steps.CommentItem;
+import org.bonitasoft.console.client.steps.StepItem;
 import org.bonitasoft.console.client.users.UserProfile;
 import org.bonitasoft.console.client.users.UserUUID;
 import org.bonitasoft.console.client.view.cases.CaseCommentEditorWidget;
@@ -88,7 +89,6 @@ public class BonitaFormAdapter extends Composite implements ApplicationConst {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -136,7 +136,12 @@ public class BonitaFormAdapter extends Composite implements ApplicationConst {
 			@Override
 			public void onSuccess(CaseItem result) {
 				myCase = result;
-
+				
+				for (StepItem si : result.getSteps()) {
+					
+					System.out.println(si.getLabel() + " " + si.getState() + " " + si.getAuthor() + " " + si.getLastUpdateDate());
+				}
+				
 				RpcConsoleServices.getCaseService().getCaseCommentFeed(myCase.getUUID(), aFilter,
 						new AsyncCallback<List<CommentItem>>() {
 
