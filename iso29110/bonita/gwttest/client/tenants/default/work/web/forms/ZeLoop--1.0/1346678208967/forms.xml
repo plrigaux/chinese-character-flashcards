@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<forms-definition product-version="5.7">
-  <migration-product-version>5.7</migration-product-version>
-  <application name="ZeLoop" version="1.0">
-    <permissions>process#ZeLoop--1.0</permissions>
-    <application-label>ZeLoop</application-label>
-    <mandatory-symbol>*</mandatory-symbol>
-  </application>
-</forms-definition>
