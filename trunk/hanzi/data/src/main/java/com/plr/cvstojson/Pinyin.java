@@ -202,11 +202,24 @@ public class Pinyin {
 
 		input = Normalizer.normalize(input, Form.NFD);
 
-		return convertSyllable_(input);
+		return convertSyllable2(input).syllable;
 
 	}
+	
+	static class SilTone {
+		
+		String syllable;
+		int tone;
+	}
 
-	private static String convertSyllable_(String input) {
+	private static SilTone convertSyllable2(String input) {
+		SilTone st = new SilTone();
+		
+		convertSyllable_(input, st);
+		return st;
+	}
+	
+	private static void convertSyllable_(String input, SilTone st) {
 
 		StringBuilder returnString = new StringBuilder(input.length() + 4);
 
@@ -234,8 +247,8 @@ public class Pinyin {
 		toaccent = getCharTone(toaccent, tone);
 		returnString.setCharAt(position, toaccent);
 
-		return returnString.toString();
-
+		st.syllable = returnString.toString();
+		st.tone = tone;
 	}
 
 	public static String convertNum(String input) {
@@ -445,7 +458,7 @@ public class Pinyin {
 		while (m.find()) {
 			String sep = m.group();
 
-			String sep2 = convertSyllable_(sep);
+			String sep2 = convertSyllable2(sep).syllable;
 
 			String inter = input.substring(start, m.start());
 
@@ -464,6 +477,41 @@ public class Pinyin {
 		// return input;
 		return sb.toString();
 	}
+	
+	
+	public static String convertToAccentHtml(String input) {
+
+		StringBuilder sb = new StringBuilder(input.length());
+
+		Matcher m = p.matcher(input);
+
+		int start = 0;
+		while (m.find()) {
+			String sep = m.group();
+
+			SilTone st = convertSyllable2(sep);
+			String sep2 = st.syllable;
+
+			String inter = input.substring(start, m.start());
+
+			sb.append(inter);
+			
+			sb.append("<span class=\"tone").append(st.tone).append("\">");
+			sb.append(sep2);
+			sb.append("</span>");
+			start = m.end();
+		}
+
+		String inter = input.substring(start, input.length());
+
+		sb.append(inter);
+
+		// input = Normalizer.normalize(sb, Form.NFC);
+		//
+		// return input;
+		return sb.toString();
+	}
+	
 	
 	public static void main(String[] args) {
 		System.out.println("n"+COMBINING_GRAVE_ACCENT);
