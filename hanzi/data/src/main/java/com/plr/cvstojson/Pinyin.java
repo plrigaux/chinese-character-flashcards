@@ -14,52 +14,33 @@ import java.util.regex.Pattern;
 
 public class Pinyin {
 
-	static private final String[] allPinyinArray = { "a", "o", "e", "ai", "ei",
-			"ao", "ou", "an", "en", "ang", "eng", "er", "yo", "yi", "ya", "ye",
-			"yao", "you", "yan", "yin", "yang", "ying", "wu", "wa", "wo",
-			"wai", "wei", "wan", "wen", "wang", "weng", "yu", "yue", "yuan",
-			"yun", "yong", "bi", "ba", "bo", "bai", "bei", "bao", "ban", "ben",
-			"bang", "beng", "bie", "biao", "bian", "bin", "bing", "bu", "pi",
-			"pa", "po", "pai", "pei", "pao", "pou", "pan", "pen", "pang",
-			"peng", "pie", "piao", "pian", "pin", "ping", "pu", "mi", "ma",
-			"mo", "me", "mai", "mei", "mao", "mou", "man", "men", "mang",
-			"meng", "mie", "miao", "miu", "mian", "min", "ming", "mu", "fa",
-			"fo", "fei", "fou", "fan", "fen", "fang", "feng", "fu", "di", "da",
-			"de", "dai", "dei", "dao", "dou", "dan", "dang", "deng", "die",
-			"diao", "diu", "dian", "ding", "du", "duo", "dui", "duan", "dun",
-			"dong", "ti", "ta", "te", "tai", "tao", "tou", "tan", "tang",
-			"teng", "tie", "tiao", "tian", "ting", "tu", "tuo", "tui", "tuan",
-			"tun", "tong", "ni", "na", "ne", "nai", "nei", "nao", "nou", "nan",
-			"nen", "nang", "neng", "nie", "niao", "niu", "nian", "nin",
-			"niang", "ning", "nu", "nuo", "nuan", "nong", "nv", "nue", "li",
-			"la", "lo", "le", "lai", "lei", "lao", "lou", "lan", "lang",
-			"leng", "lia", "lie", "liao", "liu", "lian", "lin", "liang",
-			"ling", "lu", "luo", "luan", "lun", "long", "lv", "lue", "ga",
-			"ge", "gai", "gei", "gao", "gou", "gan", "gen", "gang", "geng",
-			"gu", "gua", "guo", "guai", "gui", "guan", "gun", "guang", "gong",
-			"ka", "ke", "kai", "kei", "kao", "kou", "kan", "ken", "kang",
-			"keng", "ku", "kua", "kuo", "kuai", "kui", "kuan", "kun", "kuang",
-			"kong", "ha", "he", "hai", "hei", "hao", "hou", "han", "hen",
-			"hang", "heng", "hu", "hua", "huo", "huai", "hui", "huan", "hun",
-			"huang", "hong", "ji", "jia", "jie", "jiao", "jiu", "jian", "jin",
-			"jiang", "jing", "ju", "juan", "jun", "jue", "jiong", "qi", "qia",
-			"qie", "qiao", "qiu", "qian", "qin", "qiang", "qing", "qu", "quan",
-			"qun", "que", "qiong", "xi", "xia", "xie", "xiao", "xiu", "xian",
-			"xin", "xiang", "xing", "xu", "xuan", "xun", "xue", "xiong", "zhi",
-			"zha", "zhe", "zhai", "zhei", "zhao", "zhou", "zhan", "zhen",
-			"zhang", "zheng", "zhu", "zhua", "zhuo", "zhuai", "zhui", "zhuan",
-			"zhun", "zhuang", "zhong", "chi", "cha", "che", "chai", "chao",
-			"chou", "chan", "chen", "chang", "cheng", "chu", "chua", "chuo",
-			"chuai", "chui", "chuan", "chun", "chuang", "chong", "shi", "sha",
-			"she", "shai", "shei", "shao", "shou", "shan", "shen", "shang",
-			"sheng", "shu", "shua", "shuo", "shuai", "shui", "shuan", "shun",
-			"shuang", "ri", "re", "rao", "rou", "ran", "ren", "rang", "reng",
-			"ru", "ruo", "rui", "ruan", "run", "rong", "zi", "za", "ze", "zai",
-			"zei", "zao", "zou", "zan", "zen", "zang", "zeng", "zu", "zuo",
-			"zui", "zuan", "zun", "zong", "ci", "ca", "ce", "cai", "cao",
-			"cou", "can", "cen", "cang", "ceng", "cu", "cuo", "cui", "cuan",
-			"cun", "cong", "si", "sa", "se", "sai", "sao", "sou", "san", "sen",
-			"sang", "seng", "su", "suo", "sui", "suan", "sun", "song" };
+	static private final String[] allPinyinArray = { "a", "o", "e", "ai", "ei", "ao", "ou", "an", "en", "ang", "eng", "er", "yo",
+			"yi", "ya", "ye", "yao", "you", "yan", "yin", "yang", "ying", "wu", "wa", "wo", "wai", "wei", "wan", "wen", "wang",
+			"weng", "yu", "yue", "yuan", "yun", "yong", "bi", "ba", "bo", "bai", "bei", "bao", "ban", "ben", "bang", "beng",
+			"bie", "biao", "bian", "bin", "bing", "bu", "pi", "pa", "po", "pai", "pei", "pao", "pou", "pan", "pen", "pang",
+			"peng", "pie", "piao", "pian", "pin", "ping", "pu", "mi", "ma", "mo", "me", "mai", "mei", "mao", "mou", "man", "men",
+			"mang", "meng", "mie", "miao", "miu", "mian", "min", "ming", "mu", "fa", "fo", "fei", "fou", "fan", "fen", "fang",
+			"feng", "fu", "di", "da", "de", "dai", "dei", "dao", "dou", "dan", "dang", "deng", "die", "diao", "diu", "dian",
+			"ding", "du", "duo", "dui", "duan", "dun", "dong", "ti", "ta", "te", "tai", "tao", "tou", "tan", "tang", "teng",
+			"tie", "tiao", "tian", "ting", "tu", "tuo", "tui", "tuan", "tun", "tong", "ni", "na", "ne", "nai", "nei", "nao",
+			"nou", "nan", "nen", "nang", "neng", "nie", "niao", "niu", "nian", "nin", "niang", "ning", "nu", "nuo", "nuan",
+			"nong", "nv", "nue", "li", "la", "lo", "le", "lai", "lei", "lao", "lou", "lan", "lang", "leng", "lia", "lie", "liao",
+			"liu", "lian", "lin", "liang", "ling", "lu", "luo", "luan", "lun", "long", "lv", "lue", "ga", "ge", "gai", "gei",
+			"gao", "gou", "gan", "gen", "gang", "geng", "gu", "gua", "guo", "guai", "gui", "guan", "gun", "guang", "gong", "ka",
+			"ke", "kai", "kei", "kao", "kou", "kan", "ken", "kang", "keng", "ku", "kua", "kuo", "kuai", "kui", "kuan", "kun",
+			"kuang", "kong", "ha", "he", "hai", "hei", "hao", "hou", "han", "hen", "hang", "heng", "hu", "hua", "huo", "huai",
+			"hui", "huan", "hun", "huang", "hong", "ji", "jia", "jie", "jiao", "jiu", "jian", "jin", "jiang", "jing", "ju",
+			"juan", "jun", "jue", "jiong", "qi", "qia", "qie", "qiao", "qiu", "qian", "qin", "qiang", "qing", "qu", "quan",
+			"qun", "que", "qiong", "xi", "xia", "xie", "xiao", "xiu", "xian", "xin", "xiang", "xing", "xu", "xuan", "xun", "xue",
+			"xiong", "zhi", "zha", "zhe", "zhai", "zhei", "zhao", "zhou", "zhan", "zhen", "zhang", "zheng", "zhu", "zhua",
+			"zhuo", "zhuai", "zhui", "zhuan", "zhun", "zhuang", "zhong", "chi", "cha", "che", "chai", "chao", "chou", "chan",
+			"chen", "chang", "cheng", "chu", "chua", "chuo", "chuai", "chui", "chuan", "chun", "chuang", "chong", "shi", "sha",
+			"she", "shai", "shei", "shao", "shou", "shan", "shen", "shang", "sheng", "shu", "shua", "shuo", "shuai", "shui",
+			"shuan", "shun", "shuang", "ri", "re", "rao", "rou", "ran", "ren", "rang", "reng", "ru", "ruo", "rui", "ruan", "run",
+			"rong", "zi", "za", "ze", "zai", "zei", "zao", "zou", "zan", "zen", "zang", "zeng", "zu", "zuo", "zui", "zuan",
+			"zun", "zong", "ci", "ca", "ce", "cai", "cao", "cou", "can", "cen", "cang", "ceng", "cu", "cuo", "cui", "cuan",
+			"cun", "cong", "si", "sa", "se", "sai", "sao", "sou", "san", "sen", "sang", "seng", "su", "suo", "sui", "suan",
+			"sun", "song" };
 
 	static public final char COMBINING_GRAVE_ACCENT = '\u0300';
 	static public final char COMBINING_ACUTE_ACCENT = '\u0301';
@@ -72,19 +53,17 @@ public class Pinyin {
 
 	private static final char[] pinyinVoy;
 
-	private final static Pattern p;
+	private final static Pattern regexPat;
 
 	private static final int NOT_FOUND = -1;
 
 	static {
 
-		String COMBININGS = "" + COMBINING_CARON + COMBINING_ACUTE_ACCENT
-				+ COMBINING_MACRON + COMBINING_ACUTE_ACCENT
+		String COMBININGS = "" + COMBINING_CARON + COMBINING_ACUTE_ACCENT + COMBINING_MACRON + COMBINING_ACUTE_ACCENT
 				+ COMBINING_GRAVE_ACCENT;
 
-		String voyellBase = "aeiou";
-		StringBuilder sb = new StringBuilder((COMBININGS.length() + 1)
-				* voyellBase.length());
+		String voyellBase = "aeiouv";
+		StringBuilder sb = new StringBuilder((COMBININGS.length() + 1) * voyellBase.length());
 		for (int i = 0; i < COMBININGS.length(); i++) {
 
 			char comb = COMBININGS.charAt(i);
@@ -113,12 +92,10 @@ public class Pinyin {
 
 		Arrays.sort(pinyinVoy);
 
-		String regex = "((?:b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|w|x|y|z|zh|sh|ch)"
-				+ "(?![" + COMBININGS + "]))?(?:[" + allVoyelle + COMBININGS
-				+ "]){1,4}" + "(?:(?:ngr|ng|nr|n|r)(?![" + allVoyelle
-				+ "]))?+\\d?";
+		String regex = "((?:b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|w|x|y|z|zh|sh|ch)" + "(?![" + COMBININGS + "]))?(?:[" + allVoyelle
+				+ COMBININGS + "]){1,4}" + "(?:(?:ngr|ng|nr|n|r)(?![" + allVoyelle + "]))?+\\d?|r+\\d?";
 
-		p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+		regexPat = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 
 	}
 
@@ -158,10 +135,8 @@ public class Pinyin {
 		RuleBasedCollator myCollator = null;
 		try {
 
-			String addRules = "& a < ā , Ā ; á , Á ; ǎ , Ǎ ; à , À ; a , A"
-					+ "& e < ē , Ē ; é , É ; ě , Ě ; è , È ; e , E"
-					+ "& i < ī , Ī ; í , Í ; ǐ , Ǐ ; ì , Ì ; i , I"
-					+ "& o < ō , Ō ; ó , Ó ; ǒ , Ǒ ; ò , Ò ; o , O"
+			String addRules = "& a < ā , Ā ; á , Á ; ǎ , Ǎ ; à , À ; a , A" + "& e < ē , Ē ; é , É ; ě , Ě ; è , È ; e , E"
+					+ "& i < ī , Ī ; í , Í ; ǐ , Ǐ ; ì , Ì ; i , I" + "& o < ō , Ō ; ó , Ó ; ǒ , Ǒ ; ò , Ò ; o , O"
 					+ "& u < ū , Ū ; ú , Ú ; ǔ , Ǔ ; ù , Ù ; u , U ; ǖ , Ǖ ; ǘ , Ǘ ; ǚ , Ǚ ; ǜ , Ǜ ;ü , Ü";
 
 			// System.out.println(addRules);
@@ -205,20 +180,20 @@ public class Pinyin {
 		return convertSyllable2(input).syllable;
 
 	}
-	
+
 	static class SilTone {
-		
+
 		String syllable;
 		int tone;
 	}
 
 	private static SilTone convertSyllable2(String input) {
 		SilTone st = new SilTone();
-		
+
 		convertSyllable_(input, st);
 		return st;
 	}
-	
+
 	private static void convertSyllable_(String input, SilTone st) {
 
 		StringBuilder returnString = new StringBuilder(input.length() + 4);
@@ -230,6 +205,11 @@ public class Pinyin {
 		for (int i = 0; i < input.length(); i++) {
 			char c = input.charAt(i);
 			if (isVoyel(c)) {
+				
+				if (Character.toLowerCase(c) == 'v'){
+					c = 'ü';
+				}
+				
 				if (setNewToAccent(toaccent, c)) {
 					toaccent = c;
 					position = i;
@@ -245,8 +225,9 @@ public class Pinyin {
 		}
 
 		toaccent = getCharTone(toaccent, tone);
-		returnString.setCharAt(position, toaccent);
-
+		if (toaccent != 0) {
+			returnString.setCharAt(position, toaccent);
+		}
 		st.syllable = returnString.toString();
 		st.tone = tone;
 	}
@@ -256,7 +237,7 @@ public class Pinyin {
 		input = Normalizer.normalize(input, Form.NFD);
 
 		StringBuilder returnString = new StringBuilder(input.length() + 4);
-		
+
 		int tone = 0;
 
 		for (int i = 0; i < input.length(); i++) {
@@ -348,7 +329,7 @@ public class Pinyin {
 	public List<String> separate(String input) {
 		ArrayList<String> list = new ArrayList<String>();
 
-		java.util.regex.Matcher m = p.matcher(input);
+		java.util.regex.Matcher m = regexPat.matcher(input);
 
 		while (m.find()) {
 			String s = m.group();
@@ -440,8 +421,7 @@ public class Pinyin {
 	 * @return
 	 */
 	private static boolean isCombining(char ch) {
-		return Character.UnicodeBlock.COMBINING_DIACRITICAL_MARKS
-				.equals(Character.UnicodeBlock.of(ch));
+		return Character.UnicodeBlock.COMBINING_DIACRITICAL_MARKS.equals(Character.UnicodeBlock.of(ch));
 	}
 
 	/**
@@ -452,7 +432,7 @@ public class Pinyin {
 
 		StringBuilder sb = new StringBuilder(input.length());
 
-		Matcher m = p.matcher(input);
+		Matcher m = regexPat.matcher(input);
 
 		int start = 0;
 		while (m.find()) {
@@ -477,13 +457,12 @@ public class Pinyin {
 		// return input;
 		return sb.toString();
 	}
-	
-	
+
 	public static String convertToAccentHtml(String input) {
 
 		StringBuilder sb = new StringBuilder(input.length());
 
-		Matcher m = p.matcher(input);
+		Matcher m = regexPat.matcher(input);
 
 		int start = 0;
 		while (m.find()) {
@@ -495,7 +474,7 @@ public class Pinyin {
 			String inter = input.substring(start, m.start());
 
 			sb.append(inter);
-			
+
 			sb.append("<span class=\"tone").append(st.tone).append("\">");
 			sb.append(sep2);
 			sb.append("</span>");
@@ -506,18 +485,13 @@ public class Pinyin {
 
 		sb.append(inter);
 
-		// input = Normalizer.normalize(sb, Form.NFC);
-		//
-		// return input;
 		return sb.toString();
 	}
-	
-	
+
 	public static void main(String[] args) {
-		System.out.println("n"+COMBINING_GRAVE_ACCENT);
-	
-		
-		System.out.println(convertToAccent("ye2")); 
-		System.out.println(convertToAccent("ye2").length()); 
+		System.out.println("n" + COMBINING_GRAVE_ACCENT);
+
+		System.out.println(convertToAccent("ye2"));
+		System.out.println(convertToAccent("ye2").length());
 	}
 }
