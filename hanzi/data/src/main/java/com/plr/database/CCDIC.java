@@ -1,13 +1,15 @@
 package com.plr.database;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
@@ -71,13 +73,13 @@ public class CCDIC {
 
 	}
 
+	static Splitter s = Splitter.on(' ').limit(3);
+	static Splitter sdef = Splitter.on('/').omitEmptyStrings().trimResults();
+	static Splitter sdefv = Splitter.on(',').omitEmptyStrings().trimResults();
+
 	private void pushData() throws Exception {
 
 		String fn = "src/main/resources/com/plr/cvstojson/cedict_ts.u8";
-
-		Splitter s = Splitter.on(' ').limit(3);
-		Splitter sdef = Splitter.on('/').omitEmptyStrings().trimResults();
-		Splitter sdefv = Splitter.on(',').omitEmptyStrings().trimResults();
 
 		int baseID = -1;
 		String line = null;
@@ -160,53 +162,7 @@ public class CCDIC {
 
 						sd = sd.substring("CL:".length());
 
-						String tr;
-						String md;
-
-						if (sd.indexOf('|') != -1) {
-							tr = sd.substring(0, 1);
-							md = sd.substring(2, 3);
-						} else {
-							tr = sd.substring(0, 1);
-							md = tr;
-						}
-						
-						String pinyinc = sd.substring(sd.indexOf('[') + 1,  sd.indexOf(']'));
-
-						String pinyinc2 = Pinyin.convertToAccent(pinyinc);
-
-						for (String classifier : sdefv.split(sd)) {
-							stmtClfs.setString(1, md);
-
-							ResultSet rs1 = stmtClfs.executeQuery();
-							int claId = -1;
-							if (rs1.next()) {
-								claId = rs1.getInt(1);
-							} else {
-								stmtClf.setString(1, tr);
-								stmtClf.setString(2, md);
-								stmtClf.setString(3, pinyinc);
-								stmtClf.setString(4, pinyinc2);
-								stmtClf.executeUpdate();
-
-								rs1 = stmtClf.getGeneratedKeys();
-
-								if (rs1.next()) {
-									claId = rs1.getInt(1);
-								}
-							}
-
-							if (claId != 1) {
-								stmtBase_Clf.setInt(1, baseID);
-								stmtBase_Clf.setInt(2, claId);
-
-								try {
-									stmtBase_Clf.executeUpdate();
-								} catch (SQLIntegrityConstraintViolationException e) {
-
-								}
-							}
-						}
+						classifier(baseID, stmtClf, stmtClfs, stmtBase_Clf, sd);
 					} else {
 						defId = -1;
 						stmtDefs.setString(1, sd);
@@ -250,69 +206,91 @@ public class CCDIC {
 		}
 	}
 
-	private void createTable() throws SQLException {
+	private void classifier(int baseID, PreparedStatement stmtClf, PreparedStatement stmtClfs, PreparedStatement stmtBase_Clf,
+			String sd) throws SQLException {
+		String tr;
+		String md;
 
-		new CCDIC.CreateTable() {
-
-			@Override
-			String getStatemeent() {
-				return "Create Table BASE (" + "ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-						+ "TRAD VARCHAR(45) not null, " + "MODERN VARCHAR(45) not null, " + "PINYIN VARCHAR(150) not null, "
-						+ "PINYIN2 VARCHAR(150) not null, " + "PRIMARY KEY (ID))";
+		for (String classifier : sdefv.split(sd)) {
+			if (classifier.indexOf('|') != -1) {
+				tr = classifier.substring(0, 1);
+				md = classifier.substring(2, 3);
+			} else {
+				tr = classifier.substring(0, 1);
+				md = tr;
 			}
-		}.execute();
 
-		new CCDIC.CreateTable() {
+			String pinyinc = classifier.substring(classifier.indexOf('[') + 1, classifier.indexOf(']'));
 
-			@Override
-			String getStatemeent() {
-				return "Create Table DEFINITION ("
-						+ "ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-						+ "DEF VARCHAR(1500) not null UNIQUE," + "PRIMARY KEY (ID))";
+			String pinyinc2 = Pinyin.convertToAccent(pinyinc);
+
+			stmtClfs.setString(1, md);
+
+			ResultSet rs1 = stmtClfs.executeQuery();
+			int claId = -1;
+			if (rs1.next()) {
+				claId = rs1.getInt(1);
+			} else {
+				stmtClf.setString(1, tr);
+				stmtClf.setString(2, md);
+				stmtClf.setString(3, pinyinc);
+				stmtClf.setString(4, pinyinc2);
+				stmtClf.executeUpdate();
+
+				rs1 = stmtClf.getGeneratedKeys();
+
+				if (rs1.next()) {
+					claId = rs1.getInt(1);
+				}
 			}
-		}.execute();
 
-		new CCDIC.CreateTable() {
+			if (claId != 1) {
+				stmtBase_Clf.setInt(1, baseID);
+				stmtBase_Clf.setInt(2, claId);
 
-			@Override
-			String getStatemeent() {
-				return "Create Table BASE_DEF (" + "ID_BASE INTEGER, " + "ID_DEF INTEGER, " + "PRIMARY KEY (ID_BASE, ID_DEF))";
+				try {
+					stmtBase_Clf.executeUpdate();
+				} catch (SQLIntegrityConstraintViolationException e) {
+
+				}
 			}
-		}.execute();
+		}
+	}
 
-		new CCDIC.CreateTable() {
+	static Splitter semicol = Splitter.on(';').trimResults().omitEmptyStrings();
 
-			@Override
-			String getStatemeent() {
-				return "Create Table CLASSIFIER ("
-						+ "ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," + "CLFT CHAR(1),"
-						+ "CLFM CHAR(1) not null UNIQUE," + "PINYIN VARCHAR(7)," + "PINYIN2 VARCHAR(7)," + "PRIMARY KEY (ID))";
+	private void createTable() throws Exception {
+
+		StringBuffer bf = new StringBuffer();
+
+		try (InputStream u = this.getClass().getResourceAsStream("CCDIC.ddl"); DataInputStream in = new DataInputStream(u);
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(in));) {
+
+			if (u == null) {
+				System.err.println("snif");
 			}
-		}.execute();
 
-		new CCDIC.CreateTable() {
+			String line = br.readLine();
 
-			@Override
-			String getStatemeent() {
-				return "Create Table BASE_CLASS (" + "ID_BASE INTEGER, " + "ID_CLF INTEGER, " + "PRIMARY KEY (ID_BASE, ID_CLF))";
+			while (line != null) {
+				bf.append(line);
+				bf.append('\n');
+				line = br.readLine();
 			}
-		}.execute();
+		}
 
-		new CCDIC.CreateIndex() {
+		for (final String sql : semicol.split(bf)) {
 
-			@Override
-			String getStatemeent() {
-				return "CREATE INDEX DEFIDX ON DEFINITION (DEF)";
-			}
-		}.execute();
+			new CCDIC.CreateTable() {
 
-		new CCDIC.CreateIndex() {
+				@Override
+				String getStatemeent() {
+					return sql;
+				}
+			}.execute();
+		}
 
-			@Override
-			String getStatemeent() {
-				return "CREATE INDEX CLFIDX ON CLASSIFIER (CLFM)";
-			}
-		}.execute();
 	}
 
 	private static void createConnection() {
