@@ -26,12 +26,12 @@ public class CCDIC {
 
 	final public static String protocol = "jdbc:derby:";
 
-	private static String dir = "CCDIC";
+	final public static String dir = "CCDIC";
 
 	private static String dbURL = protocol + dir + ";create=true";
 
 	// jdbc Connection
-	private static Connection conn = null;
+	static Connection conn = null;
 
 	public static void main(String[] args) {
 
@@ -49,7 +49,7 @@ public class CCDIC {
 
 			pushData();
 
-			getHanzi();
+			//getHanzi();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -87,13 +87,13 @@ public class CCDIC {
 
 		try (BufferedReader br = new BufferedReader(new FileReader(fn));
 				PreparedStatement updateemp = conn.prepareStatement("insert into Base ("
-						+ "TRAD, MODERN , PINYIN , PINYIN2 ) values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+						+ "TRADITIONAL, SIMPLIFIED , PINYIN_NUM , PINYIN ) values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
 				PreparedStatement stmtDef = conn.prepareStatement("insert into DEFINITION (" + "DEF ) values(?)",
 						Statement.RETURN_GENERATED_KEYS);
 
 				PreparedStatement stmtClf = conn.prepareStatement(
-						"insert into CLASSIFIER (CLFT,CLFM,PINYIN,PINYIN2) values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+						"insert into CLASSIFIER (TRADITIONAL,SIMPLIFIED,PINYIN_NUM,PINYIN) values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
 				// return "Create Table CLASSIFIER ("
 				// +
@@ -104,7 +104,7 @@ public class CCDIC {
 				// + "PINYIN2 VARCHAR(6),"
 				// + "PRIMARY KEY (ID))";
 
-				PreparedStatement stmtClfs = conn.prepareStatement("select ID from CLASSIFIER where CLFM = ?");
+				PreparedStatement stmtClfs = conn.prepareStatement("select ID from CLASSIFIER where SIMPLIFIED = ?");
 
 				PreparedStatement stmtDefs = conn.prepareStatement("select ID from DEFINITION where DEF = ?");
 
@@ -282,7 +282,7 @@ public class CCDIC {
 
 		for (final String sql : semicol.split(bf)) {
 
-			new CCDIC.CreateTable() {
+			new Excutor() {
 
 				@Override
 				String getStatemeent() {
@@ -293,7 +293,7 @@ public class CCDIC {
 
 	}
 
-	private static void createConnection() {
+	static void createConnection() {
 		try {
 			Class.forName(driver).newInstance();
 			// Get a connection
@@ -303,7 +303,7 @@ public class CCDIC {
 		}
 	}
 
-	private static void shutdown() {
+	static void shutdown() {
 		try {
 
 			if (conn != null) {
@@ -321,20 +321,25 @@ public class CCDIC {
 		public void execute() throws SQLException {
 
 			try (Statement stmt = conn.createStatement();) {
-
 				String createTable = getStatemeent();
 				System.out.println(createTable);
 				stmt.execute(createTable);
 			} catch (SQLException e) {
-				if (!e.getSQLState().equals("X0Y32"))
+				if (!e.getSQLState().equals("X0Y32")) {
+					
+				} else if (!e.getSQLState().equals("42Y55")) {
+					
+				} else {
 					throw e;
+				}
+					
 			}
 		}
 
 		abstract String getStatemeent();
 	}
 
-	abstract class CreateIndex {
+	abstract class Excutor {
 
 		public void execute() throws SQLException {
 
@@ -342,6 +347,7 @@ public class CCDIC {
 
 				String createTable = getStatemeent();
 				System.out.println(createTable);
+				System.out.println();
 				stmt.execute(createTable);
 			}
 		}
