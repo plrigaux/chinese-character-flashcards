@@ -31,7 +31,7 @@ public class CCDIC {
 	private static String dbURL = protocol + dir + ";create=true";
 
 	// jdbc Connection
-	static Connection conn = null;
+	public static Connection conn = null;
 
 	public static void main(String[] args) {
 
@@ -293,7 +293,7 @@ public class CCDIC {
 
 	}
 
-	static void createConnection() {
+	public static void createConnection() {
 		try {
 			Class.forName(driver).newInstance();
 			// Get a connection
