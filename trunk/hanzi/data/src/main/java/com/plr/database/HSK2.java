@@ -74,7 +74,7 @@ public class HSK2 extends CCDIC {
 
 		}
 
-		try (PreparedStatement updateemp = CCDIC.conn.prepareStatement("insert into HSK_VOCABULARY (LEVEL,"
+		try (PreparedStatement updateemp = CCDIC.conn.prepareStatement("insert into HSK_VOCABULARY2 (LEVEL,"
 				+ "TRADITIONAL, SIMPLIFIED, PINYIN_NUM , PINYIN ,  WORD_CLASS, DEFINITION ) values(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
 		) {
