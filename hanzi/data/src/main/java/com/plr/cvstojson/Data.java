@@ -37,12 +37,12 @@ public class Data {
 				def.add(s);
 			}
 
-			pinyinNum = Pinyin.convertNum(pinyin);
+			pinyinNum = Pinyin.convertSyltoNum(pinyin);
 		}
 
 		public void setNum(String pinyinNum, Iterable<String> it) {
 
-			pinyin = Pinyin.convertNum(pinyinNum);
+			pinyin = Pinyin.convertSyltoNum(pinyinNum);
 
 			this.pinyin = Pinyin.convertToAccent(pinyinNum);
 			for (String s : it) {

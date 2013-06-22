@@ -77,7 +77,7 @@ public class AnkiWriter {
 
 	final static Pattern p = Pattern.compile("\\[([\\s\\w]+?)\\]");
 	
-	Pattern p1 = Pattern.compile("\\w+\\|", Pattern.UNICODE_CHARACTER_CLASS);
+	final static Pattern remTradChar = Pattern.compile("\\w+\\|", Pattern.UNICODE_CHARACTER_CLASS);
 
 	public String setExplanation(String def) {
 
@@ -101,7 +101,7 @@ public class AnkiWriter {
 		sb.append(def.substring(start, def.length()));
 
 		
-		String s1 = p1.matcher(sb).replaceAll("");
+		String s1 = remTradChar.matcher(sb).replaceAll("");
 		
 		String out = "";
 
