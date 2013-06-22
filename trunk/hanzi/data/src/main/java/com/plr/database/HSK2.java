@@ -133,7 +133,7 @@ public class HSK2 extends CCDIC {
 			new CreateTable() {
 
 				@Override
-				String getStatemeent() {
+				public String getStatemeent() {
 					return sql;
 				}
 			}.execute();

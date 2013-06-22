@@ -16,6 +16,7 @@ public class AnkiDataHSK {
 	private String type;
 	private String mw;
 	private String traditional;
+	public String sentenses;
 
 	public AnkiDataHSK(int id, int hSKLevel, String pinyin, String cihui, String definission, String type, String mw,
 			String traditional) {

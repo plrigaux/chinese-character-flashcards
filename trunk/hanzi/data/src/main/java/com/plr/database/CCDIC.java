@@ -22,11 +22,15 @@ import com.plr.cvstojson.Pinyin;
 
 public class CCDIC {
 
-	final public static String driver = "org.apache.derby.jdbc.EmbeddedDriver";
+	// final public static String driver =
+	// "org.apache.derby.jdbc.EmbeddedDriver";
+	final public static String driver = "org.h2.Driver";
 
-	final public static String protocol = "jdbc:derby:";
+	// final public static String protocol = "jdbc:derby:";
+	final public static String protocol = "jdbc:h2:tcp://localhost/";
 
-	final public static String dir = "CCDIC";
+	// final public static String dir = "CCDIC";
+	final public static String dir = "C:\\Users\\DELLi7\\workspace2\\hanzi\\data\\CCDIC_H2\\CCDIC_H2";
 
 	private static String dbURL = protocol + dir + ";create=true";
 
@@ -45,11 +49,11 @@ public class CCDIC {
 			FileUtils.deleteDirectory(new File(dir));
 			createConnection();
 
-			createTable();
+			createTable("CCDIC.ddl");
 
 			pushData();
 
-			//getHanzi();
+			// getHanzi();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -93,7 +97,8 @@ public class CCDIC {
 						Statement.RETURN_GENERATED_KEYS);
 
 				PreparedStatement stmtClf = conn.prepareStatement(
-						"insert into CLASSIFIER (TRADITIONAL,SIMPLIFIED,PINYIN_NUM,PINYIN) values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+						"insert into CLASSIFIER (TRADITIONAL,SIMPLIFIED,PINYIN_NUM,PINYIN) values(?,?,?,?)",
+						Statement.RETURN_GENERATED_KEYS);
 
 				// return "Create Table CLASSIFIER ("
 				// +
@@ -257,13 +262,13 @@ public class CCDIC {
 		}
 	}
 
-	static Splitter semicol = Splitter.on(';').trimResults().omitEmptyStrings();
+	protected static Splitter semicol = Splitter.on(';').trimResults().omitEmptyStrings();
 
-	private void createTable() throws Exception {
+	protected void createTable(String resource) throws Exception {
 
 		StringBuffer bf = new StringBuffer();
 
-		try (InputStream u = this.getClass().getResourceAsStream("CCDIC.ddl"); DataInputStream in = new DataInputStream(u);
+		try (InputStream u = this.getClass().getResourceAsStream(resource); DataInputStream in = new DataInputStream(u);
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));) {
 
@@ -282,10 +287,10 @@ public class CCDIC {
 
 		for (final String sql : semicol.split(bf)) {
 
-			new Excutor() {
+			new CreateTable() {
 
 				@Override
-				String getStatemeent() {
+				public String getStatemeent() {
 					return sql;
 				}
 			}.execute();
@@ -303,11 +308,11 @@ public class CCDIC {
 		}
 	}
 
-	static void shutdown() {
+	protected static void shutdown() {
 		try {
 
 			if (conn != null) {
-				DriverManager.getConnection(dbURL + ";shutdown=true");
+				// DriverManager.getConnection(dbURL + ";shutdown=true");
 				conn.close();
 			}
 		} catch (SQLException sqlExcept) {
@@ -316,7 +321,7 @@ public class CCDIC {
 
 	}
 
-	abstract class CreateTable {
+	public abstract static class CreateTable {
 
 		public void execute() throws SQLException {
 
@@ -325,18 +330,34 @@ public class CCDIC {
 				System.out.println(createTable);
 				stmt.execute(createTable);
 			} catch (SQLException e) {
-				if (!e.getSQLState().equals("X0Y32")) {
-					
-				} else if (!e.getSQLState().equals("42Y55")) {
-					
-				} else {
+
+				System.err.println(e.getSQLState());
+
+				switch (e.getSQLState()) {
+				case "42S02":
+				case "42S11":
+				case "90037":
+				case "42S01":
+					System.err.println(e.getMessage());
+					break;
+
+				default:
 					throw e;
+
 				}
-					
+
+				// if (!e.getSQLState().equals("X0Y32")) {
+				//
+				// } else if (!e.getSQLState().equals("42Y55")) {
+				//
+				// } else {
+				// throw e;
+				// }
+
 			}
 		}
 
-		abstract String getStatemeent();
+		abstract public String getStatemeent();
 	}
 
 	abstract class Excutor {

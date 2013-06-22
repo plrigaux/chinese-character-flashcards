@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.plr.cvstojson.Pinyin;
 import com.plr.database.CCDIC;
 
 public class HSK_Anki {
@@ -46,7 +47,7 @@ public class HSK_Anki {
 
 		List<AnkiDataHSK> list = new ArrayList<>();
 
-		try (Statement stmt = CCDIC.conn.createStatement(); PreparedStatement ps = CCDIC.conn.prepareStatement("")) {
+		try (Statement stmt = CCDIC.conn.createStatement();) {
 
 			ResultSet resultSet = stmt
 					.executeQuery("SELECT ID, HSK_LEVEL, PINYIN_NUM, Simplified, Description, TYPE, Mesure_word, traditional FROM hsk_main order by hsk_level, pinyin_num");
@@ -60,6 +61,52 @@ public class HSK_Anki {
 				list.add(data);
 			}
 
+		}
+
+		int i = 0;
+		try (PreparedStatement ps = CCDIC.conn.prepareStatement("select s2.* from SENTENCES20000 s2 join Word_in_Sentence ws on ws.word_id = s2.id and ws.word_id = ? limit 5")) {
+
+			for (AnkiDataHSK ad : list) {
+				i++;
+
+				if (i % 100 == 0) {
+					System.out.println(i);
+				}
+
+				ps.setInt(1, ad.id );
+				ResultSet resultSet = ps.executeQuery();
+
+				StringBuilder sb = new StringBuilder(5000);
+				
+				while (resultSet.next()) {
+
+					String expression = resultSet.getString(2);
+					String meaning = resultSet.getString(3);
+					String pinyinNum = resultSet.getString(5);
+
+					expression = expression.replace(ad.cihui, "<span class='cihui_hl'>" + ad.cihui + "</span>");
+					
+					sb.append("<div class='sentense'>");
+					
+					sb.append("<p class='expression'>");
+					sb.append(expression);
+					sb.append("</p>");
+
+					String pinyinHtML = Pinyin.convertToAccentHtml(pinyinNum);
+					sb.append("<p class='expressionPinyin'>");
+					sb.append(pinyinHtML);
+					sb.append("</p>");
+
+					sb.append("<p class='meaning'>");
+					sb.append(meaning);
+					sb.append("</p>");
+
+					sb.append("</div>");
+				}
+				
+				
+				ad.sentenses = sb.toString();
+			}
 		}
 
 		File f = new File("ankihsk.txt");
@@ -76,7 +123,7 @@ public class HSK_Anki {
 
 				String line = ad.id + "\t" + ad.cihui + "\t" + ad.getPinHTML() + "\t" + ad.getHTMLDef() + "\t" + ad.HSKLevel
 						+ "\t" + ad.getType() + "\t" + AnkiDataHSK.getHTMLMW(classifier, ad) + "\t" + ad.getTrad() + "\t"
-						+ ad.HSKLevel + "\n";
+						+ ad.sentenses + "\t" + ad.HSKLevel + "\n";
 
 				ow.write(line);
 

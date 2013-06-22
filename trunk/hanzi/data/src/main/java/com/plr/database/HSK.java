@@ -122,7 +122,7 @@ public class HSK extends CCDIC {
 			new CreateTable() {
 
 				@Override
-				String getStatemeent() {
+				public String getStatemeent() {
 					return sql;
 				}
 			}.execute();
