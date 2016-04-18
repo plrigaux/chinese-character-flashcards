@@ -1,0 +1,1 @@
+A flashcard application to learn Chinese characters and there meaning. It runs on any web browsers.
